@@ -1,0 +1,215 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+      items_per_page: 10
+      locale: en
+
+framework:
+    #esi:             ~
+    translator:      { fallbacks: ["%locale%"] }
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    #serializer:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+    default_locale:  "%locale%"
+    trusted_hosts:   ~
+    trusted_proxies: ~
+    session:
+        # handler_id set to null will use default session handler from php.ini
+        handler_id:  ~
+    fragments:       ~
+    http_method_override: true
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+    date:
+        format: d.m.Y, H:i:s
+        interval_format: '%%d days'
+    form:
+        resources: ['bootstrap_3_layout.html.twig', 'SonataCoreBundle:Form:datepicker.html.twig', 'SonataCoreBundle:Form:colorpicker.html.twig']
+
+# Assetic Configuration
+#assetic:
+#    debug:          "%kernel.debug%"
+#    use_controller: false
+#    bundles:        [AppBundle, FOSUserBundle, TwigBundle ]
+#    #java: /usr/bin/java
+#    filters:
+#        cssrewrite: ~
+#        closure:
+#            jar: "%kernel.root_dir%/Resources/java/compiler.jar"
+#        yui_css:
+#            jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar"
+
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   pdo_pgsql
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        charset:  UTF8
+        types:
+           json: Sonata\Doctrine\Types\JsonType
+
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #     path:     "%database_path%"
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: "%mailer_transport%"
+    host:      "%mailer_host%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
+    spool:     { type: memory }
+
+fos_user:
+       db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+       firewall_name: main
+       use_listener: false
+       user_class: AppBundle\Entity\User
+
+# sonata block configuration
+sonata_block:
+    default_contexts: [cms]
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts:   [admin]
+        sonata.admin.block.search_result:
+            contexts: [admin]
+
+        sonata.block.service.text:
+        sonata.block.service.action:
+        sonata.block.service.rss:
+
+# sonata admin configuration
+sonata_admin:
+    title:      Bistro
+    title_logo: /bundles/app/images/bistro_logo.png
+    templates:
+        # default global templates
+
+        layout:  SonataAdminBundle::standard_layout.html.twig
+        ajax:    SonataAdminBundle::ajax_layout.html.twig
+
+        # default actions templates, should extend a global templates
+        list:    SonataAdminBundle:CRUD:list.html.twig
+        show:    SonataAdminBundle:CRUD:show.html.twig
+        edit:    SonataAdminBundle:CRUD:edit.html.twig
+        search:  SonataAdminBundle:Core:search.html.twig
+        search_result_block: SonataAdminBundle:Block:block_search_result.html.twig
+    dashboard:
+        blocks:
+            # display a dashboard block
+            - { position: left, type: sonata.admin.block.admin_list}
+#    dashboard:
+#        blocks:
+#           position: left
+#           type: sonata.admin.block.admin_list
+#           settings:
+#               groups: [sonata_page1, sonata_page2]
+#           position: right
+#           type: sonata.admin.block.admin_list
+#           settings:
+#               groups: [sonata_page3]
+#
+#        groups:
+#           sonata_page1:
+#               items:
+#                   - sonata.page.admin.myitem1
+#
+#           sonata_page2:
+#               items:
+#                   - sonata.page.admin.myitem2
+#                   - sonata.page.admin.myitem3
+#
+#           sonata_page3:
+#               items:
+#                   - sonata.page.admin.myitem4
+
+# stfo doctrine extensions
+stof_doctrine_extensions:
+    default_locale: en
+    translation_fallback: true
+    orm:
+        default:
+            timestampable: true
+            sluggable: true
+            translatable: true
+            loggable: true
+
+# tinumce
+stfalcon_tinymce:
+    include_jquery:       false
+    tinymce_jquery:       false
+    language: en
+    theme:
+          # Simple theme: same as default theme
+          simple:
+               plugins:
+                   - "advlist autolink lists link image charmap print preview hr anchor pagebreak"
+                   - "searchreplace wordcount visualblocks visualchars code fullscreen"
+                   - "insertdatetime media nonbreaking save table contextmenu directionality"
+                   - "emoticons template paste textcolor"
+               toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+               toolbar2: "print preview media | forecolor backcolor emoticons | stfalcon | example"
+               image_advtab: true
+
+#a2lix_translation_form:
+#    locales: [en, ru]                       # [Optionnal] Array of translations locales. Can be specified in the form.
+#    default_required: false
+
+a2lix_translation_form:
+    default_locale: en
+    locales: [en]
+    required_locales: [en]
+
+# fos rest bundle
+fos_rest:
+    param_fetcher_listener: true
+    body_listener: false
+    body_converter:
+                enabled: true
+    format_listener: false
+    view:
+        view_response_listener: true
+    routing_loader:
+        default_format: json
+        include_format: false
+
+monolog:
+    channels: ["urldataok", "urldataerror"]
+    handlers:
+        urldataok:
+            type:  stream
+            path:  "%kernel.logs_dir%/urldataok.log"
+            channels: [urldataok]
+        urldataerror:
+            type:  stream
+            path:  "%kernel.logs_dir%/urldataerror.log"
+            channels: [urldataerror]
