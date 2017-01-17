@@ -11,3 +11,17 @@ services:
             class: AppBundle\Form\RegistrationType
             tags:
                 - { name: form.type, alias: app_user_registration }
+
+  # Admin
+    admin.product.item:
+                  class: AppBundle\Admin\ProductItemAdmin
+                  arguments: [~, AppBundle\Entity\ProductItem, ~]
+                  tags:
+                      - { name: sonata.admin, manager_type: orm, group: Menu, lable: Product Item }
+
+    admin.product:
+                class: AppBundle\Admin\ProductAdmin
+                arguments: [~, AppBundle\Entity\Product, ~]
+                tags:
+                    - { name: sonata.admin, manager_type: orm, group: Menu, lable: Product }
+
