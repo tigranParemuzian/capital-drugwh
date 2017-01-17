@@ -3,12 +3,14 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Product
  *
  * @ORM\Table(name="product")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Product
 {
@@ -31,51 +33,24 @@ class Product
     /**
      * @var string
      *
+     * @Gedmo\Slug(fields={"name"})
      * @ORM\Column(name="slug", type="string", length=255, unique=true)
      */
     private $slug;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="manufacturer", type="string", length=255)
+     * @var
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\ProductItem", inversedBy="product")
+     * @ORM\JoinColumn(name="product_item", referencedColumnName="id")
      */
-    private $manufacturer;
+    private $productItem;
 
     /**
-     * @var int
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ProductItem", inversedBy="product_alternative")
+     * @ORM\JoinColumn(name="alternative", referencedColumnName="id")
      *
-     * @ORM\Column(name="ndc", type="integer", unique=true)
-     */
-    private $ndc;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="alternative", type="string", length=255)
      */
     private $alternative;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="gpi", type="string", length=255)
-     */
-    private $gpi;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="size", type="string", length=50)
-     */
-    private $size;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="unit", type="string", length=10, unique=true)
-     */
-    private $unit;
 
     /**
      * @var int
@@ -105,11 +80,30 @@ class Product
      */
     private $avalible;
 
+    /**
+     * @var
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     */
+    private $created;
+
+    /**
+     * @var
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
+     */
+    private $updated;
+
+    public function __toString()
+    {
+        return $this->id ? $this->productItem->getManufacturer() . ' ' . $this->productItem->getSize() . ' ' . $this->productItem->getUnit() : 'new Product item';
+        // TODO: Implement __toString() method.
+    }
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -165,150 +159,6 @@ class Product
     }
 
     /**
-     * Set manufacturer
-     *
-     * @param string $manufacturer
-     *
-     * @return Product
-     */
-    public function setManufacturer($manufacturer)
-    {
-        $this->manufacturer = $manufacturer;
-
-        return $this;
-    }
-
-    /**
-     * Get manufacturer
-     *
-     * @return string
-     */
-    public function getManufacturer()
-    {
-        return $this->manufacturer;
-    }
-
-    /**
-     * Set ndc
-     *
-     * @param integer $ndc
-     *
-     * @return Product
-     */
-    public function setNdc($ndc)
-    {
-        $this->ndc = $ndc;
-
-        return $this;
-    }
-
-    /**
-     * Get ndc
-     *
-     * @return int
-     */
-    public function getNdc()
-    {
-        return $this->ndc;
-    }
-
-    /**
-     * Set alternative
-     *
-     * @param string $alternative
-     *
-     * @return Product
-     */
-    public function setAlternative($alternative)
-    {
-        $this->alternative = $alternative;
-
-        return $this;
-    }
-
-    /**
-     * Get alternative
-     *
-     * @return string
-     */
-    public function getAlternative()
-    {
-        return $this->alternative;
-    }
-
-    /**
-     * Set gpi
-     *
-     * @param string $gpi
-     *
-     * @return Product
-     */
-    public function setGpi($gpi)
-    {
-        $this->gpi = $gpi;
-
-        return $this;
-    }
-
-    /**
-     * Get gpi
-     *
-     * @return string
-     */
-    public function getGpi()
-    {
-        return $this->gpi;
-    }
-
-    /**
-     * Set size
-     *
-     * @param string $size
-     *
-     * @return Product
-     */
-    public function setSize($size)
-    {
-        $this->size = $size;
-
-        return $this;
-    }
-
-    /**
-     * Get size
-     *
-     * @return string
-     */
-    public function getSize()
-    {
-        return $this->size;
-    }
-
-    /**
-     * Set unit
-     *
-     * @param string $unit
-     *
-     * @return Product
-     */
-    public function setUnit($unit)
-    {
-        $this->unit = $unit;
-
-        return $this;
-    }
-
-    /**
-     * Get unit
-     *
-     * @return string
-     */
-    public function getUnit()
-    {
-        return $this->unit;
-    }
-
-    /**
      * Set count
      *
      * @param integer $count
@@ -325,7 +175,7 @@ class Product
     /**
      * Get count
      *
-     * @return int
+     * @return integer
      */
     public function getCount()
     {
@@ -397,11 +247,106 @@ class Product
     /**
      * Get avalible
      *
-     * @return int
+     * @return integer
      */
     public function getAvalible()
     {
         return $this->avalible;
     }
-}
 
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     *
+     * @return Product
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set updated
+     *
+     * @param \DateTime $updated
+     *
+     * @return Product
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * Get updated
+     *
+     * @return \DateTime
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    /**
+     * Set productItem
+     *
+     * @param \AppBundle\Entity\ProductItem $productItem
+     *
+     * @return Product
+     */
+    public function setProductItem(\AppBundle\Entity\ProductItem $productItem = null)
+    {
+        $this->productItem = $productItem;
+
+        return $this;
+    }
+
+    /**
+     * Get productItem
+     *
+     * @return \AppBundle\Entity\ProductItem
+     */
+    public function getProductItem()
+    {
+        return $this->productItem;
+    }
+
+    /**
+     * Set alternative
+     *
+     * @param \AppBundle\Entity\ProductItem $alternative
+     *
+     * @return Product
+     */
+    public function setAlternative(\AppBundle\Entity\ProductItem $alternative = null)
+    {
+        $this->alternative = $alternative;
+
+        return $this;
+    }
+
+    /**
+     * Get alternative
+     *
+     * @return \AppBundle\Entity\ProductItem
+     */
+    public function getAlternative()
+    {
+        return $this->alternative;
+    }
+}

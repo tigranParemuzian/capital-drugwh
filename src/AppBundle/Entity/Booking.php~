@@ -156,3 +156,4 @@ class Booking
         return $this->shippingHandling;
     }
 }
+

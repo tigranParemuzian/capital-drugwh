@@ -58,7 +58,7 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   pdo_pgsql
+        driver:   pdo_mysql
         host:     "%database_host%"
         port:     "%database_port%"
         dbname:   "%database_name%"
@@ -93,6 +93,9 @@ fos_user:
        firewall_name: main
        use_listener: false
        user_class: AppBundle\Entity\User
+       registration:
+           form:
+               type: AppBundle\Form\RegistrationType
 
 # sonata block configuration
 sonata_block:
@@ -109,7 +112,7 @@ sonata_block:
 
 # sonata admin configuration
 sonata_admin:
-    title:      Bistro
+    title:      Capital Drugwh TW
     title_logo: /bundles/app/images/bistro_logo.png
     templates:
         # default global templates

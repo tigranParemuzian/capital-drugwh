@@ -1,0 +1,83 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+
+/**
+ * ProductIngridient
+ *
+ * @ORM\Table(name="product_item")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductItemRepository")
+ */
+class ProductItem
+{
+    const CT = 0;
+    const ML = 1;
+
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="manufacturer", type="string", length=255)
+     */
+    private $manufacturer;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nds", type="string", length=255, unique=true)
+     */
+    private $nds;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="size", type="float")
+     */
+    private $size;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="unit", type="smallint")
+     */
+    private $unit;
+
+    /**
+     * @var
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Product", mappedBy="productItem")
+     */
+    private $product;
+
+    /**
+     * @var
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Product", mappedBy="alternative")
+     */
+    private $product_alternative;
+
+    /**
+     * @var
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     */
+    private $created;
+
+    /**
+     * @var
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
+     */
+    private $updated;
+}
+
