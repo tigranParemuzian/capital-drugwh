@@ -10,6 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="product_item")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductItemRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class ProductItem
 {
@@ -62,12 +63,6 @@ class ProductItem
 
     /**
      * @var
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Product", mappedBy="alternative")
-     */
-    private $product_alternative;
-
-    /**
-     * @var
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
      */
@@ -84,14 +79,6 @@ class ProductItem
     {
         return $this->id ? $this->manufacturer . ' ' . $this->size . ' ' . $this->unit : 'new Product item';
         // TODO: Implement __toString() method.
-    }
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->product_alternative = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -272,37 +259,4 @@ class ProductItem
         return $this->product;
     }
 
-    /**
-     * Add productAlternative
-     *
-     * @param \AppBundle\Entity\Product $productAlternative
-     *
-     * @return ProductItem
-     */
-    public function addProductAlternative(\AppBundle\Entity\Product $productAlternative)
-    {
-        $this->product_alternative[] = $productAlternative;
-
-        return $this;
-    }
-
-    /**
-     * Remove productAlternative
-     *
-     * @param \AppBundle\Entity\Product $productAlternative
-     */
-    public function removeProductAlternative(\AppBundle\Entity\Product $productAlternative)
-    {
-        $this->product_alternative->removeElement($productAlternative);
-    }
-
-    /**
-     * Get productAlternative
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getProductAlternative()
-    {
-        return $this->product_alternative;
-    }
 }

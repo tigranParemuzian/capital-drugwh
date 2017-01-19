@@ -39,7 +39,8 @@
         "knplabs/knp-paginator-bundle": "^2.5",
         "stfalcon/tinymce-bundle": "^2.1",
         "a2lix/translation-form-bundle": "^2.1",
-        "gedmo/doctrine-extensions": "^2.4"
+        "gedmo/doctrine-extensions": "^2.4",
+        "apy/datagrid-bundle": "^2.3"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",

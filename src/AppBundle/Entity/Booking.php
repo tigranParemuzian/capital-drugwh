@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="booking")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\BookingRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Booking
 {
@@ -49,6 +50,19 @@ class Booking
      */
     private $shippingHandling;
 
+    /**
+     * @var
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="booking")
+     * @ORM\JoinColumn(name="products_is", referencedColumnName="id")
+     */
+    private $product;
+
+    /**
+     * @var
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
+     */
+    private $client;
 
     /**
      * Get id
@@ -154,5 +168,53 @@ class Booking
     public function getShippingHandling()
     {
         return $this->shippingHandling;
+    }
+
+    /**
+     * Set product
+     *
+     * @param \AppBundle\Entity\Product $product
+     *
+     * @return Booking
+     */
+    public function setProduct(\AppBundle\Entity\Product $product = null)
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    /**
+     * Get product
+     *
+     * @return \AppBundle\Entity\Product
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
+     * Set client
+     *
+     * @param \AppBundle\Entity\User $client
+     *
+     * @return Booking
+     */
+    public function setClient(\AppBundle\Entity\User $client = null)
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * Get client
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getClient()
+    {
+        return $this->client;
     }
 }

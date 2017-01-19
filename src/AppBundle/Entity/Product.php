@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use APY\DataGridBundle\Grid\Mapping as GRID;
 
 /**
  * Product
@@ -11,6 +12,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="product")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @GRID\Column(id="aaaa", size="120", type="text")
+ * @GRID\Source(columns="id, name, productItem.nds, productItem.manufacturer, count, price, created")
  */
 class Product
 {
@@ -42,13 +45,13 @@ class Product
      * @var
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\ProductItem", inversedBy="product")
      * @ORM\JoinColumn(name="product_item", referencedColumnName="id")
+     * @GRID\Column(field="productItem.nds", title="Category Name")
+     * @GRID\Column(field="productItem.manufacturer", title="Category first child")
      */
     private $productItem;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ProductItem", inversedBy="product_alternative")
-     * @ORM\JoinColumn(name="alternative", referencedColumnName="id")
-     *
+     * @ORM\Column(name="alternative", type="string", length=100)
      */
     private $alternative;
 
@@ -63,6 +66,7 @@ class Product
      * @var float
      *
      * @ORM\Column(name="price", type="float")
+     * @GRID\Column(align="center", title="Price")
      */
     private $price;
 
@@ -76,7 +80,7 @@ class Product
     /**
      * @var int
      *
-     * @ORM\Column(name="avalible", type="integer")
+     * @ORM\Column(name="avalible", type="integer", nullable=true)
      */
     private $avalible;
 
@@ -84,6 +88,7 @@ class Product
      * @var
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
+     * @GRID\Column(title="Created", type="datetime")
      */
     private $created;
 
@@ -93,6 +98,12 @@ class Product
      * @ORM\Column(type="datetime")
      */
     private $updated;
+
+    /**
+     * @var
+     * @ORM\OneToMany(targetEntity="Booking", mappedBy="product")
+     */
+    private $booking;
 
     public function __toString()
     {
@@ -329,11 +340,11 @@ class Product
     /**
      * Set alternative
      *
-     * @param \AppBundle\Entity\ProductItem $alternative
+     * @param string $alternative
      *
      * @return Product
      */
-    public function setAlternative(\AppBundle\Entity\ProductItem $alternative = null)
+    public function setAlternative($alternative)
     {
         $this->alternative = $alternative;
 
@@ -343,10 +354,51 @@ class Product
     /**
      * Get alternative
      *
-     * @return \AppBundle\Entity\ProductItem
+     * @return string
      */
     public function getAlternative()
     {
         return $this->alternative;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->booking = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add booking
+     *
+     * @param \AppBundle\Entity\Booking $booking
+     *
+     * @return Product
+     */
+    public function addBooking(\AppBundle\Entity\Booking $booking)
+    {
+        $this->booking[] = $booking;
+
+        return $this;
+    }
+
+    /**
+     * Remove booking
+     *
+     * @param \AppBundle\Entity\Booking $booking
+     */
+    public function removeBooking(\AppBundle\Entity\Booking $booking)
+    {
+        $this->booking->removeElement($booking);
+    }
+
+    /**
+     * Get booking
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBooking()
+    {
+        return $this->booking;
     }
 }

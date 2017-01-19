@@ -13,15 +13,20 @@ services:
                 - { name: form.type, alias: app_user_registration }
 
   # Admin
-    admin.product.item:
-                  class: AppBundle\Admin\ProductItemAdmin
-                  arguments: [~, AppBundle\Entity\ProductItem, ~]
-                  tags:
-                      - { name: sonata.admin, manager_type: orm, group: Menu, lable: Product Item }
+    app.admin.user:
+            class: AppBundle\Admin\UserAdmin
+            arguments: [~, AppBundle\Entity\User, SonataAdminBundle:CRUD]
+            tags:
+                - {name: sonata.admin, manager_type: orm, group: User, label: User}
+
+    admin.products.item:
+        class: AppBundle\Admin\ProductItemAdmin
+        arguments: [~, AppBundle\Entity\ProductItem, ~]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: Product, label: Product Item, show_in_dashboard: true}
 
     admin.product:
-                class: AppBundle\Admin\ProductAdmin
-                arguments: [~, AppBundle\Entity\Product, ~]
-                tags:
-                    - { name: sonata.admin, manager_type: orm, group: Menu, lable: Product }
-
+        class: AppBundle\Admin\ProductAdmin
+        arguments: [~, AppBundle\Entity\Product, ~]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: Product, label: Product, show_in_dashboard: true}

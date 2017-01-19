@@ -50,7 +50,10 @@ class ProductItemAdmin extends Admin
             ->add('manufacturer')
             ->add('nds')
             ->add('size')
-            ->add('unit')
+            ->addIdentifier('unit', 'choice', array(
+                'choices'  => array(ProductItem::CT=>'CT', ProductItem::ML=>'ML'),
+            ))
+
             ->add('_action', 'actions',
                 array('actions'=>
                     array('show'=>array(), 'edit'=>array(), 'delete'=>array())

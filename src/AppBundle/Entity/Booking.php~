@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="booking")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\BookingRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Booking
 {
@@ -49,6 +50,19 @@ class Booking
      */
     private $shippingHandling;
 
+    /**
+     * @var
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="booking")
+     * @ORM\JoinColumn(name="products_is", referencedColumnName="id")
+     */
+    private $product;
+
+    /**
+     * @var
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
+     */
+    private $client;
 
     /**
      * Get id
@@ -156,4 +170,3 @@ class Booking
         return $this->shippingHandling;
     }
 }
-
