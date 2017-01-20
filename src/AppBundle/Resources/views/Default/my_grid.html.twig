@@ -2,9 +2,11 @@
 
 {% block content %}
 <div class="row">
-    {{ t }}
+    {#{{ grid_search(grid) }}#}
+    {#{{ grid_cell('APYDataGridBundle::blocks.html.twig', {id:'myTypedColumn'}, 1, grid) }}#}
+    {{ grid(grid, 'APYDataGridBundle::blocks.html.twig') }}
+
 </div>
-    {#{{ grid(grid) }}#}
 {% endblock content %}
 
 {% block stylesheets %}

@@ -13,7 +13,7 @@ use APY\DataGridBundle\Grid\Mapping as GRID;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductRepository")
  * @ORM\HasLifecycleCallbacks()
  * @GRID\Column(id="aaaa", size="120", type="text")
- * @GRID\Source(columns="id, name, productItem.nds, productItem.manufacturer, count, price, created")
+ * @GRID\Source(columns="id, name, slug, productItem.nds, productItem.manufacturer, count, price")
  */
 class Product
 {
@@ -88,7 +88,6 @@ class Product
      * @var
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
-     * @GRID\Column(title="Created", type="datetime")
      */
     private $created;
 

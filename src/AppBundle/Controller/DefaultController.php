@@ -3,6 +3,8 @@
 namespace AppBundle\Controller;
 
 use APY\DataGridBundle\Grid\Action\DeleteMassAction;
+use APY\DataGridBundle\Grid\Action\RowAction;
+use APY\DataGridBundle\Grid\Column\ActionsColumn;
 use APY\DataGridBundle\Grid\Column\BlankColumn;
 use APY\DataGridBundle\Grid\Column\DateColumn;
 use APY\DataGridBundle\Grid\Column\TextColumn;
@@ -81,14 +83,42 @@ class DefaultController extends Controller
         /* @var $grid \APY\DataGridBundle\Grid\Grid */
         $grid = $this->get('grid');
         $grid->setSource($source);
-        $grid->addExport(new CSVExport('CSV Export', 'export'));
-        $grid->addMassAction(new DeleteMassAction());
+        $grid->setHiddenColumns('id');
+//        $grid->addExport(new CSVExport('CSV Export', 'export'));
         $MyColumn = new BlankColumn(array('filterable'=>true, 'source'=>'My Data', 'values'=>array('a', 'b', 'd'), 'isAggregate'=>true, 'id' => 'myBlankColumn', 'title' => 'CS', 'size' => '54'));
         $grid->addColumn($MyColumn);
         $MyTypedColumn = new DateColumn(array('id' => 'myTypedColumn', 'title' => 'My fsd Column', 'source' => false, 'filterable' => false, 'sortable' => false));
         $grid->addColumn($MyTypedColumn);
-//        $grid->setHiddenColumns('numberOfOrders');
+
+        // Create an Actions Column
+        $actionsColumn = new ActionsColumn('action_column', 'Action Column');
+        $grid->addColumn($actionsColumn, 9);
+
+// Attach a rowAction to the Actions Column
+        $rowAction1 = new RowAction('Show', 'show_single');
+        $rowAction1->setColumn('action_column');
+        $grid->addRowAction($rowAction1);
+
+
+// OR add a second row action directly to a new action column
+        /*$rowAction2 = new RowAction('Edit', 'route_to_edit');
+
+        $actionsColumn2 = new ActionsColumn($column, $title, array(rowAction2), $separator);
+        $grid->addColumn($actionsColumn2, $position2);*/
+
         return $grid->getGridResponse('AppBundle:Default:my_grid.html.twig');
+    }
+
+    /**
+     * @Route("/show/{id}", name="show_single")
+     * @Template()
+     */
+    public function showAction(Request $request, $id){
+        $em = $this->getDoctrine()->getManager();
+
+        $single = $em->getRepository('AppBundle:Product')->findOneBy(array('id'=>$id));
+
+        return array('product'=>$single);
     }
 
     /**
