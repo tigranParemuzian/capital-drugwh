@@ -31,7 +31,13 @@ class ProductAdmin extends Admin
                     ->add('productItem','sonata_type_model', array('expanded' => false,
                                                                     'by_reference' => true,
                                                                     'btn_add'=>true,
-                                                                    'multiple' => false, 'sortable'      => 'ordering',))
+                                                                    'multiple' => false,
+                                                                    'sortable' => 'ordering',))
+            ->add('category','sonata_type_model', array('expanded' => false,
+                                                                    'by_reference' => true,
+                                                                    'btn_add'=>true,
+                                                                    'multiple' => false,
+                                                                    'sortable' => 'ordering',))
             ->add('alternative', 'text', array('required'=>false))
             ->add('count', 'number', array('required'=>false))
             ->add('price', 'text', array('required'=>true))
@@ -54,6 +60,7 @@ class ProductAdmin extends Admin
             ->add('id')
             ->add('name')
             ->add('productItem')
+            ->add('category')
             ->add('alternative')
             ->addIdentifier('count')
             ->addIdentifier('price')
@@ -85,6 +92,10 @@ class ProductAdmin extends Admin
             ->add('productItem', null, array(), 'entity', array(
                 'class'    => 'AppBundle\Entity\ProductItem',
                 'property' => 'Manufacturer',
+            ))
+            ->add('category', null, array(), 'entity', array(
+                'class'    => 'AppBundle\Entity\Category',
+                'property' => 'name',
             ))
             ->add('created', 'doctrine_orm_datetime_range', array(),'sonata_type_datetime_range_picker',
                 array('field_options_start' => array('format' => 'yyyy-MM-dd HH:mm:ss'),

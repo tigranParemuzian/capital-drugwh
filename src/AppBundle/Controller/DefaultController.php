@@ -32,7 +32,22 @@ class DefaultController extends Controller
      * @Route("/list", name="list")
      * @Template()
      */
-    public function listingAction(Request $request){
+    public function listAction(Request $request){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $products = $em->getRepository('AppBundle:Product')->fidListing();
+        $categories = $em->getRepository('AppBundle:Category')->findAll();
+
+        return array('products'=>$products, 'categories'=>$categories);
+
+    }
+
+    /**
+     * @Route("/list_old", name="list_old")
+     * @Template()
+     */
+    public function listingOldAction(Request $request){
 
         /*$gridBuilder = $this->createGridBuilder(new Entity('AppBundle:Product'), [
             'persistence'  => true,
@@ -83,5 +98,4 @@ class DefaultController extends Controller
     {
         return $this->container->get('apy_grid.factory')->createBuilder('grid', $source, $options);
     }
-
 }

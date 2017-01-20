@@ -10,4 +10,17 @@ namespace AppBundle\Repository;
  */
 class ProductRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function fidListing(){
+        $q = $this->getEntityManager()->createQueryBuilder()
+            ->select('p, pi')
+            ->from('AppBundle:Product', 'p')
+            ->innerJoin('p.productItem', 'pi')
+//            ->leftJoin('p.category', 'c')
+            ->where('p.id is not null')
+            ->orderBy('p.updated', 'DESC')
+            ;
+
+        return $q->getQuery()->getResult();
+    }
 }

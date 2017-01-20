@@ -30,3 +30,9 @@ services:
         arguments: [~, AppBundle\Entity\Product, ~]
         tags:
             - {name: sonata.admin, manager_type: orm, group: Product, label: Product, show_in_dashboard: true}
+
+    admin.category:
+        class: AppBundle\Admin\CategoryAdmin
+        arguments: [~, AppBundle\Entity\Category, ~]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: Product, label: Product Category, show_in_dashboard: true}

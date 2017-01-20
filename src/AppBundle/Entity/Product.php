@@ -51,7 +51,7 @@ class Product
     private $productItem;
 
     /**
-     * @ORM\Column(name="alternative", type="string", length=100)
+     * @ORM\Column(name="alternative", type="string", length=100, nullable=true)
      */
     private $alternative;
 
@@ -104,6 +104,13 @@ class Product
      * @ORM\OneToMany(targetEntity="Booking", mappedBy="product")
      */
     private $booking;
+
+    /**
+     * @var
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Category", inversedBy="product")
+     * @ORM\JoinColumn(name="category", referencedColumnName="id")
+     */
+    private $category;
 
     public function __toString()
     {
@@ -400,5 +407,29 @@ class Product
     public function getBooking()
     {
         return $this->booking;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \AppBundle\Entity\Category $category
+     *
+     * @return Product
+     */
+    public function setCategory(\AppBundle\Entity\Category $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \AppBundle\Entity\Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 }

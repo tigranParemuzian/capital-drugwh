@@ -1,0 +1,61 @@
+{% extends '::base.html.twig' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="col-sm-3">
+                <label>Search</label>
+                <input type="text" name="search">
+            </div>
+            <div class="col-sm-3">
+                <label>Select Category</label>
+                <select name="category" data-placeholder="Select Category">
+                    {% for category in categories %}
+                    <option value="{{ category.slug }}">{{ category.name }}</option>
+                        {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>&nbsp;<span>Select All</span></th>
+                    <th><span><a href="#">Product Name</a></span></th>
+                    <th><span><a href="#">Product Category</a></span></th>
+                    <th><span>Size</span></th>
+                    <th><span>Price</span></th>
+                    <th><span>Need count</span></th>
+                    <th><span>Available</span></th>
+                    <th><span>Actions</span></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for product in products %}
+                <tr id="{{ product.slug }}">
+                    <td>&nbsp;<span>{{ product.id }}</span></td>
+                    <td> {{ product.name }} </td>
+                    <td> {{ product.category.name }} </td>
+                    <td> {{ product.productItem.size }} {{ product.productItem.unit }}</td>
+                    <td> {{ product.price }}$ </td>
+                    <td><input type="number" name="count"></td>
+                    <td> <span>Available</span>{{ product.count }}</td>
+                    <td> <button class="btn btn-success"><span class="glyphicon glyphicon-plus-sign"></span></button></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            <tr>
+                <td><span>Selected count </span></td>
+                <td><span>Selected price </span></td>
+            </tr>
+            </tfoot>
+        </table>
+        </div>
+        <div class="col-sm-12">
+            <div class="col-sm-4"><button class="btn btn-success">Submit Order</button> </div>
+        </div>
+    </div>
+    {#{{ grid(grid) }}#}
+{% endblock content %}

@@ -169,4 +169,52 @@ class Booking
     {
         return $this->shippingHandling;
     }
+
+    /**
+     * Set product
+     *
+     * @param \AppBundle\Entity\Product $product
+     *
+     * @return Booking
+     */
+    public function setProduct(\AppBundle\Entity\Product $product = null)
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    /**
+     * Get product
+     *
+     * @return \AppBundle\Entity\Product
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
+     * Set client
+     *
+     * @param \AppBundle\Entity\User $client
+     *
+     * @return Booking
+     */
+    public function setClient(\AppBundle\Entity\User $client = null)
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * Get client
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
 }

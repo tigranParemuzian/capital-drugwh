@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use APY\DataGridBundle\Grid\Mapping as GRID;
 
 /**
  * Product
@@ -11,6 +12,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="product")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @GRID\Column(id="aaaa", size="120", type="text")
+ * @GRID\Source(columns="id, name, productItem.nds, productItem.manufacturer, count, price, created")
  */
 class Product
 {
@@ -42,6 +45,8 @@ class Product
      * @var
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\ProductItem", inversedBy="product")
      * @ORM\JoinColumn(name="product_item", referencedColumnName="id")
+     * @GRID\Column(field="productItem.nds", title="Category Name")
+     * @GRID\Column(field="productItem.manufacturer", title="Category first child")
      */
     private $productItem;
 
@@ -61,6 +66,7 @@ class Product
      * @var float
      *
      * @ORM\Column(name="price", type="float")
+     * @GRID\Column(align="center", title="Price")
      */
     private $price;
 
@@ -82,6 +88,7 @@ class Product
      * @var
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
+     * @GRID\Column(title="Created", type="datetime")
      */
     private $created;
 
@@ -97,6 +104,13 @@ class Product
      * @ORM\OneToMany(targetEntity="Booking", mappedBy="product")
      */
     private $booking;
+
+    /**
+     * @var
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Category", inversedBy="product")
+     * @ORM\JoinColumn(name="category", referencedColumnName="id")
+     */
+    private $category;
 
     public function __toString()
     {
@@ -352,5 +366,46 @@ class Product
     public function getAlternative()
     {
         return $this->alternative;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->booking = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add booking
+     *
+     * @param \AppBundle\Entity\Booking $booking
+     *
+     * @return Product
+     */
+    public function addBooking(\AppBundle\Entity\Booking $booking)
+    {
+        $this->booking[] = $booking;
+
+        return $this;
+    }
+
+    /**
+     * Remove booking
+     *
+     * @param \AppBundle\Entity\Booking $booking
+     */
+    public function removeBooking(\AppBundle\Entity\Booking $booking)
+    {
+        $this->booking->removeElement($booking);
+    }
+
+    /**
+     * Get booking
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBooking()
+    {
+        return $this->booking;
     }
 }
