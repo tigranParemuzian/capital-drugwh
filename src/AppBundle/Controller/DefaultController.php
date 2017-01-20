@@ -83,16 +83,15 @@ class DefaultController extends Controller
         /* @var $grid \APY\DataGridBundle\Grid\Grid */
         $grid = $this->get('grid');
         $grid->setSource($source);
-        $grid->setHiddenColumns('id');
 //        $grid->addExport(new CSVExport('CSV Export', 'export'));
-        $MyColumn = new BlankColumn(array('filterable'=>true, 'source'=>'My Data', 'values'=>array('a', 'b', 'd'), 'isAggregate'=>true, 'id' => 'myBlankColumn', 'title' => 'CS', 'size' => '54'));
-        $grid->addColumn($MyColumn);
+//        $MyColumn = new BlankColumn(array('filterable'=>true, 'source'=>'My Data', 'values'=>array('a', 'b', 'd'), 'isAggregate'=>true, 'id' => 'myBlankColumn', 'title' => 'CS', 'size' => '54'));
+//        $grid->addColumn($MyColumn);
         $MyTypedColumn = new DateColumn(array('id' => 'myTypedColumn', 'title' => 'My fsd Column', 'source' => false, 'filterable' => false, 'sortable' => false));
         $grid->addColumn($MyTypedColumn);
 
         // Create an Actions Column
         $actionsColumn = new ActionsColumn('action_column', 'Action Column');
-        $grid->addColumn($actionsColumn, 9);
+        $grid->addColumn($actionsColumn, 10);
 
 // Attach a rowAction to the Actions Column
         $rowAction1 = new RowAction('Show', 'show_single');

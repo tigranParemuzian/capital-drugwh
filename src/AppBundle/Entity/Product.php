@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use APY\DataGridBundle\Grid\Mapping as GRID;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Product
@@ -13,7 +14,7 @@ use APY\DataGridBundle\Grid\Mapping as GRID;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductRepository")
  * @ORM\HasLifecycleCallbacks()
  * @GRID\Column(id="aaaa", size="120", type="text")
- * @GRID\Source(columns="id, name, slug, productItem.nds, productItem.manufacturer, count, price")
+ * @GRID\Source(columns="id, name, slug, productItem.nds, productItem.manufacturer, count, avalible, price, category.name, showcount")
  */
 class Product
 {
@@ -23,9 +24,15 @@ class Product
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @GRID\Column(visible=false)
      */
     private $id;
 
+    /**
+     * @var
+     * @GRID\Column(title="show count")
+     */
+    private $showcount;
     /**
      * @var string
      *
@@ -38,6 +45,7 @@ class Product
      *
      * @Gedmo\Slug(fields={"name"})
      * @ORM\Column(name="slug", type="string", length=255, unique=true)
+     * @GRID\Column(visible=false)
      */
     private $slug;
 
@@ -45,8 +53,8 @@ class Product
      * @var
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\ProductItem", inversedBy="product")
      * @ORM\JoinColumn(name="product_item", referencedColumnName="id")
-     * @GRID\Column(field="productItem.nds", title="Category Name")
-     * @GRID\Column(field="productItem.manufacturer", title="Category first child")
+     * @GRID\Column(field="productItem.nds", title="NDS", first="")
+     * @GRID\Column(field="productItem.manufacturer", title="Manufacturer")
      */
     private $productItem;
 
@@ -59,6 +67,7 @@ class Product
      * @var int
      *
      * @ORM\Column(name="count", type="integer")
+     * @GRID\Column(align="center", title="Count", size=50, type="number", filter="select")
      */
     private $count;
 
@@ -81,6 +90,7 @@ class Product
      * @var int
      *
      * @ORM\Column(name="avalible", type="integer", nullable=true)
+     * @GRID\Column(title="Is avalible", type="boolean")
      */
     private $avalible;
 
@@ -108,6 +118,7 @@ class Product
      * @var
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Category", inversedBy="product")
      * @ORM\JoinColumn(name="category", referencedColumnName="id")
+     * @GRID\Column(field="category.name", title="Category Name", filter="select")
      */
     private $category;
 
@@ -117,6 +128,10 @@ class Product
         // TODO: Implement __toString() method.
     }
 
+
+    public function getShowCount(){
+        return $this->showcount . 'ddd';
+    }
     /**
      * Get id
      *
