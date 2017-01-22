@@ -16,6 +16,7 @@ class ProductItem
 {
     const CT = 0;
     const ML = 1;
+    const S_EA = 2;
 
 
     /**
