@@ -130,4 +130,14 @@ class ProductAdmin extends Admin
             ->add('updated');
     }
 
+    /**
+     * @param mixed $object
+     */
+    public function prePersist($object)
+    {
+        if($object->getPrice()){
+            $object->setPrice($object->getPrice() - ($object->getPrice() * 0.09));
+        }
+    }
+
 }
