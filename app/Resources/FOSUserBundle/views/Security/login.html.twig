@@ -1,22 +1,55 @@
-{% extends "FOSUserBundle::layout.html.twig" %}
+{% extends 'base.html.twig' %}
+{#{% extends "FOSUserBundle::layout.html.twig" %}#}
+{% block content %}
+    <div class="container" xmlns="http://www.w3.org/1999/html">
+        <div class="row main-content">
+            <div class="col-md-4">
+                {% block fos_user_content %}
+                    {% if error %}
+                        <div>{{ error|trans({}, 'FOSUserBundle') }}</div>
+                    {% endif %}
 
-{% block fos_user_content %}
-{% if error %}
-    <div>{{ error|trans({}, 'FOSUserBundle') }}</div>
-{% endif %}
+                    <form action="{{ path("fos_user_security_check") }}" method="post">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+                        <div class="form-group">
+                            <label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
+                            <input type="text" class="form-control" id="username" name="_username"
+                                   value="{{ last_username }}" required="required"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
+                            <input type="password" class="form-control" id="password" name="_password"
+                                   required="required"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="remember_me">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>
+                            <input type="checkbox" id="remember_me" name="_remember_me" value="on"/>
+                        </div>
+                        <input type="submit" class="btn btn-success" id="_submit" name="_submit"
+                               value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}"/>
+                        <a href="{{ path('fos_user_registration_register') }}" type="bu" class="btn btn-success" id="_submit" name="_submit"></a>
+                    </form>
+                {% endblock fos_user_content %}
+            </div>
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Help info</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                            galley of type and scrambled it to make a type specimen book. It has survived not only five
+                            centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
+                            passages, and more recently with desktop publishing software like Aldus PageMaker including
+                            versions of Lorem Ipsum.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<form action="{{ path("fos_user_security_check") }}" method="post">
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-
-    <label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
-    <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
-
-    <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
-    <input type="password" id="password" name="_password" required="required" />
-
-    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-    <label for="remember_me">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>
-
-    <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" />
-</form>
-{% endblock fos_user_content %}
+{% endblock %}

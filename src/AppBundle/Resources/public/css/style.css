@@ -46,9 +46,11 @@ nav{
     95% { left: -300%; }
     100% { left: -400%; }
 }
-
+.main-content{
+    margin-top: 20px;
+}
 /*body { margin: 0; }*/
-div#slider { overflow: hidden; }
+div#slider { overflow: hidden; margin-top: 50px}
 div#slider figure img { width: 20%; float: left; height: 300px; object-fit: cover }
 div#slider figure {
     position: relative;

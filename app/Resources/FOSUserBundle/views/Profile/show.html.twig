@@ -1,0 +1,6 @@
+{% extends "LBUserBundle::layout.html.twig" %}
+
+{% block content %}
+    {{ parent() }}
+    {% include('FOSUserBundle:Profile:show_content.html.twig') %}
+{% endblock %}
