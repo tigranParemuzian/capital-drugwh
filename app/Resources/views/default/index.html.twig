@@ -1,80 +1,91 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-    <div id="wrapper">
-        <div id="container">
-            <div id="welcome">
-                <h1><span>Welcome to</span> Symfony {{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION') }}</h1>
+    <section class="menu text-center">
+        <header><h1>text about partniors</h1></header>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-md-4">
+                    <div class="info">
+                        <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcT9tRvHMeB-Ie0qDwBEeYh9sO4OXIjCnuHUXXyLkpOT4qoRzFvq" alt="mix grill">
+                        <div class="caption">
+                            <h3>Partners name #1</h3>
+                            <p>Partners info and offer #1.</p>
+                            <button>50% Off 40$</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-xs-12 col-md-4">
+                    <div class="info">
+                        <img src="http://previews.123rf.com/images/roywylam/roywylam1104/roywylam110400039/9340480-Health-care-Icons-in-medical-green-Stock-Vector-icon.jpg" alt="mix grill">
+                        <div class="caption2">
+                            <h3>Partners name #2</h3>
+                            <p>Partners info and offer #2.</p>
+                            <button>50% Off 40$</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-xs-12 col-md-4">
+                    <div class="info">
+                        <img src="https://cdn.vectorstock.com/i/composite/34,08/medical-icon-vector-483408.jpg" alt="mix grill">
+                        <div class="caption3">
+                            <h3>Partners name #3</h3>
+                            <p>Partners info and offer #3.</p>
+                            <button>50% Off 40$</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-xs-12 col-md-4">
+                    <div class="info">
+                        <img src="http://coventryone.com/web/groups/public/@cvty_individual_c1/documents/graphic/a187116.jpg" alt="mix grill">
+                        <div class="caption4">
+                            <h3>Partners name #4</h3>
+                            <p>Partners info and offer #4.</p>
+                            <button>50% Off 40$</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-4">
+                    <div class="info">
+                        <img src="http://3ix98v4jkk22r5onw14w6xx1.wpengine.netdna-cdn.com/wp-content/uploads/archive/stories/shutterstock_90379069.jpg" alt="mix grill">
+                        <div class="caption5">
+                            <h3>Partners name #5</h3>
+                            <p>Partners info and offer #5.</p>
+                            <button>50% Off 40$</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-4">
+                    <div class="info">
+                        <img src="data:image/jpeg;base64,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" alt="mix grill">
+                        <div class="caption6">
+                            <h3>Partners name #6</h3>
+                            <p>Partners info and offer #6.</p>
+                            <button>50% Off 40$</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-
-            <div id="status">
-                <p>
-                    <svg id="icon-status" width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1671 566q0 40-28 68l-724 724-136 136q-28 28-68 28t-68-28l-136-136-362-362q-28-28-28-68t28-68l136-136q28-28 68-28t68 28l294 295 656-657q28-28 68-28t68 28l136 136q28 28 28 68z" fill="#759E1A"/></svg>
-
-                    Your application is now ready. You can start working on it at:
-                    <code>{{ base_dir }}</code>
-                </p>
-            </div>
-
-            <div id="next">
-                <h2>What's next?</h2>
-                <p>
-                    <svg id="icon-book" version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="-12.5 9 64 64" enable-background="new -12.5 9 64 64" xml:space="preserve">
-                        <path fill="#AAA" d="M6.8,40.8c2.4,0.8,4.5-0.7,4.9-2.5c0.2-1.2-0.3-2.1-1.3-3.2l-0.8-0.8c-0.4-0.5-0.6-1.3-0.2-1.9
-                            c0.4-0.5,0.9-0.8,1.8-0.5c1.3,0.4,1.9,1.3,2.9,2.2c-0.4,1.4-0.7,2.9-0.9,4.2l-0.2,1c-0.7,4-1.3,6.2-2.7,7.5
-                            c-0.3,0.3-0.7,0.5-1.3,0.6c-0.3,0-0.4-0.3-0.4-0.3c0-0.3,0.2-0.3,0.3-0.4c0.2-0.1,0.5-0.3,0.4-0.8c0-0.7-0.6-1.3-1.3-1.3
-                            c-0.6,0-1.4,0.6-1.4,1.7s1,1.9,2.4,1.8c0.8,0,2.5-0.3,4.2-2.5c2-2.5,2.5-5.4,2.9-7.4l0.5-2.8c0.3,0,0.5,0.1,0.8,0.1
-                            c2.4,0.1,3.7-1.3,3.7-2.3c0-0.6-0.3-1.2-0.9-1.2c-0.4,0-0.8,0.3-1,0.8c-0.1,0.6,0.8,1.1,0.1,1.5c-0.5,0.3-1.4,0.6-2.7,0.4l0.3-1.3
-                            c0.5-2.6,1-5.7,3.2-5.8c0.2,0,0.8,0,0.8,0.4c0,0.2,0,0.2-0.2,0.5c-0.2,0.3-0.3,0.4-0.2,0.7c0,0.7,0.5,1.1,1.2,1.1
-                            c0.9,0,1.2-1,1.2-1.4c0-1.2-1.2-1.8-2.6-1.8c-1.5,0.1-2.8,0.9-3.7,2.1c-1.1,1.3-1.8,2.9-2.3,4.5c-0.9-0.8-1.6-1.8-3.1-2.3
-                            c-1.1-0.7-2.3-0.5-3.4,0.3c-0.5,0.4-0.8,1-1,1.6c-0.4,1.5,0.4,2.9,0.8,3.4l0.9,1c0.2,0.2,0.6,0.8,0.4,1.5c-0.3,0.8-1.2,1.3-2.1,1
-                            c-0.4-0.2-1-0.5-0.9-0.9c0.1-0.2,0.2-0.3,0.3-0.5s0.1-0.3,0.1-0.3c0.2-0.6-0.1-1.4-0.7-1.6c-0.6-0.2-1.2,0-1.3,0.8
-                            C4.3,38.4,4.7,40,6.8,40.8z M46.1,20.9c0-4.2-3.2-7.5-7.1-7.5h-3.8C34.8,10.8,32.7,9,30.2,9L-2.3,9.1c-2.8,0.1-4.9,2.4-4.9,5.4
-                            L-7,58.6c0,4.8,8.1,13.9,11.6,14.1l34.7-0.1c3.9,0,7-3.4,7-7.6L46.1,20.9z M-0.3,36.4c0-8.6,6.5-15.6,14.5-15.6
-                            c8,0,14.5,7,14.5,15.6S22.1,52,14.2,52C6.1,52-0.3,45-0.3,36.4z M42.1,65.1c0,1.8-1.5,3.1-3.1,3.1H4.6c-0.7,0-3-1.8-4.5-4.4h30.4
-                            c2.8,0,5-2.4,5-5.4V17.9h3.7c1.6,0,2.9,1.4,2.9,3.1V65.1L42.1,65.1z"/>
-                    </svg>
-
-                    Read the documentation to learn
-                    <a href="http://symfony.com/doc/{{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION')[:3] }}/book/page_creation.html">
-                        How to create your first page in Symfony
-                    </a>
-                </p>
-            </div>
-
         </div>
-    </div>
+    </section>
 {% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
-<style>
-    body { background: #F5F5F5; font: 18px/1.5 sans-serif; }
-    h1, h2 { line-height: 1.2; margin: 0 0 .5em; }
-    h1 { font-size: 36px; }
-    h2 { font-size: 21px; margin-bottom: 1em; }
-    p { margin: 0 0 1em 0; }
-    a { color: #0000F0; }
-    a:hover { text-decoration: none; }
-    code { background: #F5F5F5; max-width: 100px; padding: 2px 6px; word-wrap: break-word; }
-    #wrapper { background: #FFF; margin: 1em auto; max-width: 800px; width: 95%; }
-    #container { padding: 2em; }
-    #welcome, #status { margin-bottom: 2em; }
-    #welcome h1 span { display: block; font-size: 75%; }
-    #icon-status, #icon-book { float: left; height: 64px; margin-right: 1em; margin-top: -4px; width: 64px; }
-    #icon-book { display: none; }
 
-    @media (min-width: 768px) {
-        #wrapper { width: 80%; margin: 2em auto; }
-        #icon-book { display: inline-block; }
-        #status a, #next a { display: block; }
-
-        @-webkit-keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
-        @keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
-        .sf-toolbar { opacity: 0; -webkit-animation: fade-in 1s .2s forwards; animation: fade-in 1s .2s forwards;}
-    }
-    .carousel-inner>.item>img{
-        margin: 0 auto;
-    }
-</style>
 {% endblock %}
+
+{% block sc %}
+    {{ parent() }}
+{% endblock %}
+
+

@@ -13,14 +13,14 @@ class RegistrationType extends AbstractType
     {
         $builder->add('firstName')
             ->add('lastName')
-            ->add('birthday', DateType::class, array(
+            ->add('birthday', 'date', array(
                 'widget' => 'choice',
 
                 // do not render as type="date", to avoid HTML5 date pickers
                 'html5' => false,
 
                 // add a class that can be selected in JavaScript
-                'attr' => ['class' => 'js-datepicker'],
+                'attr' => array('class' => 'js-datepicker'),
             ))
             ->add('phone', 'text', array('required'=>true));
     }
