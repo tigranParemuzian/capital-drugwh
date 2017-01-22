@@ -78,7 +78,7 @@ class ProductItem
 
     public function __toString()
     {
-        return $this->id ? $this->manufacturer . ' ' . $this->size . ' ' . $this->unit : 'new Product item';
+        return $this->id ? $this->nds . ' ' . $this->size . ' ' . $this->unit : 'new Product item';
         // TODO: Implement __toString() method.
     }
 
