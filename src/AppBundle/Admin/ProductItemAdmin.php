@@ -30,7 +30,8 @@ class ProductItemAdmin extends Admin
             ->add('manufacturer', 'text', array('required'=>true))
             ->add('nds', 'text', array('required'=>true))
             ->add('unit', 'choice', array('choices'=>
-                array(ProductItem::CT=>'CT', ProductItem::ML=>'ML', ProductItem::S_EA=>'S EA', ProductItem::GM=>'GM'), 'multiple'=>false
+                array(ProductItem::CT=>'CT', ProductItem::ML=>'ML', ProductItem::S_EA=>'S EA',
+                    ProductItem::GM=>'GM'), 'multiple'=>false
             ), array('required'=>true))
             ->add('size', 'text', array('required'=>true))
         ->end()
