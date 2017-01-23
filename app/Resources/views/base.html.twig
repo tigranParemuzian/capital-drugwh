@@ -31,7 +31,7 @@
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
-                            <a class="navbar-brand" href="{{ path('homepage') }}">Brand</a>
+                            <a class="navbar-brand" href="{{ path('homepage') }}"><img class="img-responsive img-circle logo" src="{{ asset('bundles/app/images/logo.png') }}"></a>
                         </div>
 
                         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -41,6 +41,7 @@
                                 <li><a href="{{ path('about_us') }}">About us</a></li>
                                 <li><a href="{{ path('why_directrex') }}">Why Directrex</a></li>
                                 <li><a href="{{ path('products') }}">Products</a></li>
+                                <li><a href="{{ path('services') }}">Services</a></li>
                                 <li><a href="{{ path('fos_user_security_login') }}">Login</a></li>
                             </ul>
                         </div><!-- /.navbar-collapse -->
@@ -62,7 +63,54 @@
             {% block footer %}
                 <footer class="footer">
                     <div class="container">
-                        <p class="text-muted">Place sticky footer content here.</p>
+                        <div class="row">
+                            <div class="col-md-4 col-xs-6">
+                                <ul class="footer-info-list">
+                                    <li>AAROGYA MEDSURG LLC</li>
+                                    <li><span>Toll Free:</span>1-888-888-8888</li>
+                                    <li><span>Fax:</span>1-888-888-8888</li>
+                                    <li><span>Cell:</span>1-909-682-8477</li>
+                                    <li><span>Tel:</span>1-909-980-9900</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-4 col-xs-6">
+                                <ul class="footer-info-list">
+                                    <li>Working hours Mon to Fri 9-00am to 5-00pm</li>
+                                    <li><span>Address:</span>8351 ELM AVE, #103</li>
+                                    <li><span>City:</span>RANCHO CUCAMONGA</li>
+                                    <li><span>State:</span>CA</li>
+                                    <li><span>Zip:</span>91730</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-4 col-xs-12">
+                                <ul class="footer-info-image">
+                                    <li><p>Email: info@aamedllc.com</p></li>
+                                </ul>
+                                <ul class="footer-info-image">
+                                    <li>
+                                        <a href="#">
+                                            <img class="img-responsive img-rounded" src="{{ asset('bundles/app/images/certificates/1.png') }}">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <img class="img-responsive img-thumbnail" src="{{ asset('bundles/app/images/certificates/2.png') }}">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <img class="img-responsive img-thumbnail" src="{{ asset('bundles/app/images/certificates/3.png') }}">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <img class="img-responsive img-thumbnail" src="{{ asset('bundles/app/images/certificates/4.png') }}">
+                                        </a>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
                     </div>
                 </footer>
             {% endblock %}

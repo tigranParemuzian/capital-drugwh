@@ -11,17 +11,8 @@ class RegistrationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('firstName')
-            ->add('lastName')
-            ->add('birthday', 'date', array(
-                'widget' => 'choice',
-
-                // do not render as type="date", to avoid HTML5 date pickers
-                'html5' => false,
-
-                // add a class that can be selected in JavaScript
-                'attr' => array('class' => 'js-datepicker'),
-            ))
+        $builder->add('firstName', 'text', array('required'=>true, 'attr'=>array('class'=>'form-control')))
+            ->add('lastName','text',array('required'=>true, 'attr'=>array('class'=>'form-control')))
             ->add('phone', 'text', array('required'=>true));
     }
 

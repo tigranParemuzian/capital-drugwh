@@ -1,6 +1,11 @@
+body{
+    font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
 nav{
     border-bottom: none;
-    background: linear-gradient(rgb(87, 87, 87), rgb(251, 249, 255));
+    background: #0DA15A;
+    /*background: linear-gradient(rgb(87, 87, 87), rgb(251, 249, 255));*/
     /* opacity: 2.3; */
     filter: alpha(opacity=50);
     border-bottom: snow;
@@ -10,7 +15,7 @@ nav{
 }
 
 #bs-example-navbar-collapse-1{
-    max-width: 500px;
+    max-width: 800px;
     margin: 0 auto;
     text-align: center;
 }
@@ -26,12 +31,66 @@ nav{
 #bs-example-navbar-collapse-1 ul li {
     color: #0000F0;
 }
-#bs-example-navbar-collapse-1 ul li :hover{
-    color: #6543f0;
+#bs-example-navbar-collapse-1 ul li a{
+    color: #D9EEE4;
 }
+#bs-example-navbar-collapse-1 ul li a:hover{
+    background: #D9EEE4;
+    color: #0DA15A;
+    border-top-color: #11fe6b;
+}
+
+.header-title{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 28px;
+    padding-left: 100px;
+    font-style: normal;
+    font-weight: 600;
+}
+
+.footer-info-list{
+list-style: none;
+line-height: 25px;
+text-align: left;
+}
+
+.footer-info-list span {
+    font-weight: 800;
+    letter-spacing: 1.2px;
+}
+ul.footer-info-image{
+    list-style-type: none;
+    display: inline-flex;
+}
+.footer-info-image li a img{
+    height: 75px;
+}
+
+ul.footer-info-image li a img:hover{
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+.navbar-toggle .icon-bar{
+    background-color:#D9EEE4; ;
+}
+
+.navbar-toggle {
+    border: 1px solid #0DA15A;
+}
+footer{
+    background: #0DA15A;
+    color: #D1ECDE;
+}
+
 @media (min-width: 768px){
     .navbar-nav {
         margin: 0;
+    }
+}
+
+@media (max-width: 768px){
+    .header-title{
+        padding-left: 30px;
     }
 }
 
@@ -48,6 +107,18 @@ nav{
 }
 .main-content{
     margin-top: 20px;
+}
+
+img.logo{
+    max-width: 50px;
+    margin-top: -15px;
+    border: azure solid 2px;
+}
+img.logo:hover{
+    max-width: 50px;
+    margin-top: -15px;
+    opacity: 0.8;
+    filter: alpha(opacity=50);
 }
 /*body { margin: 0; }*/
 div#slider { overflow: hidden; margin-top: 50px}

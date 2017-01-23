@@ -1,443 +1,120 @@
 {% extends "::base.html.twig" %}
 {% form_theme form _self %}
 
-{% block title %}{{ 'meta.title.register'|trans({}, 'messages') }}{% endblock %}
-{% block metaDescription %}{{ 'meta.description.register'|trans({}, 'messages') }}{% endblock %}
-
-{% block AngularApp %} <html data-ng-app="user" data-ng-controller="RegistrationController"> {% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-
-    <link href="{{ asset('app/bower_components/ngImgCrop/compile/minified/ng-img-crop.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('app/bower_components/dropzone/downloads/css/dropzone.css') }}" rel="stylesheet">
-{% endblock %}
-
-{% block header %}
-    {% include 'AppBundle:Blocks:header.html.twig' %}
-{% endblock %}
-
 {% block content %}
-<div id="register">
-    <div class="container">
-        <div class="row bg-white">
-            <div >
+<div class="container">
+    <div class="row main-content">
+        <form action="{{ path('fos_user_registration_register') }}" enctype="multipart/form-data" method="POST" class="fos_user_registration_register form-horizontal">
+        <div class="panel panel-info">
+        <div class="panel-heading">
+            <header>Registration form</header>
+        </div>
+        <div class="panel-body">
+            <div class="col-sm-12 col-md-6">
 
-                {% if app.request.isMethod("POST") and not app.request.get('_password') %}
-                    <div class="bg-danger help-block text-center">
-                            <p class="text-red">{{form.email.vars.errors[0].message|default(null) }}</p>
-                            <p class="text-red">{{form.username.vars.errors[0].message|default(null) }}</p>
-                            <p class="text-red">{{form.plainPassword.first.vars.errors[0].message|default(null) }}</p>
-                            <p class="text-red">{{form.plainPassword.second.vars.errors[0].message|default(null) }} </p>
-                            {% if profileImageError is defined and profileImageError is not null %}
-                                <p class="text-red">{{ profileImageError }}</p>
-                            {% endif %}
-                            <p class="text-red">{{form.looking_for.vars.errors[0].message|default(null) }}</p>
-                            <p class="text-red">{{form.interests.vars.errors[0].message|default(null) }}</p>
+
+                {{ form_errors(form) }}
+                {% set password = app.request.get('_password') %}
+                {% set confirmPassword = app.request.get('_password_confirm') %}
+
+                <div class="form-group row">
+                    {{ form_errors(form.username) }}
+                    {{ form_label(form.username, null, {'label_attr': {'class': 'col-sm-6 col-md-5 control-label'}}) }}
+                    <div class="col-sm-6 col-md-7">
+                        {{ form_widget(form.username) }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    {{ form_errors(form.email) }}
+                    {{ form_label(form.email, null, {'label_attr': {'class': 'col-sm-6 col-md-5 control-label'}}) }}
+                    <div class="col-sm-6 col-md-7">
+                        {{ form_widget(form.email) }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    {{ form_label(form.plainPassword.first, null, {'label_attr': {'class': 'col-sm-6 col-md-5 control-label'}}) }}
+                    <div class="col-sm-6 col-md-7">
+                        {{ form_widget(form.plainPassword.first, {'attr' : {'value': password }}) }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    {{ form_label(form.plainPassword.second, null, {'label_attr': {'class': 'col-sm-6 col-md-5 control-label'}}) }}
+                    <div class="col-sm-6 col-md-7">
+                        {{ form_widget(form.plainPassword.second, {'attr' : {'value': confirmPassword }}) }}
+
+                        {{ form_errors(form.plainPassword.first) }}
+                        {{ form_errors(form.plainPassword.second) }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="form-group row">
+                    {{ form_label(form.firstName, null, {'label_attr': {'class': 'col-sm-6 col-md-5 control-label'}}) }}
+                    <div class="col-sm-6 col-md-7">
+                        {{ form_widget(form.firstName) }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    {{ form_label(form.lastName, null, {'label_attr': {'class': 'col-sm-6 col-md-5 control-label'}}) }}
+
+                    <div class="col-sm-6 col-md-7">
+                        {{ form_widget(form.lastName) }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    {{ form_label(form.phone, null, {'label_attr': {'class': 'col-sm-6 col-md-5 control-label'}}) }}
+
+                    <div class="col-sm-6 col-md-7">
+                        {{ form_widget(form.phone) }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-offset-3 col-sm-9 col-md-offset-7 col-md-5">
+                        <label class="checkbox-inline">
+                            <bdi>*</bdi>
+                            <div class="g-recaptcha" data-sitekey="6LfenxITAAAAAIm8PPo7vnfH3UhVZEDkCsSyrijg"></div>
                             {% if captchaError is defined and captchaError is not null %}
-                                <p class="text-red">{{ captchaError }}</p>
+                                <span class="text-red">{{ captchaError }}</span>
                             {% endif %}
+                        </label>
                     </div>
-                {% endif %}
+                </div>
 
 
 
-                {% set social = false %}
+            </div>
+        </div>
+        <div class="panel-footer">
+            <div class="form-group row">
+                <div class="col-xs-offset-1 col-xs-11 col-sm-offset-3 col-sm-9 col-md-offset-8 col-md-4">
+                    <input type="submit" value="Complete Sign Up" class="btn btn-info" />
+                </div>
+            </div>
 
-                {% if (currentUser and currentUser.isSocialUser)   %}
-                    {% set social = true %}
-                {% endif %}
-
-                {% set photo = false %}
-
-                {% if (currentUser and currentUser.isSocialUser and currentUser.getSocialPhotoLink)   %}
-                    {% set photo = true %}
-                {% endif %}
-
-                <h1 class="text-center">{{ 'registration.create_new_account'|trans({}, 'FOSUserBundle') | capitalize }}</h1>
-
-                <form action="{{ path('fos_user_registration_register') }}" enctype="multipart/form-data" method="POST" class="fos_user_registration_register form-horizontal">
-                    <div class="col-sm-12 col-md-8 col-md-offset-1">
-
-
-                        {{ form_errors(form) }}
-                        {% set password = app.request.get('_password') %}
-                        {% set confirmPassword = app.request.get('_password_confirm') %}
-
-                        <div class="form-group row {% if social  %} hide {% endif %}">
-                            {{ form_errors(form.username) }}
-                            {{ form_label(form.username, null, {'label_attr': {'class': 'col-sm-6 col-md-5 control-label'}}) }}
-                            <div class="col-sm-6 col-md-7">
-                                {{ form_widget(form.username) }}
-                            </div>
-                        </div>
-
-                    <div class="form-group row">
-                        {{ form_errors(form.email) }}
-                        {{ form_label(form.email, null, {'label_attr': {'class': 'col-sm-6 col-md-5 control-label'}}) }}
-                        <div class="col-sm-6 col-md-7">
-                            {{ form_widget(form.email) }}
-                        </div>
-                    </div>
-                        {% if not  social  %}
-                            <div class="form-group row">
-                                {{ form_label(form.plainPassword.first, null, {'label_attr': {'class': 'col-sm-6 col-md-5 control-label'}}) }}
-                                <div class="col-sm-6 col-md-7">
-                                    {{ form_widget(form.plainPassword.first, {'attr' : {'value': password }}) }}
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                {{ form_label(form.plainPassword.second, null, {'label_attr': {'class': 'col-sm-6 col-md-5 control-label'}}) }}
-                                <div class="col-sm-6 col-md-7">
-                                    {{ form_widget(form.plainPassword.second, {'attr' : {'value': confirmPassword }}) }}
-                                    <small>{{ 'registration.password_theme'|trans({}, 'FOSUserBundle') }}</small>
-
-                                    {{ form_errors(form.plainPassword.first) }}
-                                    {{ form_errors(form.plainPassword.second) }}
-                                </div>
-                            </div>
-
-
-                        {% endif %}
-                    <div class="form-group row">
-
-                        <div>
-                            <label class="col-sm-6 col-md-5  control-label required">{{ 'registration.profile_image'|trans({}, 'FOSUserBundle') | capitalize }}
-                                {% if not photo %}
-                                <bdi> *</bdi>
-                                {% endif %}
-                            </label>
-
-                            <div class="col-sm-6 col-md-7">
-                                <input type="file" name="originFile" id="fileInput"/>
-                                {% if profileImageError is defined and profileImageError is not null %}
-                                    <span class="text-red">{{ profileImageError }}</span>
-                                {% endif %}
-
-                                <small>{{ 'registration.image_size'|trans({}, 'FOSUserBundle')  }}</small>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="form-group row" data-ng-show="imageCropBlock">
-                        <div class="cropArea col-sm-12 col-md-offset-5 col-md-7">
-                            <img-crop image="image" area-type="square" result-image="croppedImage"></img-crop>
-                        </div>
-                    </div>
-
-                    <div class="form-group row" {% if not croppedImage %} data-ng-show="imageCropBlock" {% endif %}>
-                        <div class="col-sm-6 col-md-5 control-label">{{ 'registration.cropped_image'|trans({}, 'FOSUserBundle') | capitalize }}</div>
-                        <div class="col-sm-6 col-md-7">
-
-                            <img data-ng-show="croppedImage!=''" src="[[ croppedImage ]]" data-ng-init="initCroppedImage('{{ croppedImage }}')"/>
-                            <input type="hidden" name="cropped_image" value="[[ croppedImage ]]">
-                        </div>
-                    </div>
-                    {% if social and currentUser.getSocialPhotoLink %}
-                        <div class="form-group row" data-ng-show="!imageCropBlock">
-                            <div class="col-sm-6 col-md-5 control-label">{{ 'registration.cropped_image'|trans({}, 'FOSUserBundle') | capitalize }}</div>
-                            <div class="col-sm-6 col-md-7">
-                                <img  src="{{ currentUser.getSocialPhotoLink }}" class="img-responsive"/>
-                            </div>
-                        </div>
-                    {% endif %}
-
-                    <div class="form-group row">
-                        <label class="col-sm-6 col-md-5 control-label">{{ 'registration.gallery'|trans({}, 'FOSUserBundle') | capitalize }}</label>
-                        <div class="col-sm-6 col-md-7">
-                            <div class="text-center" data-ng-init="initDropzone('{{ path('add_images') }}')">
-                                <div class="dropzone" id="registerDropzone">
-                                    <div class="dz-message">
-                                        <i class="fa fa-cloud-upload"></i>
-                                        <h3 class="text-dark-gray">{{ 'drag_drop'|trans({}, 'FOSUserBundle') }}</h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <small>{{ 'registration.image_size'|trans({}, 'FOSUserBundle')  }}</small>
-                        </div>
-                        <input name="gallery_file" type="hidden" ng-init="files = {{ objFiles|objToId }}" value="[[ files ]]"/>
-                    </div>
-
-
-                        <div class="form-group row">
-                            <label class="col-sm-6 col-md-5 control-label">{{ 'Gallery'| trans | capitalize }}</label>
-                            <div class="col-sm-6 col-md-7">
-                                <div class="row">
-                                    {% for objFile in objFiles %}
-                                        <div class="col-xs-6 col-sm-4">
-                                            <figure class="register-images">
-                                                <img src="{{ objFile.getWebPath }}" class="img-responsive">
-                                                <figcaption>
-                                                    <a href="javascript:void(0)" data-ng-click="deleteUploadFile('{{ url("rest_delete_file_upload_file", {fileId: objFile.id}) }}',{{ objFile.id }}, $event)" class="btn btn-default">
-                                                        <i class="fa fa-trash"></i>
-                                                        {{ 'cancel' | trans }}
-                                                    </a>
-                                                </figcaption>
-                                            </figure>
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                            <input name="gallery_file" type="hidden" ng-init="files = {{ objFiles|objToId }}" value="[[ files ]]"/>
-                        </div>
+            {{ form_widget(form._token) }}
+        </div>
+        </div>
+        </form>
+    </div>
+</div>
 
 
 
-                    <div class="form-group row">
-                        {{ form_label(form.firstName, null, {'label_attr': {'class': 'col-sm-6 col-md-5 control-label'}}) }}
-                        <div class="col-sm-6 col-md-7">
-                            {{ form_widget(form.firstName) }}
-                        </div>
-                    </div>
 
-                    <div class="form-group row">
-                        {{ form_label(form.lastName, null, {'label_attr': {'class': 'col-sm-6 col-md-5 control-label'}}) }}
 
-                        <div class="col-sm-6 col-md-7">
-                            {{ form_widget(form.lastName) }}
-                            <p class="help-text">{{ 'regisrer.lastname.help-text'|trans({}, 'messages') |capitalize }}</p>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        {{ form_label(form.birthday, null, {'label_attr': {'class': 'col-sm-6 col-md-5 control-label'}}) }}
-
-                        <div class="col-sm-6 col-md-7">
-                            <div class="row">
-                                <div class="col-xs-4">
-                                    {{ form_widget(form.birthday.year) }}
-                                </div>
-
-                                <div class="col-xs-4">
-                                    {{ form_widget(form.birthday.month) }}
-                                </div>
-
-                                <div class="col-xs-4">
-                                    {{ form_widget(form.birthday.day) }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        {{ form_label(form.I_am, null, {'label_attr': {'class': 'col-sm-6 col-md-5 control-label'}}) }}
-                        <div class="col-sm-6 col-md-7">
-
-                            <div class="row">
-                                {% for i_am in form.I_am %}
-                                    <div class="col-xs-4">
-                                        <label class="radio-inline">
-                                            {{ form_widget(i_am) }}
-                                        </label>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        {{ form_label(form.looking_for, null, {'label_attr': {'class': 'col-sm-6 col-md-5 control-label'}}) }}
-                        <div class="col-sm-6 col-md-7">
-
-                            <div class="row">
-                                {% for looking_for in form.looking_for %}
-                                    <div class="col-xs-4">
-                                        <label class="radio-inline">
-                                            {{ form_widget(looking_for) }}
-                                        </label>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                            {{ form_errors(form.looking_for) }}
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        {{ form_label(form.city, 'City, Country', {'label_attr': {'class': 'col-sm-6 col-md-5 control-label'}}) }}
-                        <div class="col-sm-6 col-md-7">
-                            {#{{ form_widget(form.city, {'attr': {'google-places-autocomplete': '', 'place': 'userLocation', 'data-types': "['(cities)']", 'ng-model': 'userLocation.address'} }) }}#}
-                            {{ form_widget(form.city, {'attr': {'google-places-autocomplete': '', 'place': 'userLocation', 'data-types': "['(cities)']" } }) }}
-                            <input name="{{ form.location.vars.full_name }}" id="{{ form.location.vars.id }}" data-ng-init="userLocation={{ form.vars.value.getLocation|default("''") }}" type="hidden" value="[[ userLocation ]]"/>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        {{ form_label(form.state, null, {'label_attr': {'class': 'col-sm-6 col-md-5 control-label'}}) }}
-
-                        <div class="col-sm-3 col-md-4">
-                            {{ form_widget(form.state) }}
-                        </div>
-
-                        <div class="col-sm-3 col-md-3">
-                            {{ form_widget(form.stateVisibility) }}
-                        </div>
-
-                    </div>
-
-                    <div class="form-group row">
-                        {{ form_label(form.zipCode, null, {'label_attr': {'class': 'col-sm-6 col-md-5 control-label'}}) }}
-
-                        <div class="col-sm-3 col-md-4">
-                            {{ form_widget(form.zipCode) }}
-                        </div>
-
-                        <div class="col-sm-3 col-md-3">
-                            {{ form_widget(form.zipCodeVisibility) }}
-                        </div>
-                    </div>
-
-                    {#<div class="form-group row">#}
-                        {#{{ form_label(form.country, null, {'label_attr': {'class': 'col-sm-6 col-md-5 control-label'}}) }}#}
-
-                        {#<div class="col-sm-3 col-md-4">#}
-                            {#{{ form_widget(form.country) }}#}
-                        {#</div>#}
-
-                        {#<div class="col-sm-3 col-md-3">#}
-                            {#{{ form_widget(form.countryVisibility) }}#}
-                        {#</div>#}
-                    {#</div>#}
-
-                    <div class="form-group row">
-                        {{ form_label(form.summary, null, {'label_attr': {'class': 'col-sm-6 col-md-5 control-label'}}) }}
-                        <div class="col-sm-6 col-md-7">
-                            {{ form_widget(form.summary) }}
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        {{ form_label(form.craziestOutdoorAdventure, 'registration.craziest_outdoor'|trans({}, 'FOSUserBundle'), {'label_attr': {'class': 'col-sm-offset-1 col-sm-11 control-label text-left'}}) }}
-
-                        <div class="col-sm-offset-1 col-sm-11">
-                            <div class="row">
-                                <div class="col-sm-9">
-                                    {{ form_widget(form.craziestOutdoorAdventure) }}
-                                </div>
-
-                                <div class="col-sm-3">
-                                    {{ form_widget(form.craziestOutdoorAdventureVisibility) }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        {{ form_label(form.favoriteOutdoorActivity, 'registration.favorite_outdoor'|trans({}, 'FOSUserBundle'), {'label_attr': {'class': 'col-sm-offset-1 col-sm-11 control-label text-left'}}) }}
-
-                        <div class="col-sm-offset-1 col-sm-11">
-                            <div class="row">
-                                <div class="col-sm-9">
-                                    {{ form_widget(form.favoriteOutdoorActivity) }}
-                                </div>
-
-                                <div class="col-sm-3">
-                                    {{ form_widget(form.favoriteOutdoorActivityVisibility) }}
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="form-group row">
-                        {{ form_label(form.likeTryTomorrow, 'registration.like_try'|trans({}, 'FOSUserBundle'), {'label_attr': {'class': 'col-sm-offset-1 col-sm-11 control-label text-left'}}) }}
-
-                        <div class="col-sm-offset-1 col-sm-11">
-                            <div class="row">
-                                <div class="col-sm-9">
-                                    {{ form_widget(form.likeTryTomorrow) }}
-                                </div>
-
-                                <div class="col-sm-3">
-                                    {{ form_widget(form.likeTryTomorrowVisibility) }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                  </div>
 
-                <div class="col-sm-12" id="interest">
 
-                    <div class="row">
-                        <h4>{{ form_label(form.interests, null, {'label_attr': {'class': 'col-sm-6 col-md-2 control-label'}}) }}</h4>
-                    </div>
-                        {{ form_widget(form.interests) }}
-                        {{ form_errors(form.interests) }}
 
-                </div>
+            {#</div>#}
 
-                    <div class="form-group row">
-                        <div class="col-sm-offset-3 col-sm-9 col-md-offset-7 col-md-5">
-                            <label class="checkbox-inline">
-                                <bdi>*</bdi>
-                                <div class="g-recaptcha" data-sitekey="6LfenxITAAAAAIm8PPo7vnfH3UhVZEDkCsSyrijg"></div>
-                                {% if captchaError is defined and captchaError is not null %}
-                                    <span class="text-red">{{ captchaError }}</span>
-                                {% endif %}
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <div class="col-xs-offset-1 col-xs-11 col-sm-offset-3 col-sm-9 col-md-offset-7 col-md-5">
-                            <label class="checkbox-inline">
-                                <input type="checkbox" name="{{ form.iAgree.vars.full_name }}" id="{{ form.iAgree.vars.id }}" required {% if form.iAgree.vars.checked %}checked{% endif %} >
-                                I agree with the terms and conditions / <a href="{{ path('page', {'slug' : 'luvbyrd-disclaimer' }) }}#privacy-statement" class="text-gray">{{ 'Privacy Policy'| trans | capitalize }}</a>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-xs-offset-1 col-xs-11 col-sm-offset-3 col-sm-9 col-md-offset-8 col-md-4">
-                            <input type="submit" value="Complete Sign Up" class="btn btn-blue" />
-                        </div>
-                    </div>
-
-                    {{ form_widget(form._token) }}
-
-                </form>
-            </div>
-
-        </div>
-    </div>
-</div>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-
-    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&language=en" type="text/javascript"></script>
-
-    <script>
-        //binds to onchange event of your input field
-        $('#fileInput').bind('change', function() {
-
-            var size = this.files[0].size;
-
-            console.log(size);
-
-            // check is file less than about 6mb
-            if(size >= 5800000){
-                var file = $("#fileInput");
-                file.replaceWith( file.clone( true ) );
-            }
-        });
-
-    </script>
-
-    {% javascripts output='js/fos_register.js'
-        'app/bower_components/ngImgCrop/compile/minified/ng-img-crop.js'
-        'app/bower_components/dropzone/downloads/dropzone.min.js'
-        'app/bower_components/angular-resource/angular-resource.min.js'
-        'app/scripts/Google/Google.js'
-        'bundles/lbuser/js/angular/user.js'
-        %}
-    <script src="{{ asset_url }}" type="text/javascript"></script>
-    {% endjavascripts %}
-
-    <script src='https://www.google.com/recaptcha/api.js' type="text/javascript"></script>
-
+        {#</div>#}
+    {#</div>#}
+{#</div>#}
 {% endblock %}
 
 

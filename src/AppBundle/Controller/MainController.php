@@ -17,7 +17,7 @@ class MainController extends Controller
     public function aboutAsAction(Request $request)
     {
 
-        return array('name' => 'ssss');
+        return array('name' => 'About As');
     }
 
     /**
@@ -26,7 +26,7 @@ class MainController extends Controller
      */
     public function whyDirectrxAction(Request $request){
 
-        return array('name'=>'whyDirectrx');
+        return array('name'=>'Why Directrx');
 
     }
 
@@ -37,5 +37,14 @@ class MainController extends Controller
      */
     public function productsAction(Request $request){
         return array('name'=>'Products');
+    }
+
+    /**
+     * @Route("services", name="services")
+     * @Template()
+     * @param Request $request
+     */
+    public function servicesAction(Request $request){
+        return array('name'=>'Services');
     }
 }
