@@ -22,22 +22,25 @@
         $('.grid').addClass('col-md-12');
         var t = $('.grid_body table').addClass('table table-hover');
 
-        var sizeUnit = $('.grid-column-unit_size');
-        var sizeUnitVal = sizeUnit.text().split('        ');
 
-        if(/0/g.test(sizeUnitVal[2]) == true){
-            sizeUnitVal[2] = sizeUnitVal[2].replace(/0/g, 'sm');
-        }else if(/1/g.test(sizeUnitVal[2]) == true){
-            sizeUnitVal[2] = sizeUnitVal[2].replace(/1/g, 'ml');
-        }else if(/2/g.test(sizeUnitVal[2]) == true){
-            sizeUnitVal[2] = sizeUnitVal[2].replace(/2/g, 's ea');
-        }else if(/3/g.test(sizeUnitVal[2]) == true){
-            sizeUnitVal[2] = sizeUnitVal[2].replace(/3/g, 'gm');
-        }
-
-        sizeUnit.text(sizeUnitVal.toString().replace(/,/g, ''));
 
         $('.grid-column-myTypedColumn').each(function(e){
+
+
+            var sizeUnit = $(this).closest('tr').children('td:eq(5)');
+            var sizeUnitVal = sizeUnit.text().split('        ');
+
+            if(/0/g.test(sizeUnitVal[2]) == true){
+                sizeUnitVal[2] = sizeUnitVal[2].replace(/0/g, 'sm');
+            }else if(/1/g.test(sizeUnitVal[2]) == true){
+                sizeUnitVal[2] = sizeUnitVal[2].replace(/1/g, 'ml');
+            }else if(/2/g.test(sizeUnitVal[2]) == true){
+                sizeUnitVal[2] = sizeUnitVal[2].replace(/2/g, 's ea');
+            }else if(/3/g.test(sizeUnitVal[2]) == true){
+                sizeUnitVal[2] = sizeUnitVal[2].replace(/3/g, 'gm');
+            }
+
+            sizeUnit.text(sizeUnitVal.toString().replace(/,/g, ''));
 
 //            console.log($(this).before('.grid-column-count').hide());
             var maxValue = $(this).closest('tr').children('td:eq(3)').text();

@@ -86,6 +86,7 @@ tr.grid-row-filters > th .grid-filter-operator select, input:first-child{
 ul.grid-row-actions{
     display: block;
     list-style-type: none;
+    margin-left: -40px;
 }
 
 .grid_body{
