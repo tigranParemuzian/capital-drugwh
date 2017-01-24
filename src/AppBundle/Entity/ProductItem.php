@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use JMS\Serializer\Annotation\VirtualProperty;
 
 /**
  * ProductIngridient
@@ -186,7 +187,24 @@ class ProductItem
      */
     public function getUnit()
     {
-        return $this->unit;
+        switch($this->unit){
+            case self::GM:
+                $unit = 'gm';
+                break;
+            case self::CT:
+                $unit = 'ct';
+                break;
+            case self::ML:
+                $unit = 'ml';
+                break;
+            case self::S_EA:
+                $unit = 's ea';
+                break;
+            default:
+                $unit = 'unknown';
+                break;
+        }
+        return $unit;
     }
 
     /**

@@ -1,14 +1,50 @@
 {% extends '::base.html.twig' %}
 
 {% block content %}
-<div class="row">
+<div class="wrapper">
+    <div class="row">
+        {{ grid(grid, 'APYDataGridBundle::blocks.html.twig') }}
+    </div>
     {#{{ grid_search(grid) }}#}
     {#{{ grid_cell('APYDataGridBundle::blocks.html.twig', {id:'myTypedColumn'}, 1, grid) }}#}
-    {{ grid(grid, 'APYDataGridBundle::blocks.html.twig') }}
+
 
 </div>
 {% endblock content %}
 
 {% block stylesheets %}
         {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $('.grid').addClass('col-md-12');
+        var t = $('.grid_body table').addClass('table table-hover');
+
+        var sizeUnit = $('.grid-column-unit_size');
+        var sizeUnitVal = sizeUnit.text().split('        ');
+
+        if(/0/g.test(sizeUnitVal[2]) == true){
+            sizeUnitVal[2] = sizeUnitVal[2].replace(/0/g, 'sm');
+        }else if(/1/g.test(sizeUnitVal[2]) == true){
+            sizeUnitVal[2] = sizeUnitVal[2].replace(/1/g, 'ml');
+        }else if(/2/g.test(sizeUnitVal[2]) == true){
+            sizeUnitVal[2] = sizeUnitVal[2].replace(/2/g, 's ea');
+        }else if(/3/g.test(sizeUnitVal[2]) == true){
+            sizeUnitVal[2] = sizeUnitVal[2].replace(/3/g, 'gm');
+        }
+
+        sizeUnit.text(sizeUnitVal.toString().replace(/,/g, ''));
+
+        $('.grid-column-myTypedColumn').each(function(e){
+
+//            console.log($(this).before('.grid-column-count').hide());
+            var maxValue = $(this).closest('tr').children('td:eq(3)').text();
+            $(this).html('<input name="order_count" id="item_" type="number" style="width: 100px" min="0" max="'+ parseInt(maxValue) +'" placeholder="Order count"/>')
+
+            $(this).closest('tr').children('td:eq(7)').children('ul').append('<li><a href="#">&nbsp;Add to cart</a></li>')
+        });
+
+    </script>
 {% endblock %}

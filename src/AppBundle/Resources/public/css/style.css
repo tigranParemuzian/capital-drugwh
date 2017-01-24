@@ -77,6 +77,30 @@ ul.footer-info-image li a img:hover{
 .navbar-toggle {
     border: 1px solid #0DA15A;
 }
+
+/* Grid */
+
+tr.grid-row-filters > th .grid-filter-operator select, input:first-child{
+    width: 150px;
+}
+ul.grid-row-actions{
+    display: block;
+    list-style-type: none;
+}
+
+.grid_body{
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 200;
+    color: #626262;
+}
+select{
+    background-color: white;
+    font-weight: 200;
+    font-size: 12px;
+    font-family: sans-serif;
+}
+
 footer{
     background: #0DA15A;
     color: #D1ECDE;

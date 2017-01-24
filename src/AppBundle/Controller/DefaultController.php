@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use APY\DataGridBundle\Grid\Action\DeleteMassAction;
+use APY\DataGridBundle\Grid\Action\MassAction;
 use APY\DataGridBundle\Grid\Action\RowAction;
 use APY\DataGridBundle\Grid\Column\ActionsColumn;
 use APY\DataGridBundle\Grid\Column\BlankColumn;
@@ -86,17 +87,26 @@ class DefaultController extends Controller
 //        $grid->addExport(new CSVExport('CSV Export', 'export'));
 //        $MyColumn = new BlankColumn(array('filterable'=>true, 'source'=>'My Data', 'values'=>array('a', 'b', 'd'), 'isAggregate'=>true, 'id' => 'myBlankColumn', 'title' => 'CS', 'size' => '54'));
 //        $grid->addColumn($MyColumn);
-        $MyTypedColumn = new DateColumn(array('id' => 'myTypedColumn', 'title' => 'My fsd Column', 'source' => false, 'filterable' => false, 'sortable' => false));
+        $MyTypedColumn = new DateColumn(array('id' => 'myTypedColumn', 'title' => 'Need Column', 'source' => false, 'filterable' => false, 'sortable' => false));
         $grid->addColumn($MyTypedColumn);
 
         // Create an Actions Column
         $actionsColumn = new ActionsColumn('action_column', 'Action Column');
-        $grid->addColumn($actionsColumn, 10);
+        $grid->addColumn($actionsColumn, 11);
 
 // Attach a rowAction to the Actions Column
-        $rowAction1 = new RowAction('Show', 'show_single');
+        $rowAction1 = new RowAction('Show', 'show_single', false, '_self', array('class'=>'show_custom'));
         $rowAction1->setColumn('action_column');
         $grid->addRowAction($rowAction1);
+
+        // Add a mass action with static callback
+//        $yourMassAction = new RowAction('Add to cart', 'my_bag');
+//        $rowAction1->setColumn('action_column');
+//        $grid->addRowAction($yourMassAction);
+
+        // Add a mass action with object callback
+/*        $yourMassAction = new MassAction('Action 2', array($this, 'myMethod'));
+        $grid->addMassAction($yourMassAction);*/
 
 
 // OR add a second row action directly to a new action column
@@ -126,5 +136,14 @@ class DefaultController extends Controller
     public function createGridBuilder(Source $source = null, array $options = [])
     {
         return $this->container->get('apy_grid.factory')->createBuilder('grid', $source, $options);
+    }
+
+    /**
+     * @Route("my_bag", name="my_bag")
+     * @param $id
+     */
+    public function myBagAction($id){
+
+        return 1;
     }
 }
