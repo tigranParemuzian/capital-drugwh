@@ -80,7 +80,7 @@ ul.footer-info-image li a img:hover{
 
 /* Grid */
 
-tr.grid-row-filters > th .grid-filter-operator select, input:first-child{
+tr.grid-row-filters > th .grid-filter-operator select, tr.grid-row-filters >th input{
     width: 150px;
 }
 ul.grid-row-actions{
@@ -158,6 +158,9 @@ div#slider figure {
     animation: 30s slidy infinite;
 }
 
+input.current{
+    text-align: center;
+}
 button {
     background: #e04646;
     padding: 5px;

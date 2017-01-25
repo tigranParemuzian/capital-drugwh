@@ -87,7 +87,7 @@ class DefaultController extends Controller
 //        $grid->addExport(new CSVExport('CSV Export', 'export'));
 //        $MyColumn = new BlankColumn(array('filterable'=>true, 'source'=>'My Data', 'values'=>array('a', 'b', 'd'), 'isAggregate'=>true, 'id' => 'myBlankColumn', 'title' => 'CS', 'size' => '54'));
 //        $grid->addColumn($MyColumn);
-        $MyTypedColumn = new DateColumn(array('id' => 'myTypedColumn', 'title' => 'Need Column', 'source' => false, 'filterable' => false, 'sortable' => false));
+        $MyTypedColumn = new DateColumn(array('id' => 'buy_count', 'title' => 'Need Column', 'source' => false, 'filterable' => false, 'sortable' => false));
         $grid->addColumn($MyTypedColumn);
 
         // Create an Actions Column
