@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use APY\DataGridBundle\Grid\Mapping as GRID;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Product
@@ -12,8 +13,9 @@ use APY\DataGridBundle\Grid\Mapping as GRID;
  * @ORM\Table(name="product")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductRepository")
  * @ORM\HasLifecycleCallbacks()
- * @GRID\Column(id="aaaa", size="120", type="text")
- * @GRID\Source(columns="id, name, productItem.nds, productItem.manufacturer, count, price, created")
+ * @GRID\Column(id="name", size="120", type="text")
+ * @GRID\Source(columns="id, name, productItem.manufacturer, productItem.nds, slug, count, price, unit_size, productItem.size, productItem.unit")
+ * @GRID\Column(id="unit_size", type="join", title="Size", columns={"productItem.size", "productItem.unit"}, size=150)
  */
 class Product
 {
@@ -23,13 +25,20 @@ class Product
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @GRID\Column(visible=false)
      */
     private $id;
 
     /**
+     * @var
+     * @GRID\Column(title="show count")
+     */
+    private $showcount;
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @GRID\Column(title="Name", size=150)
      */
     private $name;
 
@@ -38,6 +47,7 @@ class Product
      *
      * @Gedmo\Slug(fields={"name"})
      * @ORM\Column(name="slug", type="string", length=255, unique=true)
+     * @GRID\Column(visible=false)
      */
     private $slug;
 
@@ -45,13 +55,15 @@ class Product
      * @var
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\ProductItem", inversedBy="product")
      * @ORM\JoinColumn(name="product_item", referencedColumnName="id")
-     * @GRID\Column(field="productItem.nds", title="Category Name")
-     * @GRID\Column(field="productItem.manufacturer", title="Category first child")
+     * @GRID\Column(field="productItem.nds", title="NDS", first="", size=150)
+     * @GRID\Column(field="productItem.manufacturer", title="Manufacturer", size=150)
+     * @GRID\Column(field="productItem.size", title="Size", filter=false, visible=false)
+     * @GRID\Column(field="productItem.unit", title="Unit", filterable=false, visible=false)
      */
     private $productItem;
 
     /**
-     * @ORM\Column(name="alternative", type="string", length=100)
+     * @ORM\Column(name="alternative", type="string", length=100, nullable=true)
      */
     private $alternative;
 
@@ -59,6 +71,7 @@ class Product
      * @var int
      *
      * @ORM\Column(name="count", type="integer")
+     * @GRID\Column(align="center", title="Count", size=50, type="number", filter="input", size=50)
      */
     private $count;
 
@@ -66,14 +79,14 @@ class Product
      * @var float
      *
      * @ORM\Column(name="price", type="float")
-     * @GRID\Column(align="center", title="Price")
+     * @GRID\Column(align="center", title="Price", size=150)
      */
     private $price;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="pricingCode", type="string", length=255)
+     * @ORM\Column(name="pricingCode", type="string", length=255, nullable=true)
      */
     private $pricingCode;
 
@@ -81,6 +94,7 @@ class Product
      * @var int
      *
      * @ORM\Column(name="avalible", type="integer", nullable=true)
+     * @GRID\Column(title="Is avalible", type="boolean")
      */
     private $avalible;
 
@@ -88,7 +102,6 @@ class Product
      * @var
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
-     * @GRID\Column(title="Created", type="datetime")
      */
     private $created;
 
@@ -109,6 +122,7 @@ class Product
      * @var
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Category", inversedBy="product")
      * @ORM\JoinColumn(name="category", referencedColumnName="id")
+     * @GRID\Column(field="category.name", title="Category Name", filter="select")
      */
     private $category;
 
@@ -118,6 +132,10 @@ class Product
         // TODO: Implement __toString() method.
     }
 
+
+    public function getShowCount(){
+        return $this->showcount . 'ddd';
+    }
     /**
      * Get id
      *
@@ -366,6 +384,30 @@ class Product
     public function getAlternative()
     {
         return $this->alternative;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \AppBundle\Entity\Category $category
+     *
+     * @return Product
+     */
+    public function setCategory(\AppBundle\Entity\Category $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \AppBundle\Entity\Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
     /**
      * Constructor

@@ -13,6 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Booking
 {
+    const IS_NEW = 0;
+    const IS_ORDERED = 1;
+
     /**
      * @var int
      *
@@ -46,7 +49,7 @@ class Booking
     /**
      * @var float
      *
-     * @ORM\Column(name="shippingHandling", type="float")
+     * @ORM\Column(name="shippingHandling", type="float", nullable=true)
      */
     private $shippingHandling;
 
@@ -63,6 +66,12 @@ class Booking
      * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
      */
     private $client;
+
+    /**
+     * @var
+     * @ORM\Column(name="status", type="smallint")
+     */
+    private $status;
 
     /**
      * Get id
@@ -171,6 +180,30 @@ class Booking
     }
 
     /**
+     * Set client
+     *
+     * @param \AppBundle\Entity\User $client
+     *
+     * @return Booking
+     */
+    public function setClient(\AppBundle\Entity\User $client = null)
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * Get client
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
      * Set product
      *
      * @param \AppBundle\Entity\Product $product
@@ -195,26 +228,26 @@ class Booking
     }
 
     /**
-     * Set client
+     * Set status
      *
-     * @param \AppBundle\Entity\User $client
+     * @param integer $status
      *
      * @return Booking
      */
-    public function setClient(\AppBundle\Entity\User $client = null)
+    public function setStatus($status)
     {
-        $this->client = $client;
+        $this->status = $status;
 
         return $this;
     }
 
     /**
-     * Get client
+     * Get status
      *
-     * @return \AppBundle\Entity\User
+     * @return integer
      */
-    public function getClient()
+    public function getStatus()
     {
-        return $this->client;
+        return $this->status;
     }
 }

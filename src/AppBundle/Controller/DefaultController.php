@@ -52,33 +52,6 @@ class DefaultController extends Controller
      */
     public function listingOldAction(Request $request){
 
-        /*$gridBuilder = $this->createGridBuilder(new Entity('AppBundle:Product'), [
-            'persistence'  => true,
-            'route'        => 'list',
-            'filterable'   => true,
-            'sortable'     => true,
-            'max_per_page' => 20,
-        ]);
-
-        // Creates columns
-        $grid = $gridBuilder
-            ->add('id', 'number', [
-                'title'   => 'Id',
-                'primary' => 'true',
-            ])
-            ->add('name', 'text', ['title'=>'Name', 'class'=>'aaaaaa'])
-            ->add('created', 'datetime', [
-                'field' => 'created',
-            ])
-            ->add('productItem.nds', 'text', ['title'=>'NDS'])
-            ->getGrid();
-//dump(get_class_methods($gridBuilder)); exit;
-        // Handles filters, sorts, exports, ...
-        $grid->handleRequest($request);
-
-        // Renders the grid
-        return $this->render('AppBundle:Default:my_grid.html.twig', ['grid' => $grid]);*/
-
         $source = new Entity('AppBundle:Product');
 
         /* @var $grid \APY\DataGridBundle\Grid\Grid */
@@ -87,15 +60,15 @@ class DefaultController extends Controller
 //        $grid->addExport(new CSVExport('CSV Export', 'export'));
 //        $MyColumn = new BlankColumn(array('filterable'=>true, 'source'=>'My Data', 'values'=>array('a', 'b', 'd'), 'isAggregate'=>true, 'id' => 'myBlankColumn', 'title' => 'CS', 'size' => '54'));
 //        $grid->addColumn($MyColumn);
-        $MyTypedColumn = new DateColumn(array('id' => 'buy_count', 'title' => 'Need Column', 'source' => false, 'filterable' => false, 'sortable' => false));
+        $MyTypedColumn = new DateColumn(array('id' => 'buy_count', 'title' => 'Need Count', 'source' => false, 'filterable' => false, 'sortable' => false));
         $grid->addColumn($MyTypedColumn);
 
         // Create an Actions Column
         $actionsColumn = new ActionsColumn('action_column', 'Action Column');
-        $grid->addColumn($actionsColumn, 11);
+        $grid->addColumn($actionsColumn, 12);
 
 // Attach a rowAction to the Actions Column
-        $rowAction1 = new RowAction('Show', 'show_single', false, '_self', array('class'=>'show_custom'));
+        $rowAction1 = new RowAction('Show', 'show_single_id', false, '_self', array('class'=>'show_custom'));
         $rowAction1->setColumn('action_column');
         $grid->addRowAction($rowAction1);
 
@@ -119,13 +92,26 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/show/{id}", name="show_single")
+     * @Route("/show/byid/{id}", name="show_single_id")
      * @Template()
      */
-    public function showAction(Request $request, $id){
+    public function showSingleAction(Request $request, $id){
         $em = $this->getDoctrine()->getManager();
 
         $single = $em->getRepository('AppBundle:Product')->findOneBy(array('id'=>$id));
+
+        return $this->render('@App/Default/show.html.twig', array('product'=>$single));
+    }
+
+    /**
+     * @Route("medicine/{slug}", name="show_single")
+     * @Template()
+     */
+    public function showAction(Request $request, $slug){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $single = $em->getRepository('AppBundle:Product')->findOneBySlug($slug);
 
         return array('product'=>$single);
     }
@@ -140,10 +126,10 @@ class DefaultController extends Controller
 
     /**
      * @Route("my_bag", name="my_bag")
-     * @param $id
+     * @Template()
      */
-    public function myBagAction($id){
+    public function myBagAction(Request $request){
 
-        return 1;
+        return array('mybag');
     }
 }

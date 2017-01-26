@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use JMS\Serializer\Annotation\VirtualProperty;
 
 /**
  * ProductIngridient
@@ -16,6 +17,8 @@ class ProductItem
 {
     const CT = 0;
     const ML = 1;
+    const S_EA = 2;
+    const GM = 3;
 
 
     /**
@@ -77,7 +80,7 @@ class ProductItem
 
     public function __toString()
     {
-        return $this->id ? $this->manufacturer . ' ' . $this->size . ' ' . $this->unit : 'new Product item';
+        return $this->id ? $this->nds . ' ' . $this->size . ' ' . $this->unit : 'new Product item';
         // TODO: Implement __toString() method.
     }
 
@@ -184,7 +187,24 @@ class ProductItem
      */
     public function getUnit()
     {
-        return $this->unit;
+        switch($this->unit){
+            case self::GM:
+                $unit = 'gm';
+                break;
+            case self::CT:
+                $unit = 'ct';
+                break;
+            case self::ML:
+                $unit = 'ml';
+                break;
+            case self::S_EA:
+                $unit = 's ea';
+                break;
+            default:
+                $unit = 'unknown';
+                break;
+        }
+        return $unit;
     }
 
     /**

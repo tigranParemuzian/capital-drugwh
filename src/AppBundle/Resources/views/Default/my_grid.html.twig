@@ -3,12 +3,63 @@
 {% block content %}
 <div class="wrapper">
     <div class="row">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h1 class="header-title">AAROGYA MED LLC <span>{#{{ name }}#}</span></h1>
+            </div>
+        <div class="panel-body">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                      <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                          My Bag <span class="badge total-count"></span><span class="badge total-price"></span>
+                        </a>
+                      </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                      <div class="panel-body">
+                        <table class="table table-hover order">
+            <thead>
+                <tr>
+                    <th><span><a href="#">Product Name</a></span></th>
+                    <th><span>Size</span></th>
+                    <th><span>Price</span></th>
+                    <th><span>Count</span></th>
+                    <th><span>Cost</span></th>
+                    <th><span>Actions</span></th>
+                </tr>
+            </thead>
+            <tbody>
+            {#{% for product in products %}
+                <tr id="{{ product.slug }}">
+                    <td>&nbsp;<span>{{ product.id }}</span></td>
+                    <td> {{ product.name }} </td>
+                    <td> {{ product.category.name }} </td>
+                    <td> {{ product.productItem.size }} {{ product.productItem.unit }}</td>
+                    <td> {{ product.price }}$ </td>
+                    <td><input type="number" name="count"></td>
+                    <td> <span>Available</span>{{ product.count }}</td>
+                    <td> <button class="btn btn-success"><span class="glyphicon glyphicon-plus-sign"></span></button></td>
+                </tr>
+            {% endfor %}#}
+            </tbody>
+            <tfoot>
+            <tr>
+                <td class="total-count" colspan="2"><span>Selected count </span> 0</td>
+                <td class="total-price" colspan="2"><span>Selected price </span> 0$</td>
+                <td class="create_invoice" colspan="2"><button class="btn btn-success">Submit order</button></td>
+            </tr>
+            </tfoot>
+        </table>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <p> text how to add list </p>
         {{ grid(grid, 'APYDataGridBundle::blocks.html.twig') }}
+        </div>
     </div>
-    {#{{ grid_search(grid) }}#}
-    {#{{ grid_cell('APYDataGridBundle::blocks.html.twig', {id:'myTypedColumn'}, 1, grid) }}#}
-
-
 </div>
 {% endblock content %}
 
@@ -18,36 +69,5 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript">
-//        $('.grid').addClass('col-md-12');
-        /*var t = $('.grid_body table').addClass('table table-hover');
-
-
-
-        $('.grid-column-myTypedColumn').each(function(e){
-
-
-            var sizeUnit = $(this).closest('tr').children('td:eq(5)');
-            var sizeUnitVal = sizeUnit.text().split('        ');
-
-            if(/0/g.test(sizeUnitVal[2]) == true){
-                sizeUnitVal[2] = sizeUnitVal[2].replace(/0/g, 'sm');
-            }else if(/1/g.test(sizeUnitVal[2]) == true){
-                sizeUnitVal[2] = sizeUnitVal[2].replace(/1/g, 'ml');
-            }else if(/2/g.test(sizeUnitVal[2]) == true){
-                sizeUnitVal[2] = sizeUnitVal[2].replace(/2/g, 's ea');
-            }else if(/3/g.test(sizeUnitVal[2]) == true){
-                sizeUnitVal[2] = sizeUnitVal[2].replace(/3/g, 'gm');
-            }
-
-            sizeUnit.text(sizeUnitVal.toString().replace(/,/g, ''));
-
-//            console.log($(this).before('.grid-column-count').hide());
-            var maxValue = $(this).closest('tr').children('td:eq(3)').text();
-            $(this).html('<input name="order_count" id="item_" type="number" style="width: 100px" min="0" max="'+ parseInt(maxValue) +'" placeholder="Order count"/>')
-
-            $(this).closest('tr').children('td:eq(7)').children('ul').append('<li><a href="#">&nbsp;Add to cart</a></li>')
-        });*/
-
-    </script>
+    <script type="text/javascript" src="{{ asset('bundles/app/js/main.js') }}"></script>
 {% endblock %}

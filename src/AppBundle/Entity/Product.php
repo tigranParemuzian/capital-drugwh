@@ -14,7 +14,7 @@ use JMS\Serializer\Annotation as Serializer;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductRepository")
  * @ORM\HasLifecycleCallbacks()
  * @GRID\Column(id="name", size="120", type="text")
- * @GRID\Source(columns="id, name, productItem.manufacturer, productItem.nds, count, price, unit_size, productItem.size, productItem.unit")
+ * @GRID\Source(columns="id, name, productItem.manufacturer, productItem.nds, slug, count, price, unit_size, productItem.size, productItem.unit")
  * @GRID\Column(id="unit_size", type="join", title="Size", columns={"productItem.size", "productItem.unit"}, size=150)
  */
 class Product
@@ -385,6 +385,30 @@ class Product
     {
         return $this->alternative;
     }
+
+    /**
+     * Set category
+     *
+     * @param \AppBundle\Entity\Category $category
+     *
+     * @return Product
+     */
+    public function setCategory(\AppBundle\Entity\Category $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \AppBundle\Entity\Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
     /**
      * Constructor
      */
@@ -425,29 +449,5 @@ class Product
     public function getBooking()
     {
         return $this->booking;
-    }
-
-    /**
-     * Set category
-     *
-     * @param \AppBundle\Entity\Category $category
-     *
-     * @return Product
-     */
-    public function setCategory(\AppBundle\Entity\Category $category = null)
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    /**
-     * Get category
-     *
-     * @return \AppBundle\Entity\Category
-     */
-    public function getCategory()
-    {
-        return $this->category;
     }
 }
