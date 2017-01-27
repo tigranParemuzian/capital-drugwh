@@ -32,23 +32,23 @@ class DefaultController extends Controller
         ));
     }
 
+//    /**
+//     * @Route("/list", name="list")
+//     * @Template()
+//     */
+//    public function listAction(Request $request){
+//
+//        $em = $this->getDoctrine()->getManager();
+//
+//        $products = $em->getRepository('AppBundle:Product')->fidListing();
+//        $categories = $em->getRepository('AppBundle:Category')->findAll();
+//
+//        return array('products'=>$products, 'categories'=>$categories);
+//
+//    }
+
     /**
      * @Route("/list", name="list")
-     * @Template()
-     */
-    public function listAction(Request $request){
-
-        $em = $this->getDoctrine()->getManager();
-
-        $products = $em->getRepository('AppBundle:Product')->fidListing();
-        $categories = $em->getRepository('AppBundle:Category')->findAll();
-
-        return array('products'=>$products, 'categories'=>$categories);
-
-    }
-
-    /**
-     * @Route("/list_old", name="list_old")
      * @Template()
      * @Security("has_role('ROLE_USER')")
      */
