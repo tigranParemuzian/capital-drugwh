@@ -10,7 +10,6 @@ function addByBag(getId, state, slug){
     if(typeof slug=='undefined'){
         slug = slugItem
     }
-//        console.log(slug);
     var id=0, count;
     if(state == 0){
         id = parseInt(getId.replace(/add_/g, ''));
@@ -26,11 +25,9 @@ function addByBag(getId, state, slug){
 
         count = my_input.val();
     }
-//            slug = $('#slug_'+id).val();
     var data = {'slug': slug, 'count':count};
     sendRequest(data, POST);
     $('#add_'+id).hide();
-//        }
 }
 
 function updateData(getId, status){
@@ -45,11 +42,18 @@ function updateData(getId, status){
         var price = my_input.closest('tr').children('td.grid-column-price').text();
         count = my_input.val();
         var totl_itom = parseFloat(price) * count;
+
         if(status != 1){
             $('#add_'+id).show();
             my_input.css({'border': "2px inset"}).closest('.grid-column-buy_count').children('div.help-text').html('<b>'+ totl_itom +'$</b>');
         }else {
             my_input.css({'border': "2px inset"}).closest('.grid-column-buy_count').children('div.help-text').html('');
+        }
+
+        var allCnt = my_input.closest('tr').children('td.grid-column-count').text();
+        if(parseInt(allCnt) < count){
+            $('#add_'+id).hide();
+            my_input.css({'border': "2px inset"}).closest('.grid-column-buy_count').children('div.help-text').html('<b style="color: red">Count is limited '+ allCnt +'</b>');
         }
     }
 }
@@ -117,6 +121,9 @@ function getDataTerminals() {
         error: function (jqXHR, textStatus, errorThrown) {
             if(errorThrown==='Not Found'){
                 $('table.order>tbody').html('');
+                $('.total-count').html('<span>Items Count </span> 0');
+                $('.total-price').html('<span>Total price </span>0 $');
+                $('.selected_infos').html('My&nbsp;Bag&nbsp;<span class="badge">0</span>')
             }
             console.log(jqXHR, textStatus, errorThrown);
         }
@@ -142,6 +149,14 @@ function sendRequest(data, method)
         {
             getDataTerminals();
 
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            if(jqXHR.status ===400){
+                $('h4.modal-title').text('Cannot add');
+                $('div.modal-body').html('<p>'+ jqXHR.responseJSON +'</p>');
+                $('.modal').addClass('in').css({'display':'block'})
+            }
+            console.log(jqXHR, textStatus, errorThrown);
         }
     });
 }

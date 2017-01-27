@@ -107,10 +107,19 @@ class RestMainController extends FOSRestController
 
         $booking = $em->getRepository('AppBundle:Booking')->findUniq($currentUser->getId(), $product->getId());
 
+
             if(!$booking){
 
                 $booking = new Booking();
             }
+            if($product->getCount() < $count){
+
+                return new JsonResponse("Ops {$product->getName()} is limited. Limit is {$product->getCount()}" , Response::HTTP_BAD_REQUEST);
+
+            }
+            $count == 0 ? $product->setCount($product->getCount()+$booking->getCount()):$product->setCount($product->getCount()-$count);
+
+        $product->setCount($product->getCount()-$count);
         $booking->setClient($currentUser);
         $booking->setProduct($product);
         $booking->setCount($count);
@@ -147,6 +156,7 @@ class RestMainController extends FOSRestController
         }else{
             $em->persist($booking);
         }
+        $em->persist($product);
         $em->flush();
 
         return true;
