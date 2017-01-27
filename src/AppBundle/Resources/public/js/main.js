@@ -115,6 +115,9 @@ function getDataTerminals() {
             $('.selected_infos').html('My&nbsp;Bag&nbsp;<span class="badge">'+result.length+'</span>')
         },
         error: function (jqXHR, textStatus, errorThrown) {
+            if(errorThrown==='Not Found'){
+                $('table.order>tbody').html('');
+            }
             console.log(jqXHR, textStatus, errorThrown);
         }
     });
