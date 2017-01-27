@@ -12,6 +12,7 @@ use APY\DataGridBundle\Grid\Column\TextColumn;
 use APY\DataGridBundle\Grid\Export\CSVExport;
 use APY\DataGridBundle\Grid\Source\Source;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,6 +50,7 @@ class DefaultController extends Controller
     /**
      * @Route("/list_old", name="list_old")
      * @Template()
+     * @Security("has_role('ROLE_USER')")
      */
     public function listingOldAction(Request $request){
 
@@ -57,9 +59,7 @@ class DefaultController extends Controller
         /* @var $grid \APY\DataGridBundle\Grid\Grid */
         $grid = $this->get('grid');
         $grid->setSource($source);
-//        $grid->addExport(new CSVExport('CSV Export', 'export'));
-//        $MyColumn = new BlankColumn(array('filterable'=>true, 'source'=>'My Data', 'values'=>array('a', 'b', 'd'), 'isAggregate'=>true, 'id' => 'myBlankColumn', 'title' => 'CS', 'size' => '54'));
-//        $grid->addColumn($MyColumn);
+
         $MyTypedColumn = new DateColumn(array('id' => 'buy_count', 'title' => 'Need Count', 'source' => false, 'filterable' => false, 'sortable' => false));
         $grid->addColumn($MyTypedColumn);
 
@@ -67,27 +67,10 @@ class DefaultController extends Controller
         $actionsColumn = new ActionsColumn('action_column', 'Action Column');
         $grid->addColumn($actionsColumn, 12);
 
-// Attach a rowAction to the Actions Column
+        // Attach a rowAction to the Actions Column
         $rowAction1 = new RowAction('Show', 'show_single_id', false, '_self', array('class'=>'show_custom'));
         $rowAction1->setColumn('action_column');
         $grid->addRowAction($rowAction1);
-
-        // Add a mass action with static callback
-//        $yourMassAction = new RowAction('Add to cart', 'my_bag');
-//        $rowAction1->setColumn('action_column');
-//        $grid->addRowAction($yourMassAction);
-
-        // Add a mass action with object callback
-/*        $yourMassAction = new MassAction('Action 2', array($this, 'myMethod'));
-        $grid->addMassAction($yourMassAction);*/
-
-
-// OR add a second row action directly to a new action column
-        /*$rowAction2 = new RowAction('Edit', 'route_to_edit');
-
-        $actionsColumn2 = new ActionsColumn($column, $title, array(rowAction2), $separator);
-        $grid->addColumn($actionsColumn2, $position2);*/
-
         return $grid->getGridResponse('AppBundle:Default:my_grid.html.twig');
     }
 
