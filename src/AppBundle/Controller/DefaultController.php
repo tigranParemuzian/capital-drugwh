@@ -32,21 +32,6 @@ class DefaultController extends Controller
         ));
     }
 
-//    /**
-//     * @Route("/list", name="list")
-//     * @Template()
-//     */
-//    public function listAction(Request $request){
-//
-//        $em = $this->getDoctrine()->getManager();
-//
-//        $products = $em->getRepository('AppBundle:Product')->fidListing();
-//        $categories = $em->getRepository('AppBundle:Category')->findAll();
-//
-//        return array('products'=>$products, 'categories'=>$categories);
-//
-//    }
-
     /**
      * @Route("/list", name="list")
      * @Template()
@@ -65,7 +50,7 @@ class DefaultController extends Controller
 
         // Create an Actions Column
         $actionsColumn = new ActionsColumn('action_column', 'Action Column');
-        $grid->addColumn($actionsColumn, 12);
+        $grid->addColumn($actionsColumn, 16);
 
         // Attach a rowAction to the Actions Column
         $rowAction1 = new RowAction('Show', 'show_single_id', false, '_self', array('class'=>'show_custom'));

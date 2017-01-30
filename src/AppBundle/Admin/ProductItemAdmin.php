@@ -29,9 +29,15 @@ class ProductItemAdmin extends Admin
             ))
             ->add('manufacturer', 'text', array('required'=>true))
             ->add('nds', 'text', array('required'=>true))
+            ->add('size', 'text', array('required'=>true))
             ->add('unit', 'choice', array('choices'=>
-                array(ProductItem::CT=>'CT', ProductItem::ML=>'ML', ProductItem::S_EA=>'S EA',
-                    ProductItem::GM=>'GM'), 'multiple'=>false
+                array(ProductItem::CT=>'ct', ProductItem::ML=>'ml',
+                    ProductItem::S_EA=>'s ea',
+                    ProductItem::GM=>'gm'), 'multiple'=>false
+            ), array('required'=>true))
+            ->add('strength')
+            ->add('strengthUnit', 'choice', array('choices'=>
+                array(ProductItem::MG=>'mg', ProductItem::MCG=>'mcg'), 'multiple'=>false
             ), array('required'=>true))
             ->add('size', 'text', array('required'=>true))
         ->end()
@@ -52,9 +58,15 @@ class ProductItemAdmin extends Admin
             ->add('nds')
             ->add('size')
             ->addIdentifier('unit', 'choice', array(
-                'choices'  => array(ProductItem::CT=>'CT', ProductItem::ML=>'ML'),
+                'choices'  => array(ProductItem::CT=>'ct', ProductItem::ML=>'ml',
+                    ProductItem::S_EA=>'s ea',
+                    ProductItem::GM=>'gm',
+                ),
             ))
-
+            ->add('strength')
+            ->addIdentifier('strengthUnit', 'choice', array('choices'=>
+                array(ProductItem::MG=>'mg', ProductItem::MCG=>'mcg'), 'enable'=>true
+            ))
             ->add('_action', 'actions',
                 array('actions'=>
                     array('show'=>array(), 'edit'=>array(), 'delete'=>array())
@@ -68,6 +80,21 @@ class ProductItemAdmin extends Admin
      */
     protected function configureDatagridFilters(DatagridMapper $filter)
     {
+        $filter
+            ->add('id')
+            ->add('manufacturer')
+            ->add('nds')
+            ->add('size')
+            ->add('unit', 'doctrine_orm_choice', array(),
+                'choice', array('choices' => array(ProductItem::CT=>'ct', ProductItem::ML=>'ml',
+                    ProductItem::S_EA=>'s ea',
+                    ProductItem::GM=>'gm'))
+            )
+            ->add('strength')
+            ->add('strengthUnit', 'doctrine_orm_choice', array(),'choice', array('choices'=>
+                array(ProductItem::MG=>'mg', ProductItem::MCG=>'mcg')
+            ))
+            ;
     }
 
     /**
@@ -75,6 +102,21 @@ class ProductItemAdmin extends Admin
      */
     protected function configureShowFields(ShowMapper $show)
     {
+        $show
+            ->add('id')
+            ->add('manufacturer')
+            ->add('nds')
+            ->add('size')
+            ->add('unit', 'doctrine_orm_choice', array(),
+                'choice', array('choices' => array(ProductItem::CT=>'ct', ProductItem::ML=>'ml',
+                    ProductItem::S_EA=>'s ea',
+                    ProductItem::GM=>'gm'))
+            )
+            ->add('strength')
+            ->add('strengthUnit', 'doctrine_orm_choice', array(),'choice', array('choices'=>
+                array(ProductItem::MG=>'mg', ProductItem::MCG=>'mcg')
+            ))
+        ;
     }
 
 

@@ -226,4 +226,28 @@ class Booking
     {
         return $this->product;
     }
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     *
+     * @return Booking
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return integer
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
 }

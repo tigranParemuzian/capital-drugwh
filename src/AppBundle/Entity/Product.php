@@ -13,9 +13,10 @@ use JMS\Serializer\Annotation as Serializer;
  * @ORM\Table(name="product")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductRepository")
  * @ORM\HasLifecycleCallbacks()
- * @GRID\Column(id="name", size="120", type="text")
- * @GRID\Source(columns="id, name, productItem.manufacturer, productItem.nds, slug, count, price, unit_size, productItem.size, productItem.unit")
- * @GRID\Column(id="unit_size", type="join", title="Size", columns={"productItem.size", "productItem.unit"}, size=150)
+ * @GRID\Column(id="name", type="text")
+ * @GRID\Source(columns="id, name, strength_size, productItem.strength, productItem.strengthUnit, productItem.manufacturer, productItem.nds, slug, count, price, unit_size, productItem.size, productItem.unit")
+ * @GRID\Column(id="unit_size", type="join", title="Size", columns={"productItem.size", "productItem.unit"})
+ * @GRID\Column(id="strength_size", type="join", title="Strength", columns={"productItem.strength", "productItem.strengthUnit"})
  */
 class Product
 {
@@ -38,7 +39,7 @@ class Product
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
-     * @GRID\Column(title="Name", size=150)
+     * @GRID\Column(title="Name")
      */
     private $name;
 
@@ -55,10 +56,12 @@ class Product
      * @var
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\ProductItem", inversedBy="product")
      * @ORM\JoinColumn(name="product_item", referencedColumnName="id")
-     * @GRID\Column(field="productItem.nds", title="NDS", first="", size=150)
-     * @GRID\Column(field="productItem.manufacturer", title="Manufacturer", size=150)
+     * @GRID\Column(field="productItem.nds", title="NDS", first="")
+     * @GRID\Column(field="productItem.manufacturer", title="Manufacturer")
      * @GRID\Column(field="productItem.size", title="Size", filter=false, visible=false)
      * @GRID\Column(field="productItem.unit", title="Unit", filterable=false, visible=false)
+     * @GRID\Column(field="productItem.strength", title="strength", filterable=false, visible=false)
+     * @GRID\Column(field="productItem.strengthUnit", title="Strength unit", filterable=false, visible=false)
      */
     private $productItem;
 
@@ -71,7 +74,7 @@ class Product
      * @var int
      *
      * @ORM\Column(name="count", type="integer")
-     * @GRID\Column(align="center", title="Count", size=50, type="number", filter="input", size=50)
+     * @GRID\Column(align="center", title="Count", size=50, type="number", filter="input")
      */
     private $count;
 
@@ -79,7 +82,7 @@ class Product
      * @var float
      *
      * @ORM\Column(name="price", type="float")
-     * @GRID\Column(align="center", title="Price", size=150)
+     * @GRID\Column(align="center", title="Price")
      */
     private $price;
 

@@ -118,7 +118,7 @@ class RestMainController extends FOSRestController
 
             }
             $count == 0 ? $product->setCount($product->getCount()+$booking->getCount()):$product->setCount($product->getCount()-$count);
-        
+
         $booking->setClient($currentUser);
         $booking->setProduct($product);
         $booking->setCount($count);

@@ -160,8 +160,17 @@
                                 {% set uni='gm' %}
                             {% endif %}
                             <td class="grid-column-{{ column.renderBlockId }}{% if column.class %} {{ column.class }}{% endif %}{% if column.align != 'left'%} align-{{ column.align }}{% endif %}{% if loop.last %} last-column{% endif %}{% if last_row %} last-row{% endif %}">{{- grid_cell(column, row, grid)|raw|replace({' ':''})|split('&nbsp;')[0] -}}&nbsp;{{ uni }}</td>
-                    {% elseif column.renderBlockId=='price'%}
+                    {% elseif column.renderBlockId=='price' %}
                         <td class="grid-column-{{ column.renderBlockId }}{% if column.class %} {{ column.class }}{% endif %}{% if column.align != 'left'%} align-{{ column.align }}{% endif %}{% if loop.last %} last-column{% endif %}{% if last_row %} last-row{% endif %}">{{- grid_cell(column, row, grid)|raw -}}&nbsp;$</td>
+                    {% elseif column.renderBlockId=='strength_size' %}
+                        {% set Suni='' %}
+                        {% set val=grid_cell(column, row, grid)|raw|replace({' ':''})|split('&nbsp;')[1] %}
+                        {% if  val==4  %}
+                            {% set Suni='mg' %}
+                        {% elseif val == 5 %}
+                            {% set Suni='mcg' %}
+                        {% endif %}
+                        <td class="grid-column-{{ column.renderBlockId }}{% if column.class %} {{ column.class }}{% endif %}{% if column.align != 'left'%} align-{{ column.align }}{% endif %}{% if loop.last %} last-column{% endif %}{% if last_row %} last-row{% endif %}">{{- grid_cell(column, row, grid)|raw|replace({' ':''})|split('&nbsp;')[0] -}}&nbsp;{{- Suni -}}</td>
                     {% else %}
                         <td class="grid-column-{{ column.renderBlockId }}{% if column.class %} {{ column.class }}{% endif %}{% if column.align != 'left'%} align-{{ column.align }}{% endif %}{% if loop.last %} last-column{% endif %}{% if last_row %} last-row{% endif %}">{{- grid_cell(column, row, grid)|raw -}}</td>
                     {% endif %}

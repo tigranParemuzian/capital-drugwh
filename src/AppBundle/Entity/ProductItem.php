@@ -19,6 +19,8 @@ class ProductItem
     const ML = 1;
     const S_EA = 2;
     const GM = 3;
+    const MG=4;
+    const MCG=5;
 
 
     /**
@@ -77,6 +79,18 @@ class ProductItem
      * @ORM\Column(type="datetime")
      */
     private $updated;
+
+    /**
+     * @var
+     * @ORM\Column(name="strength", type="float", nullable=true, options={"default"=0})
+     */
+    private $strength;
+
+    /**
+     * @var
+     * @ORM\Column(name="strength_unit", type="smallint", nullable=true, options={"default"=4})
+     */
+    private $strengthUnit;
 
     public function __toString()
     {
@@ -187,24 +201,7 @@ class ProductItem
      */
     public function getUnit()
     {
-        switch($this->unit){
-            case self::GM:
-                $unit = 'gm';
-                break;
-            case self::CT:
-                $unit = 'ct';
-                break;
-            case self::ML:
-                $unit = 'ml';
-                break;
-            case self::S_EA:
-                $unit = 's ea';
-                break;
-            default:
-                $unit = 'unknown';
-                break;
-        }
-        return $unit;
+        return $this->unit;
     }
 
     /**
@@ -279,4 +276,52 @@ class ProductItem
         return $this->product;
     }
 
+
+    /**
+     * Set strength
+     *
+     * @param float $strength
+     *
+     * @return ProductItem
+     */
+    public function setStrength($strength)
+    {
+        $this->strength = $strength;
+
+        return $this;
+    }
+
+    /**
+     * Get strength
+     *
+     * @return float
+     */
+    public function getStrength()
+    {
+        return $this->strength;
+    }
+
+    /**
+     * Set strengthUnit
+     *
+     * @param integer $strengthUnit
+     *
+     * @return ProductItem
+     */
+    public function setStrengthUnit($strengthUnit)
+    {
+        $this->strengthUnit = $strengthUnit;
+
+        return $this;
+    }
+
+    /**
+     * Get strengthUnit
+     *
+     * @return integer
+     */
+    public function getStrengthUnit()
+    {
+        return $this->strengthUnit;
+    }
 }
