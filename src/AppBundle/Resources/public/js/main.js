@@ -41,7 +41,7 @@ function updateData(getId, status){
     }else {
         var price = my_input.closest('tr').children('td.grid-column-price').text();
         count = my_input.val();
-        var totl_itom = parseFloat(price) * count;
+        var totl_itom = (parseFloat(price) * count).toFixed(2);
 
         if(status != 1){
             $('#add_'+id).show();
@@ -82,7 +82,7 @@ function writeOrder(orders){
 
     $('table.order>tbody').append('<tr> <td >'+ orders.product.name +'</td>' +
         '<td>' + orders.product.product_item.size + ' ' + unt +'</td>' +
-        '<td>' + orders.product.price +' $</td>'+
+        '<td>' + orders.product.price.toFixed(2) +' $</td>'+
         '<td>' + orders.count +' </td>'+
         '<td>' + orders.sub_total +' $</td>'+
         '<td> <button id="remove_' + orders.product.id +'" onclick="addByBag(this.id, 1)" class="btn btn-danger">' +
@@ -98,7 +98,7 @@ function writeOrder(orders){
 function getDataTerminals() {
 
     jQuery.ajax({
-        url: "/app_dev.php/api/bag/my/bag",
+        url: "/api/bag/my/bag",
         type: "GET",
         contentType: 'application/json; charset=utf-8',
         async: true,
@@ -115,7 +115,7 @@ function getDataTerminals() {
             }
 
             $('.total-count').html('<span>Items Count </span> '+result.length);
-            $('.total-price').html('<span>Total price </span>' + total + ' $');
+            $('.total-price').html('<span>Total price </span>' + total.toFixed(2) + ' $');
             $('.selected_infos').html('My&nbsp;Bag&nbsp;<span class="badge">'+result.length+'</span>')
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -138,7 +138,7 @@ function getDataTerminals() {
 function sendRequest(data, method)
 {
     jQuery.ajax({
-        url: '/app_dev.php/api/bags/datas',
+        url: '/api/bags/datas',
         type: "POST",
         contentType: 'application/json; charset=utf-8',
         async: true,

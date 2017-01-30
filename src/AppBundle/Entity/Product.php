@@ -230,7 +230,7 @@ class Product
      */
     public function setPrice($price)
     {
-        $this->price = $price;
+        $this->price = round($price,2);
 
         return $this;
     }
@@ -242,7 +242,7 @@ class Product
      */
     public function getPrice()
     {
-        return $this->price;
+        return round($this->price, 2);
     }
 
     /**
