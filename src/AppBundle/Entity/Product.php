@@ -14,9 +14,8 @@ use JMS\Serializer\Annotation as Serializer;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductRepository")
  * @ORM\HasLifecycleCallbacks()
  * @GRID\Column(id="name", type="text")
- * @GRID\Source(columns="id, name, strength_size, productItem.strength, productItem.strengthUnit, productItem.manufacturer, productItem.nds, slug, count, price, unit_size, productItem.size, productItem.unit")
+ * @GRID\Source(columns="id, name, productItem.strength, productItem.manufacturer, productItem.nds, slug, count, price, unit_size, productItem.size, productItem.unit")
  * @GRID\Column(id="unit_size", type="join", title="Size", columns={"productItem.size", "productItem.unit"})
- * @GRID\Column(id="strength_size", type="join", title="Strength", columns={"productItem.strength", "productItem.strengthUnit"})
  */
 class Product
 {
@@ -60,8 +59,7 @@ class Product
      * @GRID\Column(field="productItem.manufacturer", title="Manufacturer")
      * @GRID\Column(field="productItem.size", title="Size", filter=false, visible=false)
      * @GRID\Column(field="productItem.unit", title="Unit", filterable=false, visible=false)
-     * @GRID\Column(field="productItem.strength", title="strength", filterable=false, visible=false)
-     * @GRID\Column(field="productItem.strengthUnit", title="Strength unit", filterable=false, visible=false)
+     * @GRID\Column(field="productItem.strength", title="Strength", filterable=true)
      */
     private $productItem;
 

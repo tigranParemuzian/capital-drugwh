@@ -19,9 +19,6 @@ class ProductItem
     const ML = 1;
     const S_EA = 2;
     const GM = 3;
-    const MG=4;
-    const MCG=5;
-
 
     /**
      * @var int
@@ -82,15 +79,9 @@ class ProductItem
 
     /**
      * @var
-     * @ORM\Column(name="strength", type="float", nullable=true, options={"default"=0})
+     * @ORM\Column(name="strength", type="string", nullable=true)
      */
     private $strength;
-
-    /**
-     * @var
-     * @ORM\Column(name="strength_unit", type="smallint", nullable=true, options={"default"=4})
-     */
-    private $strengthUnit;
 
     public function __toString()
     {
@@ -276,11 +267,10 @@ class ProductItem
         return $this->product;
     }
 
-
     /**
      * Set strength
      *
-     * @param float $strength
+     * @param string $strength
      *
      * @return ProductItem
      */
@@ -294,34 +284,10 @@ class ProductItem
     /**
      * Get strength
      *
-     * @return float
+     * @return string
      */
     public function getStrength()
     {
         return $this->strength;
-    }
-
-    /**
-     * Set strengthUnit
-     *
-     * @param integer $strengthUnit
-     *
-     * @return ProductItem
-     */
-    public function setStrengthUnit($strengthUnit)
-    {
-        $this->strengthUnit = $strengthUnit;
-
-        return $this;
-    }
-
-    /**
-     * Get strengthUnit
-     *
-     * @return integer
-     */
-    public function getStrengthUnit()
-    {
-        return $this->strengthUnit;
     }
 }

@@ -35,10 +35,7 @@ class ProductItemAdmin extends Admin
                     ProductItem::S_EA=>'s ea',
                     ProductItem::GM=>'gm'), 'multiple'=>false
             ), array('required'=>true))
-            ->add('strength')
-            ->add('strengthUnit', 'choice', array('choices'=>
-                array(ProductItem::MG=>'mg', ProductItem::MCG=>'mcg'), 'multiple'=>false
-            ), array('required'=>true))
+            ->add('strength', 'text', array('required'=>true))
             ->add('size', 'text', array('required'=>true))
         ->end()
         ->end()
@@ -64,9 +61,6 @@ class ProductItemAdmin extends Admin
                 ),
             ))
             ->add('strength')
-            ->addIdentifier('strengthUnit', 'choice', array('choices'=>
-                array(ProductItem::MG=>'mg', ProductItem::MCG=>'mcg'), 'enable'=>true
-            ))
             ->add('_action', 'actions',
                 array('actions'=>
                     array('show'=>array(), 'edit'=>array(), 'delete'=>array())
@@ -91,9 +85,6 @@ class ProductItemAdmin extends Admin
                     ProductItem::GM=>'gm'))
             )
             ->add('strength')
-            ->add('strengthUnit', 'doctrine_orm_choice', array(),'choice', array('choices'=>
-                array(ProductItem::MG=>'mg', ProductItem::MCG=>'mcg')
-            ))
             ;
     }
 
@@ -113,9 +104,6 @@ class ProductItemAdmin extends Admin
                     ProductItem::GM=>'gm'))
             )
             ->add('strength')
-            ->add('strengthUnit', 'doctrine_orm_choice', array(),'choice', array('choices'=>
-                array(ProductItem::MG=>'mg', ProductItem::MCG=>'mcg')
-            ))
         ;
     }
 

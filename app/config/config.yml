@@ -112,8 +112,8 @@ sonata_block:
 
 # sonata admin configuration
 sonata_admin:
-    title:      Capital Drugwh TW
-    title_logo: /bundles/app/images/bistro_logo.png
+    title:      AAMED LLC
+    title_logo: /bundles/app/images/logo.png
     templates:
         # default global templates
 
