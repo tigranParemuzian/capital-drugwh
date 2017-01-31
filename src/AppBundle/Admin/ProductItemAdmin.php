@@ -35,8 +35,7 @@ class ProductItemAdmin extends Admin
                     ProductItem::S_EA=>'s ea',
                     ProductItem::GM=>'gm'), 'multiple'=>false
             ), array('required'=>true))
-            ->add('strength', 'text', array('required'=>true))
-            ->add('size', 'text', array('required'=>true))
+            ->add('strength', 'text', array('required'=>false))
         ->end()
         ->end()
     ;
