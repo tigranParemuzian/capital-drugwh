@@ -11,9 +11,14 @@ use JMS\Serializer\Annotation as Serializer;
  *
  * @ORM\Table(name="invoice")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\InvoiceRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Invoice
 {
+    const IS_NEW = 0;
+    const IN_PROGRESS = 1;
+    const IS_SHIPPED = 2;
+
     /**
      * @var int
      *
@@ -26,7 +31,7 @@ class Invoice
     /**
      * @var string
      *
-     * @ORM\Column(name="shippingHandling", type="string", length=255, nullable=true)
+     * @ORM\Column(name="shippingHandling", type="datetime", nullable=true)
      */
     private $shippingHandling;
 
@@ -77,6 +82,19 @@ class Invoice
      * @ORM\Column(type="datetime")
      */
     private $updated;
+
+    /**
+     * @var
+     * @ORM\Column(name="status", type="smallint")
+     */
+    private $status;
+
+    /**
+     * @var
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
 
     /**
      * Get id
@@ -295,5 +313,53 @@ class Invoice
     public function getBooking()
     {
         return $this->booking;
+    }
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     *
+     * @return Invoice
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return integer
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Invoice
+     */
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

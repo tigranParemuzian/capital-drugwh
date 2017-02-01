@@ -17,6 +17,7 @@ class Booking
 {
     const IS_NEW = 0;
     const IS_ORDERED = 1;
+    const IS_CHANGED = 2;
 
     /**
      * @var int

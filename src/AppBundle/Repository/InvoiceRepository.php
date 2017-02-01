@@ -10,4 +10,31 @@ namespace AppBundle\Repository;
  */
 class InvoiceRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findByAuthor($userId){
+
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('i')
+            ->from('AppBundle:Invoice', 'i')
+            ->leftJoin('i.user','u')
+            ->leftJoin('i.booking', 'b')
+            ->where('u.id =:uid')
+            ->setParameter('uid', $userId)
+            ->getQuery()->getResult();
+    }
+
+    public function findUniqByAuthorAndId($userId, $id){
+
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('i')
+            ->from('AppBundle:Invoice', 'i')
+            ->leftJoin('i.user','u')
+            ->leftJoin('i.booking', 'b')
+            ->where('i.id =:id')
+            ->andWhere('u.id =:uid')
+            ->setParameter('id', $id)
+            ->setParameter('uid', $userId)
+            ->getQuery()->getOneOrNullResult();
+    }
 }

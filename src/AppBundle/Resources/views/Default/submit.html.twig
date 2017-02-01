@@ -1,0 +1,75 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+    {% block banner %}
+
+    {% endblock %}
+
+    <div class="wrapper top-panel">
+        <div class="row">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h1 class="header-title">AAROGYA MED LLC <span>Invoices</span></h1>
+                </div>
+                <div class="col-md-12 text-center invoice-header">
+                    <header><h1>INVOICES</h1></header>
+                    {% for flash_message in app.session.flashBag.get('notice') %}
+                        <div class="flash-notice">
+                            <p>{{ flash_message }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="panel-body container invoice-body">
+
+                    <div class="col-md-12">
+                        <div class="col-md-2"><span>Number</span></div>
+                        <div class="col-md-2"><span>Date</span></div>
+                        <div class="col-md-2"><span>Total</span></div>
+                        <div class="col-md-2"><span>Status</span></div>
+                        <div class="col-md-2"><span>Track Number</span></div>
+                        <div class="col-md-2"><span>Action</span></div>
+                    </div>
+                {% if pagination != null %}
+                    {% for invoice in pagination %}
+                    <div class="col-md-12">
+                        <div class="col-md-2"><span>{{ invoice.number }}</span></div>
+                        <div class="col-md-2"><span>{{ invoice.created|date('Y M d') }}</span></div>
+                        <div class="col-md-2"><span>{{ invoice.total }}&nbsp;$</span></div>
+                        <div class="col-md-2"><span>
+                                {% set removable = 0 %}
+                            {% if invoice.status == 0 %}
+                                {% set removable = 1 %}
+                                New
+                                {% elseif invoice.status == 1 %}
+                                In Progress
+                            {% elseif invoice.status == 2 %}
+                                Shipped
+                                {% endif %}
+                            </span></div>
+                        <div class="col-md-2"><span>Not Available</span></div>
+                        <div class="col-md-2">
+                            <a href="{{ path('generate_invoice', {'invoiceId':invoice.id}) }}" target="_blank" class="btn btn-info" title="Download Pdf">
+                                <span class="glyphicon glyphicon-floppy-disk"></span></a>&nbsp;
+                            {% if removable == 1 %}
+                            <a class="btn btn-danger" title="Remove">
+                                <span class="glyphicon glyphicon glyphicon-remove"></span></a>
+                                {% endif %}
+
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {{ knp_pagination_render(pagination)|raw }}
+                    {% else %}
+                        <div class="col-md-12">
+                           <p>Invoice list is empty</p>
+                        </div>
+                {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {#<script type="text/javascript" src="{{ asset('bundles/app/js/main.js') }}"></script>#}
+{% endblock %}

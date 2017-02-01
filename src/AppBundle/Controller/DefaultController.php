@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Invoice;
 use APY\DataGridBundle\Grid\Action\DeleteMassAction;
 use APY\DataGridBundle\Grid\Action\MassAction;
 use APY\DataGridBundle\Grid\Action\RowAction;
@@ -11,10 +12,12 @@ use APY\DataGridBundle\Grid\Column\DateColumn;
 use APY\DataGridBundle\Grid\Column\TextColumn;
 use APY\DataGridBundle\Grid\Export\CSVExport;
 use APY\DataGridBundle\Grid\Source\Source;
+use Proxies\__CG__\AppBundle\Entity\Booking;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use APY\DataGridBundle\Grid\Source\Entity;
 use Symfony\Component\HttpFoundation\Response;
@@ -107,7 +110,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/submit", name="submit_order")
+     * @Route("/orders", name="submit_order")
      * @Template()
      * @param Request $request
      * @Security("has_role('ROLE_USER')")
@@ -115,63 +118,164 @@ class DefaultController extends Controller
     public function submitAction(Request $request){
 
 
-        $filename = sprintf('invoice-%s.pdf', date('Y-m-d H:i:s'));
-        $path = $this->container->getParameter('kernel.root_dir')."/../web/uploads/invoice/" . $filename;
+        $userId = $this->getUser()->getId();
 
-        $pageUrl = $this->generateUrl('pdf_generate', array('userId'=>$this->getUser()->getId()), true); // use absolute path!
-        $this->container->get('knp_snappy.pdf')->generate($pageUrl, $path);
+        $em = $this->getDoctrine()->getManager();
 
-        return new Response(
-            $this->get('knp_snappy.pdf')->getOutput($pageUrl),
-            200,
-            array(
-                'Content-Type'          => 'application/pdf',
-                'Content-Disposition'   => sprintf('attachment; filename="%s"', $path),
-            )
-        );
+        $bookings = $em->getRepository('AppBundle:Booking')->findAllNewByClient($userId);
 
-        return array('message'=>'message');
+        if(count($bookings)>0){
+
+            $invoice = new Invoice();
+            $invoice->setStatus(Invoice::IS_NEW);
+
+            $now = new \DateTime('now');
+            $total = 0;
+            $errorData = array();
+            foreach($bookings as $booking){
+
+                if($booking->getCount() <= $booking->getProduct()->getCount()){
+                    $product=$booking->getProduct();
+                    $product->setCount($product->getCount() - $booking->getCount());
+                    $booking->setStatus(Booking::IS_ORDERED);
+
+                    $booking->setInvoice($invoice);
+
+                    $em->persist($product);
+                    $em->persist($booking);
+                    $total +=$booking->getCost();
+                }else{
+                    $errorData[]=array('message'=>"Product by name {$booking->getProduct()->getName()}
+                    and NDS {$booking->getProduct()->getProductItem()->getNds()} count is limited
+                    {$booking->getProduct()->getCount()}", 'bookingId'=>$booking->getId());
+                    $this->addFlash(
+                        'count_error',
+                        "Product by name {$booking->getProduct()->getName()}
+                    and NDS {$booking->getProduct()->getProductItem()->getNds()} count is limited
+                    {$booking->getProduct()->getCount()} !!"
+                    );
+
+                    $booking->setStatus(Booking::IS_CHANGED);
+                    $booking->setCount($booking->getProduct()->getCount());
+                    $em->persist($booking);
+                }
+
+
+            }
+
+            $invoiceSettings = $em->getRepository('AppBundle:InvoiceSettings')->findMax();
+
+            $dueDate = clone $now;
+            $shippingHandling = clone $now;
+            $invoice->setTotal($total);
+            $invoice->setDueDate($dueDate->modify("+{$invoiceSettings->getTerms()} day"));
+            $invoice->setNumber($now->getTimestamp().$invoice->getId());
+            $invoice->setTerms('Net ' . $invoiceSettings->getTerms());
+            $invoice->setShippingHandling($shippingHandling->modify('+1 day'));
+            $invoice->setUser($this->getUser());
+            $em->persist($invoice);
+
+
+            $validator = $this->get('validator');
+
+            $errors = $validator->validate($invoice);
+
+            if(count($errors) > 0 || count($errorData) > 0) {
+
+                // returned value
+                $returnResult = array();
+
+                // check count
+                if(count($errors) > 0){
+
+                    // loop for error
+                    foreach($errors as $error){
+                        $returnResult[$error->getPropertyPath()] = $error->getMessage();
+                    }
+                }
+
+                $this->addFlash(
+                    'error',
+                    'Your changes were saved!'
+                );
+
+                return $this->redirectToRoute('my_bag', array('message'=>$errorData));
+
+            }
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                'Your order were saved!'
+            );
+        }
+
+        $invoices = $em->getRepository('AppBundle:Invoice')->findByAuthor($this->getUser()->getId());
+
+        // get knp pagination
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($invoices, $this->get('request')->query->get('page', 1), 6);
+
+//        return $this->render(':Main:tag_single_list.html.twig', array());
+        return array('pagination' => $pagination);
     }
 
     /**
+     * @Route("/invoice/{invoiceId}", name="generate_invoice")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function invoiceAction(Request $request, $invoiceId){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $invoices = $em->getRepository('AppBundle:Invoice')->findUniqByAuthorAndId($this->getUser()->getId(), $invoiceId);
+
+        if(!$invoices){
+            $this->addFlash(
+                'notice',
+                'Not have a permission!'
+            );
+           return $this->redirectToRoute('submit_order');
+        }
+
+        $filename = sprintf('invoice-%s.pdf', $invoiceId);
+        $path = $this->container->getParameter('kernel.root_dir')."/../web/uploads/invoice/" . $filename;
+
+        if(is_file($path)){
+            return new BinaryFileResponse($path);
+        }else{
+            $pageUrl = $this->generateUrl('pdf_generate', array('invoiceId'=>$invoiceId), true); // use absolute path!
+            $this->container->get('knp_snappy.pdf')->generate($pageUrl, $path);
+
+            return new Response(
+                $this->get('knp_snappy.pdf')->getOutput($pageUrl),
+                200,
+                array(
+                    'Content-Type'          => 'application/pdf',
+                    'Content-Disposition'   => sprintf('attachment; filename="%s"', $filename),
+                )
+            );
+        }
+
+    }
+    /**
      *
-     * @Route("/pdf/{userId}", name="pdf_generate")
+     * @Route("/pdf/{invoiceId}", name="pdf_generate")
      * @Template()
      * @param Request $request
      *
      * @param Request $request
      * @return array
      */
-    public function pdfAction(Request $request, $userId){
+    public function pdfAction(Request $request, $invoiceId){
 
 
         $em = $this->getDoctrine()->getManager();
 
-        $bookings = $em->getRepository('AppBundle:Booking')->findAllNewByClient($userId);
+        $invoice = $em->getRepository('AppBundle:Invoice')->find($invoiceId);
         $invoiceSettings = $em->getRepository('AppBundle:InvoiceSettings')->findMax();
 
-
-//        dump($invoiceSettings); exit;
-
-        return array('invoiceSettings'=>$invoiceSettings, 'bookings'=>$bookings);
-
-
-
-    }
-
-    public function generatePdf(){
-
-
-//        $pdfGenerator->generatePDF($html, 'UTF-8');
-
-return true;
-//        return new Response($pdfGenerator->generatePDF($html),
-//            200,
-//            array(
-//                'Content-Type' => 'application/pdf',
-//                'Content-Disposition' => 'inline; filename="out.pdf"'
-//            )
-//        );
+        return array('invoiceSettings'=>$invoiceSettings, 'invoice'=>$invoice);
 
     }
 }

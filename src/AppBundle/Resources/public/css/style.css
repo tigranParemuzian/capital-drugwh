@@ -2,7 +2,7 @@ body{
     font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-nav{
+nav.navbar{
     border-bottom: none;
     background: #0DA15A;
     /*background: linear-gradient(rgb(87, 87, 87), rgb(251, 249, 255));*/
@@ -108,9 +108,13 @@ ul.grid-row-actions{
 .invoice-header{
     background: aliceblue;
     border: #0DA15A solid 1px;
+    margin-top: 20px;
 
 }
 
+.top-panel{
+    margin-top: 50px;
+}
 .invoice-header > header > h1{
     font-family: Helvetica, Arial, sans-serif;
     font-weight: 900;
@@ -148,9 +152,11 @@ select{
     font-family: sans-serif;
 }
 
-footer{
+.footer{
     background: #0DA15A;
     color: #D1ECDE;
+    bottom: 0;
+    width: 100%;
 }
 
 @media (min-width: 768px){
@@ -207,11 +213,23 @@ div#slider figure {
 input.current{
     text-align: center;
 }
-button {
+/*button {
     background: #e04646;
     padding: 5px;
     font-weight: bold;
     border: 0;
+}*/
+ul.pagination li a{
+    background-color: #D9EEE4;
+    color: #00a157;
+}
+ul.pagination li a:hover{
+    background-color: #00a157;
+    color: #D9EEE4;
+}
+ul.pagination>li>a.active{
+    background-color: #00a157;
+    color: #D9EEE4;
 }
 
 .menu .info img {

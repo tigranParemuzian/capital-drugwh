@@ -117,7 +117,6 @@ class RestMainController extends FOSRestController
                 return new JsonResponse("Ops {$product->getName()} is limited. Limit is {$product->getCount()}" , Response::HTTP_BAD_REQUEST);
 
             }
-            $count == 0 ? $product->setCount($product->getCount()+$booking->getCount()):$product->setCount($product->getCount()-$count);
 
         $booking->setClient($currentUser);
         $booking->setProduct($product);
@@ -155,7 +154,7 @@ class RestMainController extends FOSRestController
         }else{
             $em->persist($booking);
         }
-        $em->persist($product);
+
         $em->flush();
 
         return true;

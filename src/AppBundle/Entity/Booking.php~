@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Booking
@@ -16,6 +17,7 @@ class Booking
 {
     const IS_NEW = 0;
     const IS_ORDERED = 1;
+    const IS_CHANGED = 2;
 
     /**
      * @var int

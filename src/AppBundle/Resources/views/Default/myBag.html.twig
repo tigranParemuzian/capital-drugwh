@@ -1,10 +1,19 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-<div class="wrapper">
+    {% block banner %}
+
+    {% endblock %}
+
+<div class="wrapper top-panel">
     <div class="row">
         <div class="panel panel-success">
             <div class="panel-heading">
+                {% for flash_message in app.session.flashBag.get('notice') %}
+                    <div class="flash-notice">
+                        {{ flash_message }}
+                    </div>
+                {% endfor %}
                 <h1 class="header-title">AAROGYA MED LLC <span>{#{{ name }}#}</span></h1>
             </div>
             <div class="panel-body container">
@@ -26,7 +35,14 @@
                     <tr>
                         <td class="total-count" colspan="2"><span>Selected count </span> 0</td>
                         <td class="total-price" colspan="2"><span>Selected price </span> 0$</td>
-                        <td class="create_invoice" colspan="2"><a href="{{ path('submit_order')}}" class="btn btn-success">Submit order</a></td>
+                        <td class="create_invoice" colspan="2">
+                            {% if app.user.userSettings == null %}
+                            <a href="{{ path('submit_order')}}" class="btn btn-success">Submit order</a>
+                            {% else %}
+                                <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-info"><span class="glyphicon glyphicon-edit"></span>&nbsp;Edit Profile</a>
+                            <p>TODO info about user settings</p>
+                            {% endif %}
+                        </td>
                     </tr>
                     </tfoot>
                 </table>

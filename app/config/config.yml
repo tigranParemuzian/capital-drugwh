@@ -230,3 +230,7 @@ knp_snappy:
         binary:     /usr/local/bin/wkhtmltoimage #"\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltoimage.exe\"" for Windows users
         options:    []
     temporary_folder: %kernel.cache_dir%/../web/uploads/invoice
+
+knp_paginator:
+    template:
+        pagination: Pagination/sliding.html.twig

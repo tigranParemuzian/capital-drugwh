@@ -67,6 +67,13 @@ class User extends BaseUser
      */
     private $phone;
 
+    /**
+     * @var
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\UserSettings", inversedBy="user")
+     * @ORM\JoinColumn(name="user_settings", referencedColumnName="id")
+     */
+    private $userSettings;
+
     public function __toString()
     {
         return $this->id ? $this->username : '';
@@ -157,5 +164,29 @@ class User extends BaseUser
     public function getPhone()
     {
         return $this->phone;
+    }
+
+    /**
+     * Set userSettings
+     *
+     * @param \AppBundle\Entity\UserSettings $userSettings
+     *
+     * @return User
+     */
+    public function setUserSettings(\AppBundle\Entity\UserSettings $userSettings = null)
+    {
+        $this->userSettings = $userSettings;
+
+        return $this;
+    }
+
+    /**
+     * Get userSettings
+     *
+     * @return \AppBundle\Entity\UserSettings
+     */
+    public function getUserSettings()
+    {
+        return $this->userSettings;
     }
 }

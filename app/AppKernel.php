@@ -40,6 +40,7 @@ class AppKernel extends Kernel
             new A2lix\TranslationFormBundle\A2lixTranslationFormBundle(),
             new APY\DataGridBundle\APYDataGridBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
+            new WhiteOctober\TCPDFBundle\WhiteOctoberTCPDFBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
