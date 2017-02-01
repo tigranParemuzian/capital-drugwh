@@ -165,6 +165,13 @@ class DefaultController extends Controller
 
             $invoiceSettings = $em->getRepository('AppBundle:InvoiceSettings')->findMax();
 
+            if(!$invoiceSettings){
+                $this->addFlash(
+                    'notice',
+                    'Project is not ready. Please add invoice settings.!'
+                );
+                return $this->redirectToRoute('my_bag');
+            }
             $dueDate = clone $now;
             $shippingHandling = clone $now;
             $invoice->setTotal($total);

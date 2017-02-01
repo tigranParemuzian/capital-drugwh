@@ -9,12 +9,12 @@
     <div class="row">
         <div class="panel panel-success">
             <div class="panel-heading">
+                <h1 class="header-title">AAROGYA MED LLC <span>{{ app.user.username }} Bag</span></h1>
                 {% for flash_message in app.session.flashBag.get('notice') %}
                     <div class="flash-notice">
                         {{ flash_message }}
                     </div>
                 {% endfor %}
-                <h1 class="header-title">AAROGYA MED LLC <span>{#{{ name }}#}</span></h1>
             </div>
             <div class="panel-body container">
                 <table class="table table-hover order">
