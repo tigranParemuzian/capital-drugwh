@@ -9,10 +9,10 @@
     <div class="row">
         <div class="panel panel-success">
             <div class="panel-heading">
-                <h1 class="header-title">AAROGYA MED LLC <span>{{ app.user.username }} Bag</span></h1>
+                <h1 class="header-title">AAROGYA MED LLC <span class="uppercase">{{ app.user.username }} Bag</span></h1>
                 {% for flash_message in app.session.flashBag.get('notice') %}
                     <div class="flash-notice">
-                        {{ flash_message }}
+                        <p>{{ flash_message }}</p>
                     </div>
                 {% endfor %}
             </div>
