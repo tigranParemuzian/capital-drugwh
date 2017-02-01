@@ -216,3 +216,17 @@ monolog:
             type:  stream
             path:  "%kernel.logs_dir%/urldataerror.log"
             channels: [urldataerror]
+
+knp_snappy:
+    pdf:
+        enabled:    true
+        binary:     /usr/local/bin/wkhtmltopdf #"\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe\"" for Windows users
+        options:
+              - { name: 'viewport-size', value: ‘1024x768’ }
+              - { name: 'page-size', value: 'A4' }
+              - { name: 'orientation', value: 'Landscape' }
+    image:
+        enabled:    true
+        binary:     /usr/local/bin/wkhtmltoimage #"\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltoimage.exe\"" for Windows users
+        options:    []
+    temporary_folder: %kernel.cache_dir%/../web/uploads/invoice

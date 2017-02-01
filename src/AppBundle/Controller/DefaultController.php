@@ -17,6 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use APY\DataGridBundle\Grid\Source\Entity;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
@@ -61,6 +62,7 @@ class DefaultController extends Controller
 
     /**
      * @Route("/show/byid/{id}", name="show_single_id")
+     * @Security("has_role('ROLE_USER')")
      * @Template()
      */
     public function showSingleAction(Request $request, $id){
@@ -72,7 +74,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("medicine/{slug}", name="show_single")
+     * @Route("/medicine/{slug}", name="show_single")
      * @Template()
      */
     public function showAction(Request $request, $slug){
@@ -93,11 +95,83 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("my_bag", name="my_bag")
+     * @Route("/my_bag", name="my_bag")
      * @Template()
+     * @Security("has_role('ROLE_USER')")
      */
     public function myBagAction(Request $request){
 
+//        $d = $this->generatePdf();
+//       return $d;
         return array('mybag');
+    }
+
+    /**
+     * @Route("/submit", name="submit_order")
+     * @Template()
+     * @param Request $request
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function submitAction(Request $request){
+
+
+        $filename = sprintf('invoice-%s.pdf', date('Y-m-d H:i:s'));
+        $path = $this->container->getParameter('kernel.root_dir')."/../web/uploads/invoice/" . $filename;
+
+        $pageUrl = $this->generateUrl('pdf_generate', array('userId'=>$this->getUser()->getId()), true); // use absolute path!
+        $this->container->get('knp_snappy.pdf')->generate($pageUrl, $path);
+
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutput($pageUrl),
+            200,
+            array(
+                'Content-Type'          => 'application/pdf',
+                'Content-Disposition'   => sprintf('attachment; filename="%s"', $path),
+            )
+        );
+
+        return array('message'=>'message');
+    }
+
+    /**
+     *
+     * @Route("/pdf/{userId}", name="pdf_generate")
+     * @Template()
+     * @param Request $request
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function pdfAction(Request $request, $userId){
+
+
+        $em = $this->getDoctrine()->getManager();
+
+        $bookings = $em->getRepository('AppBundle:Booking')->findAllNewByClient($userId);
+        $invoiceSettings = $em->getRepository('AppBundle:InvoiceSettings')->findMax();
+
+
+//        dump($invoiceSettings); exit;
+
+        return array('invoiceSettings'=>$invoiceSettings, 'bookings'=>$bookings);
+
+
+
+    }
+
+    public function generatePdf(){
+
+
+//        $pdfGenerator->generatePDF($html, 'UTF-8');
+
+return true;
+//        return new Response($pdfGenerator->generatePDF($html),
+//            200,
+//            array(
+//                'Content-Type' => 'application/pdf',
+//                'Content-Disposition' => 'inline; filename="out.pdf"'
+//            )
+//        );
+
     }
 }

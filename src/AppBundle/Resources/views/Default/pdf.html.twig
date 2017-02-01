@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    {% block metadata %}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="">
+        <meta name="author" content="">
+    {% endblock %}
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" type="text/css" href="{{ asset('jquery_components/bootstrap/dist/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('jquery_components/bootstrap/dist/css/bootstrap-theme.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/app/css/style.css') }}">
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+<body>
+{% block body %}
+    {% block content %}
+    <div class="wrapper invoice">
+        <div class="row">
+          <div class="col-md-4">
+              <ul class="footer-info-list">
+                  <li><b>AAROGYA MEDSURG LLC</b></li>
+                  <li><span>Tel:</span>1-909-980-9900</li>
+                  <li>Working hours Mon to Fri 9-00am to 5-00pm</li>
+                  <li><span>Address:</span>8351 ELM AVE, #103</li>
+                  <li><span>City:</span>RANCHO CUCAMONGA</li>
+                  <li><span>State:</span>CA</li>
+                  <li><span>Zip:</span>91730</li>
+              </ul>
+          </div>
+          <div class="col-md-5"></div>
+          <div class="col-md-3 text-right">
+              <a href="{{ path('homepage') }}" target="_blank">
+                  <img src="{{ asset('bundles/app/images/logo.png') }}" class="img-responsive img-circle invoice-logo">
+              </a>
+          </div>
+            <div class="col-md-12 text-center invoice-header">
+
+                <header><h1>INVOICE</h1></header>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 container">
+                <div class="col-md-4">
+                    <ul class="footer-info-list">
+                        <li><b>BILL TO</b></li>
+                        <li>Brett Keenan</li>
+                        <li>Small Town Pharmacy</li>
+                        <li>1 N West End Blvd</li>
+                        <li>Quakertown, PA 18951</li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="footer-info-list">
+                        <li><b>SHIP TO</b></li>
+                        <li>Brett Keenan</li>
+                        <li>Small Town Pharmacy</li>
+                        <li>1 N West End Blvd</li>
+                        <li>Quakertown, PA 18951</li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="footer-info-list">
+                        <li><span>INVOICE</span>&nbsp;11111</li>
+                        <li><span>DATE</span>&nbsp;{{ "now"|date("m/d/Y") }}</li>
+                        <li><span>DUE DATE</span>&nbsp;{{ "now"|date("m/d/Y") }}</li>
+                        <li><span>TERMS</span>&nbsp;Net 15</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="wrapper">
+            <div class="row">
+
+                <div class="col-md-12 separator">
+                    <hr/>
+                </div>
+            </div>
+        </div>
+<div class="container">
+            <div class="col-md-12 ">
+                <div class="col-md-6">
+                    <ul class="footer-info-list invoice-shipping">
+                        <li><b>SHIP DATE</b></li>
+                        <li>{{ "now"|date("m/d/Y") }}</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <ul class="footer-info-list invoice-shipping">
+                        <li><b>SHIP VIA</b></li>
+                        <li>FEDEX</li>
+                    </ul>
+                </div>
+            </div>
+</div>
+        <div class="wrapper">
+            <div class="row">
+
+                <div class="col-md-12 separator">
+                    <hr/>
+                </div>
+            </div>
+        </div>
+    <div class="container">
+        <div class="row invoice-body">
+            <div class="col-md-12 text-uppercase text-left">
+                <div class="col-md-2"><b>#</b></div>
+                <div class="col-md-3"><b>Name</b></div>
+                <div class="col-md-3"><b>NDS</b></div>
+                <div class="col-md-2"><b>QTY</b></div>
+                <div class="col-md-2"><b>Amount</b></div>
+            </div>
+            {% set count = 1 %}
+            {% set total = 0 %}
+            {% for booking in bookings %}
+            <div class="col-md-12 text-uppercase text-left">
+                <div class="col-md-2"><b>{{ count }}</b></div>
+                <div class="col-md-3"><b>{{ booking.product.name }}</b></div>
+                <div class="col-md-3"><b>{{ booking.product.productItem.nds }}</b></div>
+                <div class="col-md-2"><b>{{ booking.count }}</b></div>
+                <div class="col-md-2"><b>{{ booking.subTotal }} &nbsp;$</b></div>
+            </div>
+                {% set count = count +1 %}
+                {% set total = total + booking.subTotal %}
+            {% endfor %}
+            <hr>
+            <div class="col-md-12">
+                <div class="col-md-6 text-left">
+                    <p>All payments must be made within 15 days from the date of invoice. There
+                        will be a 1.5% interest charge per month on late invoices.</p>
+                </div>
+                <div class="col-md-6 text-left">
+                    <h1>BALANCE DUE</h1><h1 >{{ total }} &nbsp;$</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+    {% block footer %}
+        <footer class="footer">
+
+        </footer>
+    {% endblock %}
+{% endblock %}
+<script type="text/javascript" src="{{ asset('jquery_components/jquery/dist/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('jquery_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+{% block javascripts %}
+{% endblock %}
+</body>
+</html>

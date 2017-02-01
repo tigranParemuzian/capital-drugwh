@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Booking
@@ -47,13 +49,6 @@ class Booking
     private $subTotal;
 
     /**
-     * @var float
-     *
-     * @ORM\Column(name="shippingHandling", type="float", nullable=true)
-     */
-    private $shippingHandling;
-
-    /**
      * @var
      * @ORM\ManyToOne(targetEntity="Product", inversedBy="booking")
      * @ORM\JoinColumn(name="products_is", referencedColumnName="id")
@@ -69,9 +64,30 @@ class Booking
 
     /**
      * @var
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Invoice", inversedBy="booking")
+     * @ORM\JoinColumn(name="invoice_id", referencedColumnName="id")
+     */
+    private $invoice;
+
+    /**
+     * @var
      * @ORM\Column(name="status", type="smallint")
      */
     private $status;
+
+    /**
+     * @var
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     */
+    private $created;
+
+    /**
+     * @var
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
+     */
+    private $updated;
 
     /**
      * Get id
@@ -156,30 +172,6 @@ class Booking
     }
 
     /**
-     * Set shippingHandling
-     *
-     * @param float $shippingHandling
-     *
-     * @return Booking
-     */
-    public function setShippingHandling($shippingHandling)
-    {
-        $this->shippingHandling = $shippingHandling;
-
-        return $this;
-    }
-
-    /**
-     * Get shippingHandling
-     *
-     * @return float
-     */
-    public function getShippingHandling()
-    {
-        return $this->shippingHandling;
-    }
-
-    /**
      * Set client
      *
      * @param \AppBundle\Entity\User $client
@@ -249,5 +241,77 @@ class Booking
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     *
+     * @return Booking
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set updated
+     *
+     * @param \DateTime $updated
+     *
+     * @return Booking
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * Get updated
+     *
+     * @return \DateTime
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    /**
+     * Set invoice
+     *
+     * @param \AppBundle\Entity\Invoice $invoice
+     *
+     * @return Booking
+     */
+    public function setInvoice(\AppBundle\Entity\Invoice $invoice = null)
+    {
+        $this->invoice = $invoice;
+
+        return $this;
+    }
+
+    /**
+     * Get invoice
+     *
+     * @return \AppBundle\Entity\Invoice
+     */
+    public function getInvoice()
+    {
+        return $this->invoice;
     }
 }

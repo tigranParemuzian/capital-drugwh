@@ -95,6 +95,52 @@ ul.grid-row-actions{
     font-weight: 200;
     color: #626262;
 }
+
+.invoice{
+    margin-top: 25px;
+
+}
+
+.separator > hr{
+    border-top: 2px solid #0DA15A;
+}
+
+.invoice-header{
+    background: aliceblue;
+    border: #0DA15A solid 1px;
+
+}
+
+.invoice-header > header > h1{
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: 900;
+    font-size: 25px;
+    color: #0DA15A;
+}
+
+.invoice-logo{
+    border: black solid 2px;
+}
+
+.invoice-shipping > li > b{
+    font-size: 20px;
+    color: #0DA15A;
+}
+.invoice-body{
+    line-height: 46px;
+}
+
+.invoice-body > div.col-md-12{
+    border-bottom: #0DA15A solid 2px;
+}
+
+.invoice-body h1{
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: 900;
+    font-size: 25px;
+    color: #0DA15A;
+    max-width: 300px;
+}
 select{
     background-color: white;
     font-weight: 200;

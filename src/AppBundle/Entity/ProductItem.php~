@@ -266,4 +266,28 @@ class ProductItem
     {
         return $this->product;
     }
+
+    /**
+     * Set strength
+     *
+     * @param string $strength
+     *
+     * @return ProductItem
+     */
+    public function setStrength($strength)
+    {
+        $this->strength = $strength;
+
+        return $this;
+    }
+
+    /**
+     * Get strength
+     *
+     * @return string
+     */
+    public function getStrength()
+    {
+        return $this->strength;
+    }
 }

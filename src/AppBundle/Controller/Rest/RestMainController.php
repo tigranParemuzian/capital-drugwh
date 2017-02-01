@@ -44,7 +44,7 @@ class RestMainController extends FOSRestController
      *         200="Returned when successful",
      *     }
      * )
-     * @Rest\View
+     * @Rest\View()
      */
     public function getMyBagAction()
     {

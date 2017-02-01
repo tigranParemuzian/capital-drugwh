@@ -31,8 +31,14 @@ services:
         tags:
             - {name: sonata.admin, manager_type: orm, group: Product, label: Product, show_in_dashboard: true}
 
-    admin.category:
-        class: AppBundle\Admin\CategoryAdmin
-        arguments: [~, AppBundle\Entity\Category, ~]
+    admin.invoice:
+        class: AppBundle\Admin\InvoiceAdmin
+        arguments: [~, AppBundle\Entity\Invoice, ~]
         tags:
-            - {name: sonata.admin, manager_type: orm, group: Product, label: Product Category, show_in_dashboard: true}
+            - {name: sonata.admin, manager_type: orm, group: Invoice, label: Invoices, show_in_dashboard: true}
+
+    admin.invoice_settings:
+        class: AppBundle\Admin\InvoiceSettingsAdmin
+        arguments: [~, AppBundle\Entity\InvoiceSettings, ~]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: Invoice, label: Invoice Settings, show_in_dashboard: true}

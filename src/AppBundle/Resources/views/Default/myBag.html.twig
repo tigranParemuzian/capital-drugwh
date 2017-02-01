@@ -20,24 +20,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {#{% for product in products %}
-                        <tr id="{{ product.slug }}">
-                            <td>&nbsp;<span>{{ product.id }}</span></td>
-                            <td> {{ product.name }} </td>
-                            <td> {{ product.category.name }} </td>
-                            <td> {{ product.productItem.size }} {{ product.productItem.unit }}</td>
-                            <td> {{ product.price }}$ </td>
-                            <td><input type="number" name="count"></td>
-                            <td> <span>Available</span>{{ product.count }}</td>
-                            <td> <button class="btn btn-success"><span class="glyphicon glyphicon-plus-sign"></span></button></td>
-                        </tr>
-                    {% endfor %}#}
+
                     </tbody>
                     <tfoot>
                     <tr>
                         <td class="total-count" colspan="2"><span>Selected count </span> 0</td>
                         <td class="total-price" colspan="2"><span>Selected price </span> 0$</td>
-                        <td class="create_invoice" colspan="2"><button class="btn btn-success">Submit order</button></td>
+                        <td class="create_invoice" colspan="2"><a href="{{ path('submit_order')}}" class="btn btn-success">Submit order</a></td>
                     </tr>
                     </tfoot>
                 </table>
