@@ -34,7 +34,7 @@ nav.navbar{
 #bs-example-navbar-collapse-1 ul li a{
     color: #D9EEE4;
 }
-#bs-example-navbar-collapse-1 ul li a:hover, .nav .open>a{
+#bs-example-navbar-collapse-1 ul li a:hover{
     background: #D9EEE4;
     color: #0DA15A;
     border-top-color: #11fe6b;
@@ -89,6 +89,16 @@ ul.grid-row-actions{
     margin-left: -40px;
 }
 
+li.open >.dropdown-toggle
+{
+    color: #0DA15A;
+}
+
+ul.dropdown-menu{
+    background-color: #00a157;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
 .grid_body{
     font-family: Helvetica, Arial, sans-serif;
     font-size: 12px;
