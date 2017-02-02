@@ -234,15 +234,19 @@ class DefaultController extends Controller
     public function invoiceAction(Request $request, $invoiceId){
 
         $em = $this->getDoctrine()->getManager();
+        $secure = $this->container->get('security.authorization_checker');
+        if(!$secure->isGranted("ROLE_SUPER_ADMIN")){
 
-        $invoices = $em->getRepository('AppBundle:Invoice')->findUniqByAuthorAndId($this->getUser()->getId(), $invoiceId);
+            $invoices = $em->getRepository('AppBundle:Invoice')->findUniqByAuthorAndId($this->getUser()->getId(), $invoiceId);
 
-        if(!$invoices){
-            $this->addFlash(
-                'notice',
-                'Not have a permission!'
-            );
-           return $this->redirectToRoute('submit_order');
+            if(!$invoices){
+                $this->addFlash(
+                    'notice',
+                    'Not have a permission!'
+                );
+                return $this->redirectToRoute('submit_order');
+            }
+
         }
 
         $filename = sprintf('invoice-%s.pdf', $invoiceId);

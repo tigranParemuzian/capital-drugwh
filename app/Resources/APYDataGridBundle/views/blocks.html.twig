@@ -135,7 +135,7 @@
                 {% if column.visible(grid.isReadyForExport) %}
                     {% if column.renderBlockId == 'buy_count' %}
                         <td class="grid-column-{{ column.renderBlockId }}{% if column.class %} {{ column.class }}{% endif %}{% if column.align != 'left'%} align-{{ column.align }}{% endif %}{% if loop.last %} last-column{% endif %}{% if last_row %} last-row{% endif %}">
-                            <input id="used_count_{{ row.field('id') }}" max="{{ row.field('count') }}" type="number" style="max-width: 100px;" placeholder="need count"
+                            <input id="used_count_{{ row.field('id') }}" max="{{ row.field('count') }}" type="number" style="max-width: 100px;" placeholder="count"
                                    onkeydown="updateData(this.id, 0)" onkeyup="updateData(this.id, 0)" onchange="updateData(this.id, 1)">
                         <input type="hidden" value="{{ row.field('slug') }}" id="slug_{{ row.field('id') }}">
                             <div class="help-text"></div>

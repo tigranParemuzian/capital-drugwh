@@ -36,7 +36,7 @@
                         <td class="total-count" colspan="2"><span>Selected count </span> 0</td>
                         <td class="total-price" colspan="2"><span>Selected price </span> 0$</td>
                         <td class="create_invoice" colspan="2">
-                            {% if app.user.userSettings == null %}
+                            {% if app.user.isValid == 1 %}
                             <a href="{{ path('submit_order')}}" class="btn btn-success">Submit order</a>
                             {% else %}
                                 <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-info"><span class="glyphicon glyphicon-edit"></span>&nbsp;Edit Profile</a>

@@ -1,0 +1,5 @@
+{% if admin.isGranted('EDIT', object) and admin.hasRoute('edit') %}
+    <a href="{{ path('generate_invoice', {'invoiceId':object.id}) }}" target="_blank" class="btn btn-default calculate_link" title="{{ 'action_calculate'|trans({}, 'SonataAdminBundle') }}">
+        <span class="glyphicon glyphicon-floppy-disk"></span>&nbsp;Show
+    </a>
+{% endif %}

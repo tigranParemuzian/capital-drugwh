@@ -96,6 +96,12 @@ class Invoice
      */
     private $user;
 
+    public function __toString()
+    {
+        return $this->id ? (string)$this->number: 'New Invoice';
+        // TODO: Implement __toString() method.
+    }
+
     /**
      * Get id
      *

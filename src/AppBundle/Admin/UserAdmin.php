@@ -65,6 +65,7 @@ class UserAdmin extends Admin
             ->add('lastName')
             ->add('firstName')
             ->add('enabled')
+            ->add('isValid', null, array('label'=>'Valid'))
             ->add('phone')
             ->add('roles', 'doctrine_orm_string', array(), 'choice', array(
                 'choices'  => array('ROLE_DRIVER'=>'Driver', 'ROLE_CLIENT'=>'Client', 'ROLE_SUPER_ADMIN'=>'Admin'),
@@ -92,6 +93,7 @@ class UserAdmin extends Admin
                 'multiple' => true
             ))
             ->add('enabled', null, array('editable'=>true))
+            ->add('isValid', null, array('editable'=>true, 'label'=>'Valid'))
             ->add('created')
             ->add('_action', 'actions', array(
                 'actions' => array(

@@ -74,6 +74,12 @@ class User extends BaseUser
      */
     private $userSettings;
 
+    /**
+     * @var
+     * @ORM\Column(name="is_valid", type="boolean")
+     */
+    private $isValid;
+
     public function __toString()
     {
         return $this->id ? $this->username : '';
@@ -83,6 +89,7 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
+        $this->isValid=false;
     }
 
     /**
@@ -188,5 +195,29 @@ class User extends BaseUser
     public function getUserSettings()
     {
         return $this->userSettings;
+    }
+
+    /**
+     * Set isValid
+     *
+     * @param boolean $isValid
+     *
+     * @return User
+     */
+    public function setIsValid($isValid)
+    {
+        $this->isValid = $isValid;
+
+        return $this;
+    }
+
+    /**
+     * Get isValid
+     *
+     * @return boolean
+     */
+    public function getIsValid()
+    {
+        return $this->isValid;
     }
 }
