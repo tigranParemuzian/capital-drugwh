@@ -90,6 +90,12 @@ class Booking
      */
     private $updated;
 
+    public function __toString()
+    {
+        return $this->id ? $this->product . ' count: ' . $this->count :"new order";
+        // TODO: Implement __toString() method.
+    }
+
     /**
      * Get id
      *

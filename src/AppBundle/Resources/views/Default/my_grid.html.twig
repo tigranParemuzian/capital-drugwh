@@ -33,18 +33,6 @@
                 </tr>
             </thead>
             <tbody>
-            {#{% for product in products %}
-                <tr id="{{ product.slug }}">
-                    <td>&nbsp;<span>{{ product.id }}</span></td>
-                    <td> {{ product.name }} </td>
-                    <td> {{ product.category.name }} </td>
-                    <td> {{ product.productItem.size }} {{ product.productItem.unit }}</td>
-                    <td> {{ product.price }}$ </td>
-                    <td><input type="number" name="count"></td>
-                    <td> <span>Available</span>{{ product.count }}</td>
-                    <td> <button class="btn btn-success"><span class="glyphicon glyphicon-plus-sign"></span></button></td>
-                </tr>
-            {% endfor %}#}
             </tbody>
             <tfoot>
             <tr>

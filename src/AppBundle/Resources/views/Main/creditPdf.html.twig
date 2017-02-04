@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    {% block metadata %}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="">
+        <meta name="author" content="">
+    {% endblock %}
+    <title>{% block title %}Invoise at &nbsp;{{ "now"|date("m/d/Y") }}!{% endblock %}</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" type="text/css" href="{{ asset('jquery_components/bootstrap/dist/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('jquery_components/bootstrap/dist/css/bootstrap-theme.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/app/css/style.css') }}">
+        <style type="text/css" rel="stylesheet">
+            header > h1 {
+                font-size: 31px;
+                text-decoration: underline;
+            }
+            p.parent-text>span {
+                margin-left: 10%;
+            }
+        </style>
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+<body>
+{% block body %}
+    {% block content %}
+        <div class="wrapper invoice">
+            <div class="row">
+                <div class="col-md-3 text-center">
+                    <div class="col-md-6">
+                        <a href="{{ path('homepage') }}" target="_blank">
+                            <img src="{{ asset('bundles/app/images/logo.png') }}" class="img-responsive img-circle invoice-logo">
+                        </a>
+                    </div>
+                    <div class="col-md-6 text-center"><h1>AAMED LLC</h1></div>
+
+                </div>
+
+                <div class="col-md-4">
+                    <ul class="footer-info-list">
+                        <li><span>Address:</span>8351 ELM AVE, #103</li>
+                        <li><span>City:</span>RANCHO CUCAMONGA</li>
+                        <li><span>State:</span>CA</li>
+                        <li><span>Zip:</span>91730</li>
+                        <li><span>Web:</span> www.aamedllc.com</li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="footer-info-list">
+                        <li><span>Toll Free:</span>1-888-888-8888</li>
+                        <li><span>Cell:</span>1-909-682-8477</li>
+                        <li><span>Tel:</span>1-909-980-9900</li>
+                        <li><span>Fax:</span>1-888-888-8888</li>
+                        <li><span>Email:</span> info@aamedllc.com</li>
+                    </ul>
+                </div>
+                <div class="col-md-12 text-center invoice-header">
+
+                    <header><h1>CREDIT APPLICATION AND AGREEMENT</h1><p>Please Print</p></header>
+                </div>
+            </div>
+        </div>
+        <div class="container" style="margin-top: 20px">
+            <div class="row">
+
+                <div class="panel-body">
+
+                    <!-- Tab panes -->
+                    <div class="help-text bs-callout bs-callout-info active" id="general_information">
+                        <header><h1>General Information</h1></header>
+                        <ol><li>
+                                <span class="title-info">Business / Trade Name:</span><span class="value-info">&nbsp;{{ userSettings.tradeName }}</span>
+                            </li>
+                            <li>
+                                <span class="title-info">Business / Trade Address:</span><span class="value-info">&nbsp;{{ userSettings.tradeAddress }}</span>
+                            </li>
+                        </ol>
+                    </div>
+                    <div class="help-text bs-callout bs-callout-info" id="financial_information">
+                        <header><h1> Financial information </h1></header>
+                        <ol>
+                                <li><span class="title-info">Type Of Ownership:</span>&nbsp;
+                                    {% set otype = '' %}
+                                    {% if userSettings.ownershipType == 1 %}
+                                        {% set otype = 'Proprietorship' %}
+                                    {% elseif userSettings.ownershipType == 2 %}
+                                        {% set otype = 'Partnership' %}
+                                    {% elseif userSettings.ownershipType == 3 %}
+                                        {% set otype = 'Corporation' %}
+                                    {% elseif userSettings.ownershipType == 4 %}
+                                        {% set otype = 'Limited Liability Company' %}
+                                    {% elseif userSettings.ownershipType == 5 %}
+                                        {% set otype = 'State of Incorporation' %}
+                                    {% endif %}
+                                    <span class="value-info">{{ otype }}</span></li>
+                                <li><span class="title-info">Legal Corporate Name Or Business:</span><span class="value-info">&nbsp;{{ userSettings.corporateName }}</span></li>
+                                <li><span class="title-info">Federal Tax I.D.:</span><span class="value-info">&nbsp;{{ userSettings.taxId }}</span></li>
+                                <li><span class="title-info">State Id:</span><span class="value-info">&nbsp;{{ userSettings.stateId }}</span></li>
+                                <li><span class="title-info">HIN:</span><span class="value-info">&nbsp;{{ userSettings.hin }}</span></li>
+                                <li><span class="title-info">State Pharmacy License:</span><span class="value-info">&nbsp;{{ userSettings.statePharmacyLicense }}</span></li>
+                                <li><span class="title-info">DEA License:</span><span class="value-info">&nbsp;{{ userSettings.deaLicense }}</span></li>
+                                <li><span class="title-info">State Controlled Substance License:</span><span class="value-info">&nbsp;{{ userSettings.stateControlledSubstanceLicense }}</span>
+                                </li>
+                            </ol>
+                        </div>
+                        <div class="help-text bs-callout bs-callout-info" id="shipping">
+                            <header><h1>Shipping Address</h1></header>
+                            <p>
+                                <span class="title-info">Shipping Address:</span>
+                                <span class="value-info">&nbsp;{{ userSettings.shippingAddressState }}&nbsp;{{ userSettings.shippingAddressCity }}&nbsp;{{ userSettings.shippingAddressCounty }}&nbsp;{{ userSettings.shippingAddressStreet }}&nbsp;{{ userSettings.shippingAddressNumber}} &nbsp;{{ userSettings.shippingAddressZip}}</span>
+                            </p>
+                        </div>
+                        <div class="help-text bs-callout bs-callout-info" id="business_purchasing">
+                            <header><h1>Primary Business/Purchasing</h1></header>
+                            <ol>
+                                <li>
+                                    <p>
+                                        <span class="title-info">Business Contact:</span>
+                                        <span class="value-info">{{ userSettings.primeryBusinessContact}}</span>
+                                    </p>
+                                    <p>
+                                        <span class="title-info">Business Contact Title:</span>
+                                        <span class="value-info">{{ userSettings.primeryBusinessContactTitle}}</span>
+                                        <span class="title-info">Business Contact Email:</span>
+                                        <span class="value-info">{{ userSettings.primeryBusinessContactEmail}}</span>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        <span class="title-info">Purchasing Contact:</span>
+                                        <span class="value-info">{{-userSettings.primeryPurchasingContact-}}</span>
+                                    </p>
+                                    <p>
+                                        <span class="title-info">Purchasing Contact Title:</span>
+                                        <span class="value-info">{{-userSettings.primeryPurchasingContactTitle-}}</span>
+                                        <span class="title-info">Purchasing Contact Email:</span>
+                                        <span class="value-info">{{-userSettings.primeryPurchasingContactEmail-}}</span>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p><span class="title-info">Business Telephone:</span>
+                                        <span class="value-info">{{-userSettings.businessTelephone-}}</span>
+                                        <span class="title-info">Business Fax:</span>
+                                        <span class="value-info">{{-userSettings.businessFax-}}</span>
+                                        <span class="title-info">Pharmacist In Charge:</span>
+                                        <span class="value-info">{{-userSettings.pharmacistInCharge-}}</span>
+                                        <span class="title-info">Pic License:</span>
+                                        <span class="value-info">{{-userSettings.picLicense-}}</span>
+                                    </p>
+                                </li>
+                            </ol>
+                        </div>
+                        <div class="help-text bs-callout bs-callout-info" id="major_suppliers">
+                            <header><h1>Major Suppliers</h1></header>
+                            {% set w2 = 0 %}
+                            {% set w3 = 0 %}
+                            {% if userSettings.supplierWholesalers2 %}{% set w2 = 1 %}{% endif %}
+                            {% if userSettings.supplierWholesalers3 %}{% set w3 = 1 %}{% endif %}
+                            {% if w2 >0 or w3 >0 %}<ol>
+                                <li>
+                                    {% endif %}
+                                    <p>
+                                        <span class="title-info">Supplier:</span>
+                                        <span class="value-info">{{-userSettings.supplierWholesalers-}}</span>
+                                        <span class="title-info">Address:</span>
+                                        <span class="value-info">{{-userSettings.supplierWholesalersAddress-}}</span>
+                                        <span class="title-info">Phone:</span>
+                                        <span class="value-info">{{-userSettings.supplierWholesalersPhone-}}</span>
+                                        <span class="title-info">Contact:</span>
+                                        <span class="value-info">{{-userSettings.supplierWholesalersContact-}}</span>
+                                    </p>
+                                    {% if w2 >0 or w3 >0 %}
+                                </li>
+                                {% if w2 > 0 %}
+                                    <li>
+                                        <span class="title-info">Supplier:</span>
+                                        <span class="value-info">{{-userSettings.supplierWholesalers2-}}</span>
+                                        <span class="title-info">Address:</span>
+                                        <span class="value-info">{{-userSettings.supplierWholesalersAddress2-}}</span>
+                                        <span class="title-info">Phone:</span>
+                                        <span class="value-info">{{-userSettings.supplierWholesalersPhone2-}}</span>
+                                        <span class="title-info">Contact:</span>
+                                        <span class="value-info">{{-userSettings.supplierWholesalersContact2-}}</span>
+                                    </li>
+                                {% endif %}
+                                {% if w3 >0  %}
+                                    <li>
+                                        <span class="title-info">Supplier:</span>
+                                        <span class="value-info">{{-userSettings.supplierWholesalers3-}}</span>
+                                        <span class="title-info">Address:</span>
+                                        <span class="value-info">{{-userSettings.supplierWholesalersAddress3-}}</span>
+                                        <span class="title-info">Phone:</span>
+                                        <span class="value-info">{{-userSettings.supplierWholesalersPhone3-}}</span>
+                                        <span class="title-info">Contact:</span>
+                                        <span class="value-info">{{-userSettings.supplierWholesalersContact3-}}</span>
+                                    </li>
+                                {% endif %}
+                            </ol>
+                            {% endif %}
+                        </div>
+                        <div class="help-text bs-callout bs-callout-info" id="bank_info">
+                            <header><h1>Bank Info</h1></header>
+                            {% set b2 = 0 %}
+                            {% if userSettings.bankName2 %}{% set b2 = 1 %}{% endif %}
+                            {% if w2 >0 %}
+                            <ol>
+                                <li>
+                                    {% endif %}
+                                    <span class="title-info">Bank Name:</span>
+                                    <span class="value-info">{{-userSettings.bankName-}}</span>
+                                    <span class="title-info">Bank City:</span>
+                                    <span class="value-info">{{-userSettings.bankCity-}}</span>
+                                    <span class="title-info">Bank State:</span>
+                                    <span class="value-info">{{-userSettings.bankState-}}</span>
+                                    <span class="title-info">Bank Account Officer:</span>
+                                    <span class="value-info">{{-userSettings.bankAccountOfficer-}}</span>
+                                    <span class="title-info">Bank Phone:</span>
+                                    <span class="value-info">{{-userSettings.bankPhone-}}</span>
+                                    <span class="title-info">Bank Account:</span>
+                                    <span class="value-info">{{-userSettings.bankAccount-}}</span>
+                                    {% if w2 >0 %}</li>
+                                <li>
+                                    <span class="title-info">Bank Name:</span>
+                                    <span class="value-info">{{-userSettings.bankName2-}}</span>
+                                    <span class="title-info">Bank City:</span>
+                                    <span class="value-info">{{-userSettings.bankCity2-}}</span>
+                                    <span class="title-info">Bank State:</span>
+                                    <span class="value-info">{{-userSettings.bankState2-}}</span>
+                                    <span class="title-info">Bank Account Officer:</span>
+                                    <span class="value-info">{{-userSettings.bankAccountOfficer2-}}</span>
+                                    <span class="title-info">Bank Phone:</span>
+                                    <span class="value-info">{{-userSettings.bankPhone2-}}</span>
+                                    <span class="title-info">Bank Account:</span>
+                                    <span class="value-info">{{-userSettings.bankAccount2-}}</span>
+                                </li>
+                            </ol>
+                            {% endif %}
+                        </div>
+                        <div class="help-text bs-callout bs-callout-info" id="business_info">
+                            <header><h1>Business Info</h1></header>
+                            <ol>
+                                <li>
+                                    <span class="title-info">Type of Business:</span>
+                                    <span class="value-info text-capitalize">{% for type in  userSettings.businessType %}{{ type|replace('_', ' ') }},&nbsp;{% endfor %}</span>
+                                </li>
+                                <li>
+                                    <span class="title-info">Years in Business:</span>
+                                    <span class="value-info">{{-userSettings.businessYear-}}</span>
+                                </li>
+                                <li>
+                                    <span class="title-info">Average Monthly Script Volume:</span>
+                                    <span class="value-info">{{-userSettings.businessMonthlyVolume-}}</span>
+                                </li>
+                                <li>
+                                    <span class="title-info">Average Monthly Generic Sales:</span>
+                                    <span class="value-info">{{-userSettings.businessMonthlyGenericSales-}}&nbsp;$</span>
+                                </li>
+                                <li>
+                                    <span class="title-info">Average Monthly Brand Sales:</span>
+                                    <span class="value-info">{{-userSettings.businessMonthlyBrandSales-}}&nbsp;$</span>
+                                </li>
+                            </ol>
+                        </div>
+                        <div class="help-text bs-callout bs-callout-info">
+                            <header><h1 class="text-capitalize">agreement and disclosures </h1></header>
+                            <ol>
+                                <li>
+                                    <p>As an inducement for Capital Wholesale Drug Co. (“Capital”) to accept orders from or otherwise
+                                        extend or make available credit to Applicant, which includes all Applicant owned stores as listed in
+                                        Exhibit A attached hereto, the undersigned Applicant hereby agrees to comply with the following
+                                        terms of sale, should Capital elect to extend such credit.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>Pricing and payment terms are determined at the time an offer is presented to Applicant and as
+                                        reflected on any accompanying invoice.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>If Capital does not receive payment in accordance with the payment terms or based upon credit
+                                        considerations deemed relevant to Capital, then Capital may refuse to deliver the product covered
+                                        by this Agreement (the "Product"), refuse additional orders, modify payment terms, place the
+                                        Applicant on C.O.D., modify Applicant’s costs of goods, limit or terminate the extension of credit
+                                        and will be entitled to any other remedies available at law or equity.</p></li>
+                                <li>
+                                    <p>All payments shall be made in full, in good funds, either by check or electronic funds transfer
+                                        (either by wire or automated clearinghouse), and in accordance with the payment terms. Capital
+                                        may assess a service charge calculated at the rate of 1.5% per month (or the maximum rate
+                                        allowed by law, if such rate is less than 1.5% per month) on any amount not paid by Applicant to
+                                        Capital when due under the terms of this Agreement from the first day of delinquency. Failure or
+                                        delay by Capital to bill Applicant for any such service charge will not waive Capital’s right to
+                                        receive the same. In the event of default in payments on any invoices, Capital shall have the right
+                                        to declare all invoices immediately due and payable and Applicant gives Capital the authorization
+                                        to use any credit card, debit card or electronic funds transfer to satisfy any past due invoices.
+                                        Applicant shall pay all out-of-pocket expenses, including attorney’s fees, court costs, expenses and
+                                        disbursements, incurred by Capital to collect any amounts due under this Agreement or to
+                                        otherwise enforce any of the terms of this agreement.</p></li>
+                                <li>
+                                    <p>The Product is shipped FOB destination. Applicant’s obligation to pay for Product begins on the
+                                        date of shipment. Applicant agrees to place orders in the specified minimum dollar amount. If the
+                                        order size is less than specified minimum, Applicant agrees to pay a minimum order charge.
+                                        Capital reserves the right at all times to determine what Product it will carry based upon product
+                                        quality, manufacture indemnity, insurance, and other policies, and other standards determined by
+                                        it, and may delete Product from its available inventory at any time. No schedule II orders will be
+                                        delivered other than in compliance with DEA regulations.</p></li>
+                                <li>
+                                    <p>Capital will accept returns of Product within three months after the Product expiration. A 25%
+                                        restocking fee applies to all Product returns except for returns due to shipping damages or errors.
+                                        Applicant must notify Capital within 48 hours of receipt of any discrepancies or shortages on the
+                                        order. Capital may refuse any returns if not notified as herein stated.</p></li>
+                                <li>
+                                    <p>Applicant attests to Capital that it is properly licensed with applicable state licensing agencies to
+                                        receive, dispense, distribute and otherwise legally dispose of the Product. Applicant understands
+                                        that by attesting to this, Capital is complying with the “good faith inquiry” standard to ensure that
+                                        the Product is distributed to properly licensed and/or registered pharmacy locations. Prior to
+                                        purchasing the product from Capital hereunder, Applicant must provide Capital with copies of all
+                                        such licenses and any renewals, revocations or other changes to the same.</p></li>
+                                <li>
+                                    <p>Applicant agrees to all the terms and conditions of the Agreement. This Agreement, together
+                                        with all invoices, purchase orders, and the exhibits and addenda thereto constitute the entire
+                                        agreement and understanding of the parties with respect to the subject matter hereof and
+                                        supersede all prior written and oral arguments, proposals, buds/bid responses, and
+                                        understandings between the parties relative to the subject matter hereof. No changes to this
+                                        Agreement or any purchase orders will be made or be binding upon either party unless made in
+                                        writing and signed by each party. By signing this Agreement, Capital and Applicant each represent
+                                        that it has the authority to bind its respective party to this agreement.</p></li>
+                                <li>
+                                    <p>All information provided in this Application or otherwise submitted is true and correct and is
+                                        being (or will be) furnished for the purpose of obtaining/retaining credit from Capital. Applicant
+                                        authorizes its banks and suppliers to release any and all information as requested by Capital so as to ascertain credit worthiness. Applicant shall provide Capital with financial statements and such
+                                        further information as may reasonably be requested from time to time.</p></li>
+                                <li>
+                                    <p>If there is a lawsuit, Applicant agrees to submit to the jurisdiction of the state courts of
+                                        Franklin County, Ohio or to the jurisdiction of the United States District Court for the Southern
+                                        District of Ohio. Applicant further consents to venue in either of the preceding courts.</p></li>
+                            </ol>
+                        </div>
+                        <div class="help-text bs-callout bs-callout-info">
+                            <header><h1 class="text-capitalize">authorized signature</h1></header>
+                            <span>By:</span><p     style="border-bottom: black solid 2px;
+                                                   width: 95%;
+                                                   margin-left: 40px;"></p>
+                            <p style="margin-left: 40px; font-size: 12px">Print legal name as it appears on the application</p>
+                            <span>By:</span><p     style="border-bottom: black solid 2px;
+                                                   width: 95%;
+                                                   margin-left: 40px;"></p>
+                            <p  class="parent-text" style="margin-left: 40px; font-size: 12px"><span>Authorized</span><span> Signature</span><span>Title</span><span>Printed Name Of Signatory</span><span>Date</span></p>
+
+                        </div>
+                        <div class="help-text bs-callout bs-callout-info row">
+                            <header><h1 class="text-capitalize">guarantee</h1></header>
+                            <p>The undersigned Principal(s) of Applicant by reason of their interest in the Applicant and as an inducement for Capital
+                                Wholesale Drug Co. to extend credit to Applicant, hereby jointly and severally, irrevocably, and unconditionally
+                                guarantee to Capital Wholesale Drug Co. and its subsidiaries affiliates and successors (each a Guarantee party) and
+                                assigns the prompt and full payment (and not merely the ultimate collectability) and performance of all obligations of
+                                Applicant to each Guaranteed party, whether now existing or hereafter arising. The undersigned authorizes Capital
+                                Wholesale Drug Co. to verify this information and/or additional information by obtaining data from a credit reporting
+                                agency. If applicant or its business is hereafter sold, this guaranty shall continue to all credit hereafter made available
+                                to that Applicant or its business (as the case may be) until such time as Capital Wholesale Drug Co. has received 5 days
+                                advanced written notice (via certified mail, return receipt requested) that Applicant and/or Principal(s) will no longer
+                                be responsible for credit thereafter made available with respect to that Applicant or its business.</p>
+                            <p><b>THE UNDERSIGNED ACKNOWLEDGES THAT HIS/HER INDIVIDUAL CREDIT HISTORY MAY BE A
+                                    FACTOR IN THE EVALUATION OF THE CREDIT HISTORY OF THE APPLICANT AND HEREBY CONSENTS
+                                    AND AUTHORIZES THE USE OF A CONSUMER CREDIT REPORT ON THE UNDERSIGNED BY CAPITAL
+                                    WHOLESALE DRUG CO. FROM TIME TO TIME AS CAPITAL WHOLE DRUG CO. MAY DEEM NECESSARY
+                                    IN ITS CREDIT EVALUATIONS.</b></p>
+                            <br>
+                            <br>
+                            <br>
+                            <div class="col-md-6">
+                                <span>By:</span><p     style="border-bottom: black solid 2px;
+                                                   width: 95%;
+                                                   margin-left: 40px;"></p>
+                                <p style="margin-left: 40px; font-size: 12px">Print Name</p>
+                            </div>
+                            <div class="col-md-6">
+                                <span>By:</span><p     style="border-bottom: black solid 2px;
+                                                   width: 95%;
+                                                   margin-left: 40px;"></p>
+                                <p  class="parent-text" style="margin-left: 40px; font-size: 12px"><span> Signature</span><span></span><span></span><span></span><span>Date</span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <span>By:</span><p     style="border-bottom: black solid 2px;
+                                                   width: 95%;
+                                                   margin-left: 40px;"></p>
+                                <p style="margin-left: 40px; font-size: 12px">Print Name</p>
+                            </div>
+                            <div class="col-md-6">
+                                <span>By:</span><p     style="border-bottom: black solid 2px;
+                                                   width: 95%;
+                                                   margin-left: 40px;"></p>
+                                <p  class="parent-text" style="margin-left: 40px; font-size: 12px"><span> Signature</span><span></span><span></span><span></span><span>Date</span></p>
+                            </div>
+                        </div>
+                    </div>
+                <div class="col-md-12 text-left">
+                    <div class="col-md-4"><p style="border-bottom: black solid 2px;">Internal use: Credit Limit: </p></div>
+                    <div class="col-md-4"><p style="border-bottom: black solid 2px;">Payment terms: </p></div>
+                    <div class="col-md-4"><p style="border-bottom: black solid 2px;">Approval: </p></div>
+                </div>
+                </div>
+
+            </div>
+    {% endblock %}
+    {% block footer %}
+        <br>
+        <br>
+        <br>
+    {% endblock %}
+{% endblock %}
+<script type="text/javascript" src="{{ asset('jquery_components/jquery/dist/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('jquery_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+{% block javascripts %}
+{% endblock %}
+</body>
+</html>

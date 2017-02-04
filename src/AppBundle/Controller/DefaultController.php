@@ -29,7 +29,6 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-//        return $this->redirect('http://www.capital-drug.com/');
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
@@ -104,8 +103,6 @@ class DefaultController extends Controller
      */
     public function myBagAction(Request $request){
 
-//        $d = $this->generatePdf();
-//       return $d;
         return array('mybag');
     }
 
@@ -223,7 +220,6 @@ class DefaultController extends Controller
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate($invoices, $this->get('request')->query->get('page', 1), 6);
 
-//        return $this->render(':Main:tag_single_list.html.twig', array());
         return array('pagination' => $pagination);
     }
 

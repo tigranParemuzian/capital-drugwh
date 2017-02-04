@@ -15,7 +15,7 @@ use JMS\Serializer\Annotation as Serializer;
  * @ORM\HasLifecycleCallbacks()
  * @GRID\Column(id="name", type="text")
  * @GRID\Source(columns="id, name, productItem.strength, productItem.manufacturer, productItem.nds, slug, count, price, unit_size, productItem.size, productItem.unit")
- * @GRID\Column(id="unit_size", type="join", title="Size", columns={"productItem.size", "productItem.unit"})
+ * @GRID\Column(id="unit_size", type="join", title="Size", columns={"productItem.size", "productItem.unit"}, size=30)
  */
 class Product
 {
@@ -72,7 +72,7 @@ class Product
      * @var int
      *
      * @ORM\Column(name="count", type="integer")
-     * @GRID\Column(align="center", title="Count", size=50, type="number", filter="input")
+     * @GRID\Column(align="center", title="Count", size=30, type="number", filter="input")
      */
     private $count;
 
@@ -80,7 +80,7 @@ class Product
      * @var float
      *
      * @ORM\Column(name="price", type="float")
-     * @GRID\Column(align="center", title="Price")
+     * @GRID\Column(align="center", title="Price", size=30)
      */
     private $price;
 
@@ -129,7 +129,7 @@ class Product
 
     public function __toString()
     {
-        return $this->id ? $this->productItem->getManufacturer() . ' ' . $this->productItem->getSize() . ' ' . $this->productItem->getUnit() : 'new Product item';
+        return $this->id ? $this->productItem->getManufacturer() . ' ' . $this->productItem->getNds() : 'new Product item';
         // TODO: Implement __toString() method.
     }
 

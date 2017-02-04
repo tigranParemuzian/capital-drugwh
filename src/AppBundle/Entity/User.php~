@@ -196,4 +196,28 @@ class User extends BaseUser
     {
         return $this->userSettings;
     }
+
+    /**
+     * Set isValid
+     *
+     * @param boolean $isValid
+     *
+     * @return User
+     */
+    public function setIsValid($isValid)
+    {
+        $this->isValid = $isValid;
+
+        return $this;
+    }
+
+    /**
+     * Get isValid
+     *
+     * @return boolean
+     */
+    public function getIsValid()
+    {
+        return $this->isValid;
+    }
 }
