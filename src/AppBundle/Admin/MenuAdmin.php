@@ -37,7 +37,21 @@ class MenuAdmin extends Admin
                 'box-class' => 'box box-solid box-danger',
                 'description'=>'Parent information'
             ))
-            ->add('menuItoms', null, array('required'=>false))
+            ->add('menuItoms', 'sonata_type_collection', array(), array(
+                'by_reference' => true,
+                'label' => false,
+                'type_options' => array('delete' => true),
+                'cascade_validation' => true,
+                'btn_add' => 'Add new EventImages',
+                "required" => false ), array(
+                'edit' => 'inline',
+                'inline' => 'table'
+            ))
+            /*->add('menuItoms', 'sonata_type_collection', array(), array(
+                'edit' => 'inline',
+                'inline' => 'table',
+                'sortable'  => 'id'
+            ))*/
             ->add('metaTitle', 'text', array('required'=>true))
             ->add('metaDescription', 'text', array('required'=>true))
         ->end()
@@ -94,5 +108,29 @@ class MenuAdmin extends Admin
         ;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function preUpdate($object)
+    {
+        if($object->getIngredients()){
+            foreach($object->getIngredients() as $productIngredient) {
+                $productIngredient->setMenu($object);
+            }
+        }
+        $object->uploadFile();
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function prePersist($object)
+    {
+        if($object->getIngredients()){
+            foreach($object->getIngredients() as $productIngredient) {
+                $productIngredient->setMenu($object);
+            }
+        }
+        $object->uploadFile();
+    }
 
 }

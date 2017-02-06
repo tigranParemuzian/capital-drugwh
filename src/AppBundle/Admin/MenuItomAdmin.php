@@ -21,6 +21,7 @@ class MenuItomAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
+            ->tab('Menu Itom')
             ->with('Main', array(
                 'class' =>'col-sm-6',
                 'box-class' => 'box box-solid box-danger',
@@ -50,6 +51,7 @@ class MenuItomAdmin extends Admin
                 'config' => array(
                     'uiColor' => '#ffffff',
                     'required'=>true)))
+        ->end()
         ->end()
     ;
 
