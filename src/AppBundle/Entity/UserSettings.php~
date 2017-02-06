@@ -325,39 +325,39 @@ class UserSettings
     /**
      *
      * @var $bankName2
-     * @ORM\Column(name="bank_name_2", type="string")
+     * @ORM\Column(name="bank_name_2", type="string", length=50, nullable=true)
      */
     private $bankName2;
 
     /**
      *
      * @var $bankCity2
-     * @ORM\Column(name="bank_city_2", type="string")
+     * @ORM\Column(name="bank_city_2", type="string", length=50, nullable=true)
      */
     private $bankCity2;
 
     /**
      * @var $bankState2
-     * @ORM\Column(name="bank_state_2", type="string")
+     * @ORM\Column(name="bank_state_2", type="string", length=50, nullable=true)
      */
     private $bankState2;
 
     /**
      * @var $bankAccountOfficer2
-     * @ORM\Column(name="bank_account_officer_2", type="string")
+     * @ORM\Column(name="bank_account_officer_2", type="string", length=50, nullable=true)
      */
     private $bankAccountOfficer2;
 
     /**
      *
      * @var $bankPhone2
-     * @ORM\Column(name="bank_phone_2", type="string")
+     * @ORM\Column(name="bank_phone_2", type="string", length=50, nullable=true)
      */
     private $bankPhone2;
 
     /**
      * @var $bankAccount2
-     * @ORM\Column(name="bank_account_2", type="string")
+     * @ORM\Column(name="bank_account_2", type="string", length=50, nullable=true)
      */
     private $bankAccount2;
 
@@ -1394,6 +1394,9 @@ class UserSettings
      */
     public function setBusinessType($businessType)
     {
+        if(is_array($businessType)){
+            $businessType = json_encode($businessType);
+        }
         $this->businessType = $businessType;
 
         return $this;
@@ -1406,7 +1409,7 @@ class UserSettings
      */
     public function getBusinessType()
     {
-        return $this->businessType;
+        return json_decode($this->businessType, true);
     }
 
     /**
@@ -1503,5 +1506,245 @@ class UserSettings
     public function getBusinessMonthlyBrandSales()
     {
         return $this->businessMonthlyBrandSales;
+    }
+
+    /**
+     * Set ownershipType
+     *
+     * @param integer $ownershipType
+     *
+     * @return UserSettings
+     */
+    public function setOwnershipType($ownershipType)
+    {
+        $this->ownershipType = $ownershipType;
+
+        return $this;
+    }
+
+    /**
+     * Get ownershipType
+     *
+     * @return integer
+     */
+    public function getOwnershipType()
+    {
+        return $this->ownershipType;
+    }
+
+    /**
+     * Set shippingAddressNumber
+     *
+     * @param string $shippingAddressNumber
+     *
+     * @return UserSettings
+     */
+    public function setShippingAddressNumber($shippingAddressNumber)
+    {
+        $this->shippingAddressNumber = $shippingAddressNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get shippingAddressNumber
+     *
+     * @return string
+     */
+    public function getShippingAddressNumber()
+    {
+        return $this->shippingAddressNumber;
+    }
+
+    /**
+     * Set shippingAddressStreet
+     *
+     * @param string $shippingAddressStreet
+     *
+     * @return UserSettings
+     */
+    public function setShippingAddressStreet($shippingAddressStreet)
+    {
+        $this->shippingAddressStreet = $shippingAddressStreet;
+
+        return $this;
+    }
+
+    /**
+     * Get shippingAddressStreet
+     *
+     * @return string
+     */
+    public function getShippingAddressStreet()
+    {
+        return $this->shippingAddressStreet;
+    }
+
+    /**
+     * Set shippingAddressCity
+     *
+     * @param string $shippingAddressCity
+     *
+     * @return UserSettings
+     */
+    public function setShippingAddressCity($shippingAddressCity)
+    {
+        $this->shippingAddressCity = $shippingAddressCity;
+
+        return $this;
+    }
+
+    /**
+     * Get shippingAddressCity
+     *
+     * @return string
+     */
+    public function getShippingAddressCity()
+    {
+        return $this->shippingAddressCity;
+    }
+
+    /**
+     * Set shippingAddressState
+     *
+     * @param string $shippingAddressState
+     *
+     * @return UserSettings
+     */
+    public function setShippingAddressState($shippingAddressState)
+    {
+        $this->shippingAddressState = $shippingAddressState;
+
+        return $this;
+    }
+
+    /**
+     * Get shippingAddressState
+     *
+     * @return string
+     */
+    public function getShippingAddressState()
+    {
+        return $this->shippingAddressState;
+    }
+
+    /**
+     * Set shippingAddressZip
+     *
+     * @param string $shippingAddressZip
+     *
+     * @return UserSettings
+     */
+    public function setShippingAddressZip($shippingAddressZip)
+    {
+        $this->shippingAddressZip = $shippingAddressZip;
+
+        return $this;
+    }
+
+    /**
+     * Get shippingAddressZip
+     *
+     * @return string
+     */
+    public function getShippingAddressZip()
+    {
+        return $this->shippingAddressZip;
+    }
+
+    /**
+     * Set shippingAddressCounty
+     *
+     * @param string $shippingAddressCounty
+     *
+     * @return UserSettings
+     */
+    public function setShippingAddressCounty($shippingAddressCounty)
+    {
+        $this->shippingAddressCounty = $shippingAddressCounty;
+
+        return $this;
+    }
+
+    /**
+     * Get shippingAddressCounty
+     *
+     * @return string
+     */
+    public function getShippingAddressCounty()
+    {
+        return $this->shippingAddressCounty;
+    }
+
+    /**
+     * Set supplierWholesalers
+     *
+     * @param string $supplierWholesalers
+     *
+     * @return UserSettings
+     */
+    public function setSupplierWholesalers($supplierWholesalers)
+    {
+        $this->supplierWholesalers = $supplierWholesalers;
+
+        return $this;
+    }
+
+    /**
+     * Get supplierWholesalers
+     *
+     * @return string
+     */
+    public function getSupplierWholesalers()
+    {
+        return $this->supplierWholesalers;
+    }
+
+    /**
+     * Set supplierWholesalers2
+     *
+     * @param string $supplierWholesalers2
+     *
+     * @return UserSettings
+     */
+    public function setSupplierWholesalers2($supplierWholesalers2)
+    {
+        $this->supplierWholesalers2 = $supplierWholesalers2;
+
+        return $this;
+    }
+
+    /**
+     * Get supplierWholesalers2
+     *
+     * @return string
+     */
+    public function getSupplierWholesalers2()
+    {
+        return $this->supplierWholesalers2;
+    }
+
+    /**
+     * Set supplierWholesalers3
+     *
+     * @param string $supplierWholesalers3
+     *
+     * @return UserSettings
+     */
+    public function setSupplierWholesalers3($supplierWholesalers3)
+    {
+        $this->supplierWholesalers3 = $supplierWholesalers3;
+
+        return $this;
+    }
+
+    /**
+     * Get supplierWholesalers3
+     *
+     * @return string
+     */
+    public function getSupplierWholesalers3()
+    {
+        return $this->supplierWholesalers3;
     }
 }

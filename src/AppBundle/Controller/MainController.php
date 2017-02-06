@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 class MainController extends Controller
 {
     /**
-     * @Route("about_us", name="about_us")
+     * @Route("about-us", name="about_us")
      * @Template()
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -26,7 +26,7 @@ class MainController extends Controller
     }
 
     /**
-     * @Route("why_directrex", name="why_directrex")
+     * @Route("why-directrex", name="why_directrex")
      * @Template()
      */
     public function whyDirectrxAction(Request $request){
@@ -166,4 +166,5 @@ class MainController extends Controller
         return array('userSettings'=>$userSettings);
 
     }
+
 }

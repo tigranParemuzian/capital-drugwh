@@ -36,34 +36,35 @@
 
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                            <ul class="nav navbar-nav">
-                                <li class="active"><a href="{{ path('homepage') }}">Home<span class="sr-only">(current)</span></a></li>
-                                <li><a href="{{ path('about_us') }}">About Us</a></li>
-                                <li><a href="{{ path('why_directrex') }}">Why Directrex</a></li>
-                                <li><a href="{% if app.user == null %}{{ path('products') }}
-                                {% else %}{{ path('list') }}{% endif %}">Products</a></li>
-                                <li><a href="{{ path('services') }}">Services</a></li>
-                                {% if app.user == null %}
-                                <li><a href="{{ path('fos_user_security_login') }}">Login</a></li>
-                                    {% else %}
-                                        <li><a href="{{ path('user_settings') }}">Company Settings</a></li>
-                                        <li><a href="{{ path('my_bag') }}" class="selected_infos">My&nbsp;Bag&nbsp;</a></li>
-                                        <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> &nbsp;{{ app.user.lastname }}<span class="caret"></span></a>
-                                            <ul class="dropdown-menu">
-                                                {% if is_granted('ROLE_SUPER_ADMIN') %}
-                                                    <li><a href="{{ path('sonata_admin_dashboard') }}"><span class="glyphicon glyphicon-book">&nbsp;Dashboard</span></a></li>
-                                                {% endif %}
-                                                <li><a href="{{ path('submit_order') }}"><span class="glyphicon glyphicon-screenshot"></span>&nbsp;Orders</a></li>
-                                                <li><a href="{{ path('fos_user_profile_edit') }}"><span class="glyphicon glyphicon-edit"></span>&nbsp;Edit Profile</a></li>
-                                                <li role="separator" class="divider"></li>
-                                                <li><a href="{{ path('fos_user_profile_show') }}"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;Profile</a></li>
-                                                <li role="separator" class="divider"></li>
-                                                <li><a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Logout</a></li>
-                                            </ul>
-                                        </li>
-                                {% endif %}
-                            </ul>
+                            {#<ul class="nav navbar-nav">#}
+                                {{ knp_menu_render('AppBundle:Builder:topMenu', { 'template': 'Menu/knp_menu.html.twig', 'currentAsLink': false, 'id':'navigation'}) }}
+                                {#<li class="active"><a href="{{ path('homepage') }}">Home<span class="sr-only">(current)</span></a></li>#}
+                                {#<li><a href="{{ path('about_us') }}">About Us</a></li>#}
+                                {#<li><a href="{{ path('why_directrex') }}">Why Directrex</a></li>#}
+                                {#<li><a href="{% if app.user == null %}{{ path('products') }}#}
+                                {#{% else %}{{ path('list') }}{% endif %}">Products</a></li>#}
+                                {#<li><a href="{{ path('services') }}">Services</a></li>#}
+                                {#{% if app.user == null %}#}
+                                {#<li><a href="{{ path('fos_user_security_login') }}">Login</a></li>#}
+                                    {#{% else %}#}
+                                        {#<li><a href="{{ path('user_settings') }}">Company Settings</a></li>#}
+                                        {#<li><a href="{{ path('my_bag') }}" class="selected_infos">My&nbsp;Bag&nbsp;</a></li>#}
+                                        {#<li class="dropdown">#}
+                                            {#<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> &nbsp;{{ app.user.lastname }}<span class="caret"></span></a>#}
+                                            {#<ul class="dropdown-menu">#}
+                                                {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
+                                                    {#<li><a href="{{ path('sonata_admin_dashboard') }}"><span class="glyphicon glyphicon-book">&nbsp;Dashboard</span></a></li>#}
+                                                {#{% endif %}#}
+                                                {#<li><a href="{{ path('submit_order') }}"><span class="glyphicon glyphicon-screenshot"></span>&nbsp;Orders</a></li>#}
+                                                {#<li><a href="{{ path('fos_user_profile_edit') }}"><span class="glyphicon glyphicon-edit"></span>&nbsp;Edit Profile</a></li>#}
+                                                {#<li role="separator" class="divider"></li>#}
+                                                {#<li><a href="{{ path('fos_user_profile_show') }}"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;Profile</a></li>#}
+                                                {#<li role="separator" class="divider"></li>#}
+                                                {#<li><a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Logout</a></li>#}
+                                            {#</ul>#}
+                                        {#</li>#}
+                                {#{% endif %}#}
+                            {#</ul>#}
                         </div><!-- /.navbar-collapse -->
                     </div><!-- /.container-fluid -->
                 </nav>
@@ -137,6 +138,10 @@
         {% endblock %}
         <script type="text/javascript" src="{{ asset('jquery_components/jquery/dist/jquery.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('jquery_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+        <script type="text/javascript">
+            var text = $('.dropdown-toggle').text();
+            $('.dropdown-toggle').html('<span class="glyphicon glyphicon-user"></span> &nbsp;'+text+'&nbsp;<span class="caret"></span>')
+        </script>
         {% block javascripts %}
         {% endblock %}
     </body>

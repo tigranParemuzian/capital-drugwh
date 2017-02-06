@@ -35,10 +35,10 @@ class UserSettingsType extends AbstractType
                 , 'text',  array('label'=>'federal tax i.d.', 'label_attr'=>
                     array('class'=>'text-capitalize'), 'required'=>true)
             )
-            ->add('stateId', 'text',  array('label'=>'state i.d', 'label_attr'=>
-                array('class'=>'text-capitalize'), 'required'=>true))
-            ->add('hin', 'text',  array('label'=>'hin', 'label_attr'=>
-                array('class'=>'text-capitalize'), 'required'=>true))
+           /* ->add('stateId', 'text',  array('label'=>'state i.d', 'label_attr'=>
+                array('class'=>'text-capitalize'), 'required'=>true))*/
+            /*->add('hin', 'text',  array('label'=>'hin', 'label_attr'=>
+                array('class'=>'text-capitalize'), 'required'=>true))*/
             ->add('statePharmacyLicense', 'text',  array('label'=>'state pharmacy license', 'label_attr'=>
                 array('class'=>'text-capitalize'), 'required'=>true))
             ->add('deaLicense', 'text',  array('label'=>'dea license', 'label_attr'=>
@@ -77,10 +77,6 @@ class UserSettingsType extends AbstractType
                 array('class'=>'text-capitalize'), 'required'=>true))
             ->add('businessFax','text',  array('label'=>'business fax', 'label_attr'=>
                 array('class'=>'text-capitalize'), 'required'=>true))
-            ->add('pharmacistInCharge', 'text',  array('label'=>'pharmacist in charge', 'label_attr'=>
-                array('class'=>'text-capitalize'), 'required'=>true))
-            ->add('picLicense', 'text',  array('label'=>'pic license', 'label_attr'=>
-        array('class'=>'text-capitalize'), 'required'=>true))
 
             ->add('supplierWholesalers', 'text',  array('label'=>'supplier wholesalers', 'label_attr'=>
                 array('class'=>'text-capitalize'), 'required'=>true))
@@ -116,8 +112,8 @@ class UserSettingsType extends AbstractType
                 array('class'=>'text-capitalize'), 'required'=>true))
             ->add('bankState', 'text',  array('label'=>'bank state', 'label_attr'=>
                 array('class'=>'text-capitalize'), 'required'=>true))
-            ->add('bankAccountOfficer', 'text',  array('label'=>'account officer', 'label_attr'=>
-                array('class'=>'text-capitalize'), 'required'=>true))
+           /* ->add('bankAccountOfficer', 'text',  array('label'=>'account officer', 'label_attr'=>
+                array('class'=>'text-capitalize'), 'required'=>true))*/
             ->add('bankPhone', 'text',  array('label'=>'bank phone', 'label_attr'=>
                 array('class'=>'text-capitalize'), 'required'=>true))
             ->add('bankAccount', 'text',  array('label'=>'bank account', 'label_attr'=>
@@ -129,8 +125,8 @@ class UserSettingsType extends AbstractType
                 array('class'=>'text-capitalize'), 'required'=>false))
             ->add('bankState2', 'text',  array('label'=>'bank state 2', 'label_attr'=>
                 array('class'=>'text-capitalize'), 'required'=>false))
-            ->add('bankAccountOfficer2', 'text',  array('label'=>'account officer 2', 'label_attr'=>
-                array('class'=>'text-capitalize'), 'required'=>false))
+          /*  ->add('bankAccountOfficer2', 'text',  array('label'=>'account officer 2', 'label_attr'=>
+                array('class'=>'text-capitalize'), 'required'=>false))*/
             ->add('bankPhone2', 'text',  array('label'=>'bank phone 2', 'label_attr'=>
                 array('class'=>'text-capitalize'), 'required'=>false))
             ->add('bankAccount2', 'text',  array('label'=>'bank account 2', 'label_attr'=>

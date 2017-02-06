@@ -33,18 +33,20 @@
             <div class="panel-body container">
                 <div class="col-md-12">
                     {{ form_start(form) }}
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <header><span>Section 1:</span> General Information</header>
+
+                    </div>
+                    <div class="col-md-6">
                         {{ form_label(form.tradeName) }}
                         {{ form_widget(form.tradeName) }}
                         {{ form_errors(form.tradeName) }}
+
+                    </div>
+                    <div class="col-md-6">
                         {{ form_label(form.tradeAddress) }}
                         {{ form_widget(form.tradeAddress) }}
                         {{ form_errors(form.tradeAddress) }}
-                    </div>
-                    <div class="col-md-6 help-text bs-callout bs-callout-info">
-                        <p>(Additional stores under common ownership and same legal entity must be identified and listed with its business name and address, attach as
-                        Exhibit A. Any store with a different ownership or legal entity must complete and execute a separate credit application and agreement)</p>
                     </div>
                     <div class="col-md-12">
                         <header class="text-capitalize"><span>Section 2:</span>&nbsp;Financial information</header>
@@ -62,15 +64,8 @@
                         {{ form_widget(form.taxId) }}
                         {{ form_errors(form.taxId) }}
 
-                        {{ form_label(form.stateId) }}
-                        {{ form_widget(form.stateId) }}
-                        {{ form_errors(form.stateId) }}
-
                     </div>
                     <div class="col-md-6">
-                        {{ form_label(form.hin) }}
-                        {{ form_widget(form.hin) }}
-                        {{ form_errors(form.hin) }}
 
                         {{ form_label(form.statePharmacyLicense) }}
                         {{ form_widget(form.statePharmacyLicense) }}
@@ -89,31 +84,34 @@
                         <header class="text-capitalize"><span>Section 3:</span>&nbsp;Shipping address information</header>
                     </div>
                     <div class="col-md-6">
+                    {#Street, City, State, Zip code#}
 
-                        {{ form_label(form.shippingAddressState) }}
-                        {{ form_widget(form.shippingAddressState) }}
-                        {{ form_errors(form.shippingAddressState) }}
+                        {{ form_label(form.shippingAddressStreet) }}
+                        {{ form_widget(form.shippingAddressStreet) }}
+                        {{ form_errors(form.shippingAddressStreet) }}
 
                         {{ form_label(form.shippingAddressCity) }}
                         {{ form_widget(form.shippingAddressCity) }}
                         {{ form_errors(form.shippingAddressCity) }}
 
-                        {{ form_label(form.shippingAddressCounty) }}
-                        {{ form_widget(form.shippingAddressCounty) }}
-                        {{ form_errors(form.shippingAddressCounty) }}
+
+                        {{ form_label(form.shippingAddressState) }}
+                        {{ form_widget(form.shippingAddressState) }}
+                        {{ form_errors(form.shippingAddressState) }}
                     </div>
                     <div class="col-md-6">
-                        {{ form_label(form.shippingAddressStreet) }}
-                        {{ form_widget(form.shippingAddressStreet) }}
-                        {{ form_errors(form.shippingAddressStreet) }}
+
+                        {{ form_label(form.shippingAddressZip) }}
+                        {{ form_widget(form.shippingAddressZip) }}
+                        {{ form_errors(form.shippingAddressZip) }}
 
                         {{ form_label(form.shippingAddressNumber) }}
                         {{ form_widget(form.shippingAddressNumber) }}
                         {{ form_errors(form.shippingAddressNumber) }}
 
-                        {{ form_label(form.shippingAddressZip) }}
-                        {{ form_widget(form.shippingAddressZip) }}
-                        {{ form_errors(form.shippingAddressZip) }}
+                        {{ form_label(form.shippingAddressCounty) }}
+                        {{ form_widget(form.shippingAddressCounty) }}
+                        {{ form_errors(form.shippingAddressCounty) }}
 
                     </div>
                     <div class="col-md-12">
@@ -133,8 +131,16 @@
                         {{ form_widget(form.primeryBusinessContactEmail) }}
                         {{ form_errors(form.primeryBusinessContactEmail) }}
 
+                        {{ form_label(form.businessTelephone) }}
+                        {{ form_widget(form.businessTelephone) }}
+                        {{ form_errors(form.businessTelephone) }}
+
                     </div>
                     <div class="col-md-6">
+
+                        {{ form_label(form.businessFax) }}
+                        {{ form_widget(form.businessFax) }}
+                        {{ form_errors(form.businessFax) }}
 
                         {{ form_label(form.primeryPurchasingContact) }}
                         {{ form_widget(form.primeryPurchasingContact) }}
@@ -148,26 +154,7 @@
                         {{ form_widget(form.primeryPurchasingContactEmail) }}
                         {{ form_errors(form.primeryPurchasingContactEmail) }}
                     </div>
-                    <div class="col-md-6">
 
-                        {{ form_label(form.businessTelephone) }}
-                        {{ form_widget(form.businessTelephone) }}
-                        {{ form_errors(form.businessTelephone) }}
-
-                        {{ form_label(form.businessFax) }}
-                        {{ form_widget(form.businessFax) }}
-                        {{ form_errors(form.businessFax) }}
-                    </div>
-                    <div class="col-md-6">
-
-                        {{ form_label(form.pharmacistInCharge) }}
-                        {{ form_widget(form.pharmacistInCharge) }}
-                        {{ form_errors(form.pharmacistInCharge) }}
-
-                        {{ form_label(form.picLicense) }}
-                        {{ form_widget(form.picLicense) }}
-                        {{ form_errors(form.picLicense) }}
-                    </div>
                     <div class="col-md-12">
                         <header class="text-capitalize"><span>Section 5:</span>&nbsp;Major Suppliers / Existing Wholesalers</header>
                     </div>
@@ -260,11 +247,6 @@
                         {{ form_errors(form.bankState) }}
                     </div>
                     <div class="col-md-2">
-                        {{ form_label(form.bankAccountOfficer) }}
-                        {{ form_widget(form.bankAccountOfficer) }}
-                        {{ form_errors(form.bankAccountOfficer) }}
-                    </div>
-                    <div class="col-md-2">
                         {{ form_label(form.bankPhone) }}
                         {{ form_widget(form.bankPhone) }}
                         {{ form_errors(form.bankPhone) }}
@@ -273,6 +255,8 @@
                         {{ form_label(form.bankAccount) }}
                         {{ form_widget(form.bankAccount) }}
                         {{ form_errors(form.bankAccount) }}
+                        </div>
+                    <div class="col-md-2">
                         <div class="panel-heading" role="tab" id="headingOne">
                           <h4 class="panel-title">
                             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#banks" aria-expanded="true" aria-controls="banks">
@@ -296,11 +280,6 @@
                             {{ form_label(form.bankState2) }}
                             {{ form_widget(form.bankState2) }}
                             {{ form_errors(form.bankState2) }}
-                        </div>
-                        <div class="col-md-2">
-                            {{ form_label(form.bankAccountOfficer2) }}
-                            {{ form_widget(form.bankAccountOfficer2) }}
-                            {{ form_errors(form.bankAccountOfficer2) }}
                         </div>
                         <div class="col-md-2">
                             {{ form_label(form.bankPhone2) }}
@@ -354,74 +333,29 @@
                         <div class="col-md-12 help-text bs-callout bs-callout-info">
                             <ol>
                                 <li>
-                                    <p>As an inducement for Capital Wholesale Drug Co. (“Capital”) to accept orders from or otherwise
-                                    extend or make available credit to Applicant, which includes all Applicant owned stores as listed in
-                                    Exhibit A attached hereto, the undersigned Applicant hereby agrees to comply with the following
-                                    terms of sale, should Capital elect to extend such credit.
+                                    <p>As an inducement for Aarogya medsurg llc. (AAMED”) to accept orders from or otherwise extend or make available credit to Applicant, which includes all Applicant owned stores as listed in section 1, the undersigned Applicant hereby agrees to comply with the following terms of sale, should AAMED elect to extend such credit.
                                     </p>
                                 </li>
                                 <li>
-                                    <p>Pricing and payment terms are determined at the time an offer is presented to Applicant and as
-                                    reflected on any accompanying invoice.
+                                    <p>Pricing and payment terms are determined at the time an offer is presented to Applicant and as reflected on any accompanying invoice.
                                     </p>
                                 </li>
                                 <li>
-                                    <p>If Capital does not receive payment in accordance with the payment terms or based upon credit
-                                considerations deemed relevant to Capital, then Capital may refuse to deliver the product covered
-                                by this Agreement (the "Product"), refuse additional orders, modify payment terms, place the
-                                Applicant on C.O.D., modify Applicant’s costs of goods, limit or terminate the extension of credit
-                                and will be entitled to any other remedies available at law or equity.</p></li>
+                                    <p>If AAMED does not receive payment in accordance with the payment terms or based upon credit considerations deemed relevant to AAMED, then AAMED  may refuse to deliver the product covered by this Agreement (the "Product"), refuse additional orders, modify payment terms, place the Applicant on C.O.D., modify Applicant’s costs of goods, limit or terminate the extension of credit and will be entitled to any other remedies available at law or equity.</p></li>
                                 <li>
-                                    <p>All payments shall be made in full, in good funds, either by check or electronic funds transfer
-                                (either by wire or automated clearinghouse), and in accordance with the payment terms. Capital
-                                may assess a service charge calculated at the rate of 1.5% per month (or the maximum rate
-                                allowed by law, if such rate is less than 1.5% per month) on any amount not paid by Applicant to
-                                Capital when due under the terms of this Agreement from the first day of delinquency. Failure or
-                                delay by Capital to bill Applicant for any such service charge will not waive Capital’s right to
-                                receive the same. In the event of default in payments on any invoices, Capital shall have the right
-                                to declare all invoices immediately due and payable and Applicant gives Capital the authorization
-                                to use any credit card, debit card or electronic funds transfer to satisfy any past due invoices.
-                                Applicant shall pay all out-of-pocket expenses, including attorney’s fees, court costs, expenses and
-                                disbursements, incurred by Capital to collect any amounts due under this Agreement or to
-                                otherwise enforce any of the terms of this agreement.</p></li>
+                                    <p>All payments shall be made in full, in good funds, either by check or electronic funds transfer (either by wire or automated clearinghouse), and in accordance with the payment terms. AAMED may assess a service charge calculated at the rate of 1.5% per month (or the maximum rate allowed by law, if such rate is less than 1.5% per month) on any amount not paid by Applicant to AAMED when due under the terms of this Agreement from the first day of delinquency. Failure or delay by AAMED to bill Applicant for any such service charge will not waive AAMED right to receive the same. In the event of default in payments on any invoices, AAMED shall have the right to declare all invoices immediately due and payable and Applicant gives AAMED the authorization to use any credit card, debit card or electronic funds transfer to satisfy any past due invoices. Applicant shall pay all out-of-pocket expenses, including attorney’s fees, court costs, expenses and disbursements, incurred by AAMED to collect any amounts due under this Agreement or to otherwise enforce any of the terms of this agreement.</p></li>
                                 <li>
-                                    <p>The Product is shipped FOB destination. Applicant’s obligation to pay for Product begins on the
-                                date of shipment. Applicant agrees to place orders in the specified minimum dollar amount. If the
-                                order size is less than specified minimum, Applicant agrees to pay a minimum order charge.
-                                Capital reserves the right at all times to determine what Product it will carry based upon product
-                                quality, manufacture indemnity, insurance, and other policies, and other standards determined by
-                                it, and may delete Product from its available inventory at any time. No schedule II orders will be
-                                delivered other than in compliance with DEA regulations.</p></li>
+                                    <p>The Product is shipped FOB destination. Applicant’s obligation to pay for Product begins on the date of shipment. Applicant agrees to place orders in the specified minimum dollar amount. If the order size is less than specified minimum, Applicant agrees to pay a minimum order charge. AAMED reserves the right at all times to determine what Product it will carry based upon product quality, manufacture indemnity, insurance, and other policies, and other standards determined by it, and may delete Product from its available inventory at any time. No schedule II orders will be delivered other than in compliance with DEA regulations.</p></li>
                                 <li>
-                                    <p>Capital will accept returns of Product within three months after the Product expiration. A 25%
-                                restocking fee applies to all Product returns except for returns due to shipping damages or errors.
-                                Applicant must notify Capital within 48 hours of receipt of any discrepancies or shortages on the
-                                order. Capital may refuse any returns if not notified as herein stated.</p></li>
+                                    <p>AAMED will accept returns of Product within one month after the Product purchase date. A 25% restocking fee applies to all Product returns except for returns due to shipping damages or errors. Applicant must notify AAMED within 24 hours of receipt of any discrepancies or shortages on the order. AAMED may refuse any returns if not notified as herein stated.</p></li>
                                 <li>
-                                    <p>Applicant attests to Capital that it is properly licensed with applicable state licensing agencies to
-                                receive, dispense, distribute and otherwise legally dispose of the Product. Applicant understands
-                                that by attesting to this, Capital is complying with the “good faith inquiry” standard to ensure that
-                                the Product is distributed to properly licensed and/or registered pharmacy locations. Prior to
-                                purchasing the product from Capital hereunder, Applicant must provide Capital with copies of all
-                                such licenses and any renewals, revocations or other changes to the same.</p></li>
+                                    <p>Applicant attests to AAMED that it is properly licensed with applicable state licensing agencies to receive, dispense, distribute and otherwise legally dispose of the Product. Applicant understands that by attesting to this, AAMED is complying with the “good faith inquiry” standard to ensure that the Product is distributed to properly licensed and/or registered pharmacy/distributor locations. Prior to purchasing the product from AAMED hereunder, Applicant must provide AAMED with copies of all such licenses and any renewals, revocations or other changes to the same.</p></li>
                                 <li>
-                                    <p>Applicant agrees to all the terms and conditions of the Agreement. This Agreement, together
-                                with all invoices, purchase orders, and the exhibits and addenda thereto constitute the entire
-                                agreement and understanding of the parties with respect to the subject matter hereof and
-                                supersede all prior written and oral arguments, proposals, buds/bid responses, and
-                                understandings between the parties relative to the subject matter hereof. No changes to this
-                                Agreement or any purchase orders will be made or be binding upon either party unless made in
-                                writing and signed by each party. By signing this Agreement, Capital and Applicant each represent
-                                that it has the authority to bind its respective party to this agreement.</p></li>
+                                    <p>Applicant agrees to all the terms and conditions of the Agreement. This Agreement, together with all invoices, purchase orders, and the exhibits and addenda thereto constitute the entire agreement and understanding of the parties with respect to the subject matter hereof and supersede all prior written and oral arguments, proposals, buds/bid responses, and understandings between the parties relative to the subject matter hereof. No changes to this Agreement or any purchase orders will be made or be binding upon either party unless made in writing and signed by each party. By signing this Agreement, AAMED and Applicant each represent that it has the authority to bind its respective party to this agreement.</p></li>
                                 <li>
-                                    <p>All information provided in this Application or otherwise submitted is true and correct and is
-                                being (or will be) furnished for the purpose of obtaining/retaining credit from Capital. Applicant
-                                authorizes its banks and suppliers to release any and all information as requested by Capital so as to ascertain credit worthiness. Applicant shall provide Capital with financial statements and such
-                                further information as may reasonably be requested from time to time.</p></li>
+                                    <p>All information provided in this Application or otherwise submitted is true and correct and is being (or will be) furnished for the purpose of obtaining/retaining credit from AAMED. Applicant authorizes its banks and suppliers to release any and all information as requested by AAMED so as to ascertain credit worthiness. Applicant shall provide AAMED with financial statements and such further information as may reasonably be requested from time to time.</p></li>
                                 <li>
-                                    <p>If there is a lawsuit, Applicant agrees to submit to the jurisdiction of the state courts of
-                                Franklin County, Ohio or to the jurisdiction of the United States District Court for the Southern
-                                District of Ohio. Applicant further consents to venue in either of the preceding courts.</p></li>
+                                    <p>If there is a lawsuit, Applicant agrees to submit to the jurisdiction of the state courts of San Bernardino, California or to the jurisdiction of the United States District Court for the Central District of California. Applicant further consents to venue in either of the preceding courts.</p></li>
                             </ol>
                         </div>
                     </div>
@@ -434,16 +368,7 @@
                     </div>
                     <div id="guarantee" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                         <div class="col-md-12 help-text bs-callout bs-callout-info">
-                        <p>The undersigned Principal(s) of Applicant by reason of their interest in the Applicant and as an inducement for Capital
-Wholesale Drug Co. to extend credit to Applicant, hereby jointly and severally, irrevocably, and unconditionally
-guarantee to Capital Wholesale Drug Co. and its subsidiaries affiliates and successors (each a Guarantee party) and
-assigns the prompt and full payment (and not merely the ultimate collectability) and performance of all obligations of
-Applicant to each Guaranteed party, whether now existing or hereafter arising. The undersigned authorizes Capital
-Wholesale Drug Co. to verify this information and/or additional information by obtaining data from a credit reporting
-agency. If applicant or its business is hereafter sold, this guaranty shall continue to all credit hereafter made available
-to that Applicant or its business (as the case may be) until such time as Capital Wholesale Drug Co. has received 5 days
-advanced written notice (via certified mail, return receipt requested) that Applicant and/or Principal(s) will no longer
-be responsible for credit thereafter made available with respect to that Applicant or its business.</p>
+                        <p>The undersigned Principal(s) of Applicant by reason of their interest in the Applicant and as an inducement for  Aarogya Medsurg LLC  to extend credit to Applicant, hereby jointly and severally, irrevocably, and unconditionally guarantee to Aarogya Medsurg LLC  and its subsidiaries affiliates and successors (each a Guarantee party) and assigns the prompt and full payment (and not merely the ultimate collectability) and performance of all obligations of Applicant to each Guaranteed party, whether now existing or hereafter arising. The undersigned authorizes Aarogya Medsurg LLC  to verify this information and/or additional information by obtaining data from a credit reporting agency. If applicant or its business is hereafter sold, this guaranty shall continue to all credit hereafter made available to that Applicant or its business (as the case may be) until such time as Aarogya Medsurg LLC  has received 5 days advanced written notice (via certified mail, return receipt requested) that Applicant and/or Principal(s) will no longer be responsible for credit thereafter made available with respect to that Applicant or its business.</p>
 </div></div>
                     {{ form_widget(form.save) }}
                     </div>

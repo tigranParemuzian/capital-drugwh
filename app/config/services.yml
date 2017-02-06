@@ -7,6 +7,12 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+
+    app.form.type.gender:
+            class: AppBundle\Form\IconType
+            tags:
+                - { name: form.type, alias: ad_file_type }
+
     app.form.registration:
             class: AppBundle\Form\RegistrationType
             tags:
@@ -42,3 +48,16 @@ services:
         arguments: [~, AppBundle\Entity\InvoiceSettings, ~]
         tags:
             - {name: sonata.admin, manager_type: orm, group: Invoice, label: Invoice Settings, show_in_dashboard: true}
+
+    admin.menues:
+        class: AppBundle\Admin\MenuAdmin
+        arguments: [~, AppBundle\Entity\Menu, ~]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: Template, label: Menu, show_in_dashboard: true}
+
+    admin.menue_itom:
+        class: AppBundle\Admin\MenuItomAdmin
+        arguments: [~, AppBundle\Entity\MenuItom, ~]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: Template, label: Menu Item, show_in_dashboard: true}
+

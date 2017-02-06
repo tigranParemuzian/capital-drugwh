@@ -356,6 +356,13 @@ file that was distributed with this source code.
         <script type="text/javascript">
             javascript:(function(){var s=document.createElement("script");s.onload=function(){bootlint.showLintReportForCurrentDocument([], {hasProblems: false, problemFree: false});};s.src="https://maxcdn.bootstrapcdn.com/bootlint/latest/bootlint.min.js";document.body.appendChild(s)})();
         </script>
+        <script src="{{ asset('bundles/ivoryckeditor/adapters/jquery.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('bundles/ivoryckeditor/ckeditor.js') }}" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(function() {
+                $('textarea.ckeditor').ckeditor();
+            });
+        </script>
     {% endblock %}
 {% endif %}
 
