@@ -7,6 +7,7 @@
  */
 namespace AppBundle\Admin;
 
+use AppBundle\Entity\Booking;
 use AppBundle\Entity\Invoice;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\ProductItem;
@@ -24,6 +25,7 @@ class InvoiceAdmin extends Admin
     {
         $collection->clearExcept(array('list', 'delete', 'edit', 'batch'));
         $collection->add('invoice_pdf');
+        $collection->add('t3_statement_pdf');
 
     }
 
@@ -39,6 +41,7 @@ class InvoiceAdmin extends Admin
         {
             // define calculate action
             $actions['invoice_pdf']= array ('label' => 'Generate Pdf', 'ask_confirmation'  => true );
+            $actions['t3_statement_pdf']= array ('label' => 'T3 Statement Pdf', 'ask_confirmation'  => true );
 
         }
 
@@ -62,6 +65,17 @@ class InvoiceAdmin extends Admin
             ), array('required'=>true))
                     ->add('user')
             ->end()
+            ->with('Bookings', array('class' =>'col-sm-12',
+                'box-class' => 'box box-solid box-danger',
+                'description'=>'Bookings part'))
+            ->add('booking', 'sonata_type_collection', array(), array(
+                'edit' => 'inline',
+                'inline' => 'table',
+                'sortable'  => 'id',
+                    'delete'=>true
+            )
+               )
+            ->end()
             ;
 
     }
@@ -84,7 +98,8 @@ class InvoiceAdmin extends Admin
                 array('actions'=>
                     array(
                         'invoice_pdf' => array('template' => 'AppBundle:CRUD:generate_pdf.html.twig'),
-                        'delete'=>array(),
+                        't3_statement_pdf' => array('template' => 'AppBundle:CRUD:t3_statment_pdf.html.twig'),
+                        'delete'=>array(), 'edit'=>array()
                     )
                 ))
         ;
@@ -130,6 +145,41 @@ class InvoiceAdmin extends Admin
             ->add('created')
 //            ->add('updated')
         ;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function preUpdate($object)
+    {
+//        dump($object->getBooking()); exit;
+        if($object->getBooking()){
+            foreach($object->getBooking() as $productIngredient) {
+                $productIngredient->setInvoice($object);
+                $productIngredient->setClient($object->getUser());
+                $productIngredient->setCost(round($productIngredient->getProduct()->getPrice()*$productIngredient->getCount(), 2));
+                $productIngredient->setSubTotal(round($productIngredient->getProduct()->getPrice()*$productIngredient->getCount(), 2));
+                $productIngredient->setStatus(Booking::IS_ORDERED);
+            }
+        }
+//        $object->uploadFile();
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function prePersist($object)
+    {
+        if($object->getBooking()){
+//            dump($object->getBooking()); exit;
+            foreach($object->getBooking() as $productIngredient) {
+                $productIngredient->setInvoice($object);
+                $productIngredient->setClient($object->getUser());
+                $productIngredient->setCost(round($productIngredient->getProduct()->getPrice()*$productIngredient->getCount(), 2));
+                $productIngredient->setSubTotal(round($productIngredient->getProduct()->getPrice()*$productIngredient->getCount(), 2));
+                $productIngredient->setStatus(Booking::IS_ORDERED);
+            }
+        }
+//        $object->uploadFile();
     }
 
 //    public function batchActionCalculate(ProxyQueryInterface $selectedModelQuery)

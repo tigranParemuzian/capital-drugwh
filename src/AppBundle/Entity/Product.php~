@@ -129,7 +129,7 @@ class Product
 
     public function __toString()
     {
-        return $this->id ? $this->productItem->getManufacturer() . ' ' . $this->productItem->getNds() : 'new Product item';
+        return $this->id ? $this->name . ' ' . $this->productItem->getNds() : 'new Product item';
         // TODO: Implement __toString() method.
     }
 

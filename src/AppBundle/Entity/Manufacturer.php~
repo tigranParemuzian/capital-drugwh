@@ -42,7 +42,7 @@ class Manufacturer
     /**
      * @var string
      *
-     * @ORM\Column(name="address", type="string", length=255)
+     * @ORM\Column(name="address", type="string", length=255, nullable=true)
      */
     private $address;
 
@@ -51,6 +51,12 @@ class Manufacturer
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProductItem", mappedBy="manufacturers")
      */
     private $productItom;
+
+    public function __toString()
+    {
+        return $this->id ? $this->name : 'new Manufacturer';
+        // TODO: Implement __toString() method.
+    }
 
     /**
      * Get id
@@ -133,5 +139,45 @@ class Manufacturer
     {
         return $this->address;
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->productItom = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Add productItom
+     *
+     * @param \AppBundle\Entity\ProductItem $productItom
+     *
+     * @return Manufacturer
+     */
+    public function addProductItom(\AppBundle\Entity\ProductItem $productItom)
+    {
+        $this->productItom[] = $productItom;
+
+        return $this;
+    }
+
+    /**
+     * Remove productItom
+     *
+     * @param \AppBundle\Entity\ProductItem $productItom
+     */
+    public function removeProductItom(\AppBundle\Entity\ProductItem $productItom)
+    {
+        $this->productItom->removeElement($productItom);
+    }
+
+    /**
+     * Get productItom
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductItom()
+    {
+        return $this->productItom;
+    }
+}

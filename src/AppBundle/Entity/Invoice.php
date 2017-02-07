@@ -65,7 +65,7 @@ class Invoice
 
     /**
      * @var
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Booking", mappedBy="invoice")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Booking", mappedBy="invoice", cascade={"all"}, orphanRemoval=true)
      */
     private $booking;
 

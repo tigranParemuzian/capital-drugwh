@@ -10,4 +10,16 @@ namespace AppBundle\Repository;
  */
 class UserSettingsRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findByUser($userId)
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('u')
+            ->from('AppBundle:UserSettings', 'u')
+            ->innerJoin('u.user', 'cu')
+            ->where('cu.id =:cid')
+            ->setParameter('cid', $userId)
+            ->setMaxResults(1)
+            ->getQuery()->getOneOrNullResult();
+    }
 }

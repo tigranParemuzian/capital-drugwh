@@ -46,7 +46,7 @@ class UserSettings
      * @var
      * @ORM\Column(name="trade_name", type="string", length=100)
      * @Assert\NotBlank(message="Business trade name can't be null")
-     * @Assert\Length(min = 10,
+     * @Assert\Length(min = 5,
      *      max = 100,
      *      minMessage = "Your business trade name must be at least {{ limit }} characters long",
      *      maxMessage = "Your Business trade name cannot be longer than {{ limit }} characters")

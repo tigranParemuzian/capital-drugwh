@@ -46,7 +46,7 @@ class MenuAdmin extends Admin
             ->add('metaDescription', 'text', array('required'=>true))
         ->end()
             ->with('Items')
-            ->add('menuItoms', 'sonata_type_collection', array(), array(
+            ->add('menuItoms', 'sonata_type_collection', array('label'=>'Bookings'), array(
                 'by_reference' => true,
                 'label' => true,
                 'type_options' => array('delete' => true),

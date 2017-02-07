@@ -67,3 +67,9 @@ services:
         tags:
             - {name: sonata.admin, manager_type: orm, group: Product, label: Manufacturer, show_in_dashboard: true}
 
+    admin.booking:
+        class: AppBundle\Admin\BookingAdmin
+        arguments: [~, AppBundle\Entity\Booking, ~]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: Invoice, label: Booking, show_in_dashboard: true}
+

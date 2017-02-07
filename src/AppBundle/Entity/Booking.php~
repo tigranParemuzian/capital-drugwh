@@ -90,6 +90,18 @@ class Booking
      */
     private $updated;
 
+    /**
+     * @var
+     * @ORM\Column(name="lot", type="string", length=50, nullable=true)
+     */
+    private $lot;
+
+    /**
+     * @var
+     * @ORM\Column(name="expiry_date", type="datetime", nullable=true)
+     */
+    private $expiryDate;
+
     public function __toString()
     {
         return $this->id ? $this->product . ' count: ' . $this->count :"new order";

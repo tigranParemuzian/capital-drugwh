@@ -285,4 +285,70 @@ class DefaultController extends Controller
         return array('invoiceSettings'=>$invoiceSettings, 'invoice'=>$invoice);
 
     }
+
+    /**
+     * @Route("/t3/{invoiceId}", name="generate_t3_statment")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function t3Action(Request $request, $invoiceId){
+
+        $em = $this->getDoctrine()->getManager();
+        $secure = $this->container->get('security.authorization_checker');
+        if(!$secure->isGranted("ROLE_SUPER_ADMIN")){
+
+            $invoices = $em->getRepository('AppBundle:Invoice')->findUniqByAuthorAndId($this->getUser()->getId(), $invoiceId);
+
+            if(!$invoices){
+                $this->addFlash(
+                    'notice',
+                    'Not have a permission!'
+                );
+                return $this->redirectToRoute('submit_order');
+            }
+
+        }
+
+        $filename = sprintf('t3_invoice-%s.pdf', $invoiceId);
+        $path = $this->container->getParameter('kernel.root_dir')."/../web/uploads/invoice/" . $filename;
+
+        if(is_file($path)){
+            unlink($path);
+        }
+
+        $pageUrl = $this->generateUrl('t3_pdf_generate', array('invoiceId'=>$invoiceId, 'cuserId'=> $this->getUser()->getId()), true); // use absolute path!
+        $this->container->get('knp_snappy.pdf')->generate($pageUrl, $path);
+
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutput($pageUrl),
+            200,
+            array(
+                'Content-Type'          => 'application/pdf',
+                'Content-Disposition'   => sprintf('attachment; filename="%s"', $filename),
+            )
+        );
+
+
+    }
+    /**
+     *
+     * @Route("/t3pdf/{invoiceId}/{cuserId}", name="t3_pdf_generate")
+     * @Template()
+     * @param Request $request
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function t3pdfAction(Request $request, $invoiceId, $cuserId){
+
+
+        $em = $this->getDoctrine()->getManager();
+
+        $invoice = $em->getRepository('AppBundle:Invoice')->find($invoiceId);
+        $invoiceSettings = $em->getRepository('AppBundle:InvoiceSettings')->findMax();
+
+        $userSettings = $em->getRepository('AppBundle:UserSettings')->findByUser($cuserId);
+
+        return array('invoiceSettings'=>$invoiceSettings, 'invoice'=>$invoice, 'userSettings'=>$userSettings);
+
+    }
 }
