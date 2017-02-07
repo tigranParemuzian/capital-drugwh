@@ -75,14 +75,14 @@ class ProductItemAdmin extends Admin
         $filter
             ->add('id')
             ->add('manufacturer')
-            ->add('nds')
+            ->add('strength')
+            ->add('nds', null, array('label'=>'NDC'))
             ->add('size')
             ->add('unit', 'doctrine_orm_choice', array(),
                 'choice', array('choices' => array(ProductItem::CT=>'ct', ProductItem::ML=>'ml',
                     ProductItem::S_EA=>'s ea',
                     ProductItem::GM=>'gm'))
             )
-            ->add('strength')
             ;
     }
 

@@ -80,7 +80,7 @@ class UserSettings
     /**
      *
      * @var $taxId
-     * @ORM\Column(name="tax_id", type="string", length=50)
+     * @ORM\Column(name="tax_id", type="string", length=50, nullable=true)
      */
     private $taxId;
 
@@ -94,14 +94,14 @@ class UserSettings
     /**
      *
      * @var $deaLicense
-     * @ORM\Column(name="dea_license", type="string", length=50)
+     * @ORM\Column(name="dea_license", type="string", length=50, nullable=true)
      */
     private $deaLicense;
 
     /**
      *
      * @var $stateControlledSubstanceLicense
-     * @ORM\Column(name="state_controlled_substance_license", type="string", length=50)
+     * @ORM\Column(name="state_controlled_substance_license", type="string", length=50, nullable=true)
      */
     private $stateControlledSubstanceLicense;
 
@@ -262,33 +262,33 @@ class UserSettings
     /**
      *
      * @var $bankName
-     * @ORM\Column(name="bank_name", type="string")
+     * @ORM\Column(name="bank_name", type="string", nullable=true)
      */
     private $bankName;
 
     /**
      *
      * @var $bankCity
-     * @ORM\Column(name="bank_city", type="string")
+     * @ORM\Column(name="bank_city", type="string", nullable=true)
      */
     private $bankCity;
 
     /**
      * @var $bankState
-     * @ORM\Column(name="bank_state", type="string")
+     * @ORM\Column(name="bank_state", type="string", nullable=true)
      */
     private $bankState;
 
     /**
      *
      * @var $bankPhone
-     * @ORM\Column(name="bank_phone", type="string")
+     * @ORM\Column(name="bank_phone", type="string", nullable=true)
      */
     private $bankPhone;
 
     /**
      * @var $bankAccount
-     * @ORM\Column(name="bank_account", type="string")
+     * @ORM\Column(name="bank_account", type="string", nullable=true)
      */
     private $bankAccount;
 

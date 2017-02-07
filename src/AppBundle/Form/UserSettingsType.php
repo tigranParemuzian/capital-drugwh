@@ -33,29 +33,29 @@ class UserSettingsType extends AbstractType
                 )
             ->add('taxId'
                 , 'text',  array('label'=>'federal tax i.d.', 'label_attr'=>
-                    array('class'=>'text-capitalize'), 'required'=>true)
+                    array('class'=>'text-capitalize'), 'required'=>false)
             )
            /* ->add('stateId', 'text',  array('label'=>'state i.d', 'label_attr'=>
                 array('class'=>'text-capitalize'), 'required'=>true))*/
             /*->add('hin', 'text',  array('label'=>'hin', 'label_attr'=>
                 array('class'=>'text-capitalize'), 'required'=>true))*/
-            ->add('statePharmacyLicense', 'text',  array('label'=>'state pharmacy license', 'label_attr'=>
+            ->add('statePharmacyLicense', 'text',  array('label'=>'State Pharmacy License / Distributor License', 'label_attr'=>
                 array('class'=>'text-capitalize'), 'required'=>true))
             ->add('deaLicense', 'text',  array('label'=>'dea license', 'label_attr'=>
-                array('class'=>'text-capitalize'), 'required'=>true))
+                array('class'=>'text-capitalize'), 'required'=>false))
             ->add('stateControlledSubstanceLicense', 'text',  array('label'=>'state controlled substance license', 'label_attr'=>
-                array('class'=>'text-capitalize'), 'required'=>true))
+                array('class'=>'text-capitalize'), 'required'=>false))
 
             ->add('shippingAddressState', 'text',  array('label'=>'state', 'label_attr'=>
                 array('class'=>'text-capitalize'), 'required'=>true))
             ->add('shippingAddressCity', 'text',  array('label'=>'city', 'label_attr'=>
                 array('class'=>'text-capitalize'), 'required'=>true))
-            ->add('shippingAddressCounty', 'text',  array('label'=>'county', 'label_attr'=>
-                array('class'=>'text-capitalize'), 'required'=>true))
+//            ->add('shippingAddressCounty', 'text',  array('label'=>'county', 'label_attr'=>
+//                array('class'=>'text-capitalize'), 'required'=>true))
             ->add('shippingAddressStreet', 'text',  array('label'=>'street', 'label_attr'=>
                 array('class'=>'text-capitalize'), 'required'=>true))
-            ->add('shippingAddressNumber', 'text',  array('label'=>'number', 'label_attr'=>
-                array('class'=>'text-capitalize'), 'required'=>true))
+//            ->add('shippingAddressNumber', 'text',  array('label'=>'number', 'label_attr'=>
+//                array('class'=>'text-capitalize'), 'required'=>true))
             ->add('shippingAddressZip', 'text',  array('label'=>'zip', 'label_attr'=>
                 array('class'=>'text-capitalize'), 'required'=>true))
 
@@ -107,17 +107,17 @@ class UserSettingsType extends AbstractType
 
 
             ->add('bankName', 'text',  array('label'=>'bank name', 'label_attr'=>
-                array('class'=>'text-capitalize'), 'required'=>true))
+                array('class'=>'text-capitalize'), 'required'=>false))
             ->add('bankCity', 'text',  array('label'=>'bank city', 'label_attr'=>
-                array('class'=>'text-capitalize'), 'required'=>true))
+                array('class'=>'text-capitalize'), 'required'=>false))
             ->add('bankState', 'text',  array('label'=>'bank state', 'label_attr'=>
-                array('class'=>'text-capitalize'), 'required'=>true))
+                array('class'=>'text-capitalize'), 'required'=>false))
            /* ->add('bankAccountOfficer', 'text',  array('label'=>'account officer', 'label_attr'=>
                 array('class'=>'text-capitalize'), 'required'=>true))*/
             ->add('bankPhone', 'text',  array('label'=>'bank phone', 'label_attr'=>
-                array('class'=>'text-capitalize'), 'required'=>true))
+                array('class'=>'text-capitalize'), 'required'=>false))
             ->add('bankAccount', 'text',  array('label'=>'bank account', 'label_attr'=>
-                array('class'=>'text-capitalize'), 'required'=>true))
+                array('class'=>'text-capitalize'), 'required'=>false))
 
              ->add('bankName2', 'text',  array('label'=>'bank name 2', 'label_attr'=>
                 array('class'=>'text-capitalize'), 'required'=>false))
