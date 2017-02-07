@@ -308,7 +308,7 @@ class DefaultController extends Controller
 
         }
 
-        $filename = sprintf('t3_invoice-%s.pdf', $invoiceId);
+        $filename = sprintf('t3_statment_%s.pdf', $invoiceId);
         $path = $this->container->getParameter('kernel.root_dir')."/../web/uploads/invoice/" . $filename;
 
         if(is_file($path)){
