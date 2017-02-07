@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Traits\File;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -24,6 +25,7 @@ class UserSettings
     const STATE_OF_INCORPORATION = 5;
 
 
+    use  File;
 
     /**
      * @var int
@@ -81,19 +83,6 @@ class UserSettings
      * @ORM\Column(name="tax_id", type="string", length=50)
      */
     private $taxId;
-
-    /**
-     *
-     * @var $stateId
-     * @ORM\Column(name="state_id", type="string", length=50)
-     */
-    private $stateId;
-
-    /**
-     * @var $hin
-     * @ORM\Column(name="hin", type="string", length=50)
-     */
-    private $hin;
 
     /**
      *
@@ -199,19 +188,6 @@ class UserSettings
     private $businessFax;
 
     /**
-     * @var $pharmacistInCharge
-     * @ORM\Column(name="pharmacist_in_charge", type="string")
-     *
-     */
-    private $pharmacistInCharge;
-
-    /**
-     * @var $picLicense
-     * @ORM\Column(name="pic_license", type="string")
-     */
-    private $picLicense;
-
-    /**
      * @var $supplierWholesalers
      * @ORM\Column(name="supplier_wholesalers", type="string", nullable=true)
      */
@@ -304,12 +280,6 @@ class UserSettings
     private $bankState;
 
     /**
-     * @var $bankAccountOfficer
-     * @ORM\Column(name="bank_account_officer", type="string")
-     */
-    private $bankAccountOfficer;
-
-    /**
      *
      * @var $bankPhone
      * @ORM\Column(name="bank_phone", type="string")
@@ -341,12 +311,6 @@ class UserSettings
      * @ORM\Column(name="bank_state_2", type="string", length=50, nullable=true)
      */
     private $bankState2;
-
-    /**
-     * @var $bankAccountOfficer2
-     * @ORM\Column(name="bank_account_officer_2", type="string", length=50, nullable=true)
-     */
-    private $bankAccountOfficer2;
 
     /**
      *
@@ -519,54 +483,6 @@ class UserSettings
     public function getTaxId()
     {
         return $this->taxId;
-    }
-
-    /**
-     * Set stateId
-     *
-     * @param string $stateId
-     *
-     * @return UserSettings
-     */
-    public function setStateId($stateId)
-    {
-        $this->stateId = $stateId;
-
-        return $this;
-    }
-
-    /**
-     * Get stateId
-     *
-     * @return string
-     */
-    public function getStateId()
-    {
-        return $this->stateId;
-    }
-
-    /**
-     * Set hin
-     *
-     * @param string $hin
-     *
-     * @return UserSettings
-     */
-    public function setHin($hin)
-    {
-        $this->hin = $hin;
-
-        return $this;
-    }
-
-    /**
-     * Get hin
-     *
-     * @return string
-     */
-    public function getHin()
-    {
-        return $this->hin;
     }
 
     /**
@@ -831,54 +747,6 @@ class UserSettings
     public function getBusinessFax()
     {
         return $this->businessFax;
-    }
-
-    /**
-     * Set pharmacistInCharge
-     *
-     * @param string $pharmacistInCharge
-     *
-     * @return UserSettings
-     */
-    public function setPharmacistInCharge($pharmacistInCharge)
-    {
-        $this->pharmacistInCharge = $pharmacistInCharge;
-
-        return $this;
-    }
-
-    /**
-     * Get pharmacistInCharge
-     *
-     * @return string
-     */
-    public function getPharmacistInCharge()
-    {
-        return $this->pharmacistInCharge;
-    }
-
-    /**
-     * Set picLicense
-     *
-     * @param string $picLicense
-     *
-     * @return UserSettings
-     */
-    public function setPicLicense($picLicense)
-    {
-        $this->picLicense = $picLicense;
-
-        return $this;
-    }
-
-    /**
-     * Get picLicense
-     *
-     * @return string
-     */
-    public function getPicLicense()
-    {
-        return $this->picLicense;
     }
 
     /**
@@ -1170,30 +1038,6 @@ class UserSettings
     }
 
     /**
-     * Set bankAccountOfficer
-     *
-     * @param string $bankAccountOfficer
-     *
-     * @return UserSettings
-     */
-    public function setBankAccountOfficer($bankAccountOfficer)
-    {
-        $this->bankAccountOfficer = $bankAccountOfficer;
-
-        return $this;
-    }
-
-    /**
-     * Get bankAccountOfficer
-     *
-     * @return string
-     */
-    public function getBankAccountOfficer()
-    {
-        return $this->bankAccountOfficer;
-    }
-
-    /**
      * Set bankPhone
      *
      * @param string $bankPhone
@@ -1311,30 +1155,6 @@ class UserSettings
     public function getBankState2()
     {
         return $this->bankState2;
-    }
-
-    /**
-     * Set bankAccountOfficer2
-     *
-     * @param string $bankAccountOfficer2
-     *
-     * @return UserSettings
-     */
-    public function setBankAccountOfficer2($bankAccountOfficer2)
-    {
-        $this->bankAccountOfficer2 = $bankAccountOfficer2;
-
-        return $this;
-    }
-
-    /**
-     * Get bankAccountOfficer2
-     *
-     * @return string
-     */
-    public function getBankAccountOfficer2()
-    {
-        return $this->bankAccountOfficer2;
     }
 
     /**

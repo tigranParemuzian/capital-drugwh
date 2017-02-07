@@ -90,6 +90,12 @@ class MenuItom
      */
     private $menu;
 
+    public function __toString()
+    {
+        return $this->id ? $this->getName() : 'New menu Item';
+        // TODO: Implement __toString() method.
+    }
+
     /**
      * Get id
      *

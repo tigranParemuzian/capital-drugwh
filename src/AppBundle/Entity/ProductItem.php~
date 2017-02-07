@@ -37,6 +37,13 @@ class ProductItem
     private $manufacturer;
 
     /**
+     * @var
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Manufacturer", inversedBy="productItom")
+     * @ORM\JoinColumn(name="manufacturer_id", referencedColumnName="id")
+     */
+    private $manufacturers;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="nds", type="string", length=255, unique=true)

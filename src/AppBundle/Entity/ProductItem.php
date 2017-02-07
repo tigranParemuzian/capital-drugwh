@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use APY\DataGridBundle\Grid\Mapping\Column;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation\VirtualProperty;
@@ -35,6 +36,14 @@ class ProductItem
      * @ORM\Column(name="manufacturer", type="string", length=255)
      */
     private $manufacturer;
+
+    /**
+     * @var
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Manufacturer", inversedBy="productItom")
+     * @ORM\JoinColumn(name="manufacturer_id", referencedColumnName="id")
+
+     */
+    private $manufacturers;
 
     /**
      * @var string
@@ -289,5 +298,29 @@ class ProductItem
     public function getStrength()
     {
         return $this->strength;
+    }
+
+    /**
+     * Set manufacturers
+     *
+     * @param \AppBundle\Entity\Manufacturer $manufacturers
+     *
+     * @return ProductItem
+     */
+    public function setManufacturers(\AppBundle\Entity\Manufacturer $manufacturers = null)
+    {
+        $this->manufacturers = $manufacturers;
+
+        return $this;
+    }
+
+    /**
+     * Get manufacturers
+     *
+     * @return \AppBundle\Entity\Manufacturer
+     */
+    public function getManufacturers()
+    {
+        return $this->manufacturers;
     }
 }

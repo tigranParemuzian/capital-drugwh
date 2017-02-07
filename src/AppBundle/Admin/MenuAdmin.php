@@ -33,19 +33,9 @@ class MenuAdmin extends Admin
             ), array('required'=>true))
             ->end()
             ->with('Parent', array(
-                'class' =>'col-sm-6',
+                'class' =>'col-sm-12',
                 'box-class' => 'box box-solid box-danger',
                 'description'=>'Parent information'
-            ))
-            ->add('menuItoms', 'sonata_type_collection', array(), array(
-                'by_reference' => true,
-                'label' => false,
-                'type_options' => array('delete' => true),
-                'cascade_validation' => true,
-                'btn_add' => 'Add new EventImages',
-                "required" => false ), array(
-                'edit' => 'inline',
-                'inline' => 'table'
             ))
             /*->add('menuItoms', 'sonata_type_collection', array(), array(
                 'edit' => 'inline',
@@ -55,6 +45,18 @@ class MenuAdmin extends Admin
             ->add('metaTitle', 'text', array('required'=>true))
             ->add('metaDescription', 'text', array('required'=>true))
         ->end()
+            ->with('Items')
+            ->add('menuItoms', 'sonata_type_collection', array(), array(
+                'by_reference' => true,
+                'label' => true,
+                'type_options' => array('delete' => true),
+                'cascade_validation' => true,
+                'btn_add' => 'Add new EventImages',
+                "required" => false ),
+                array(
+                'edit' => 'inline',
+                'inline' => 'table',))
+            ->end()
     ;
 
     }
@@ -113,24 +115,25 @@ class MenuAdmin extends Admin
      */
     public function preUpdate($object)
     {
-        if($object->getIngredients()){
-            foreach($object->getIngredients() as $productIngredient) {
+        if($object->getMenuItoms()){
+            foreach($object->getMenuItoms() as $productIngredient) {
                 $productIngredient->setMenu($object);
             }
         }
-        $object->uploadFile();
+//        $object->uploadFile();
     }
     /**
      * {@inheritdoc}
      */
     public function prePersist($object)
     {
-        if($object->getIngredients()){
-            foreach($object->getIngredients() as $productIngredient) {
+        if($object->getMenuItoms()){
+            foreach($object->getMenuItoms() as $productIngredient) {
                 $productIngredient->setMenu($object);
+
             }
         }
-        $object->uploadFile();
+//        $object->uploadFile();
     }
 
 }

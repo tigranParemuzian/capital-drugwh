@@ -110,4 +110,18 @@ class MenuItomAdmin extends Admin
     }
 
 
+    /**
+     * {@inheritdoc}
+     */
+    public function preUpdate($object)
+    {
+        $object->uploadFile();
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function prePersist($object)
+    {
+        $object->uploadFile();
+    }
 }

@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -13,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="menu")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MenuRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity("position")
  */
 class Menu
 {
@@ -44,6 +46,7 @@ class Menu
      * @var int
      *
      * @ORM\Column(name="position", type="integer", unique=true)
+     *
      */
     private $position;
 
@@ -86,6 +89,12 @@ class Menu
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\MenuItom", mappedBy="menu")
      */
     private $menuItoms;
+
+    public function __toString()
+    {
+        return $this->id? $this->name : 'new Menu';
+        // TODO: Implement __toString() method.
+    }
 
     /**
      * Get id

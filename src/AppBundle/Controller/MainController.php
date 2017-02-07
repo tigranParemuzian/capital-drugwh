@@ -41,7 +41,17 @@ class MainController extends Controller
      * @param Request $request
      */
     public function productsAction(Request $request){
-        return array('name'=>'Products');
+
+        if(is_object($this->getUser())){
+            return $this->redirect($this->generateUrl('list'));
+        } else{
+            $em = $this->getDoctrine()->getManager();
+
+            $products = $em->getRepository('AppBundle:Menu')->findBy(array('slug'=>'products'));
+
+            return array('name'=>'Products', 'products'=>$products);
+        }
+
     }
 
     /**

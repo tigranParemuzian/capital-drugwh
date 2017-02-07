@@ -27,7 +27,7 @@ class ProductItemAdmin extends Admin
                 'box-class' => 'box box-solid box-danger',
                 'description'=>'Products main create part'
             ))
-            ->add('manufacturer', 'text', array('required'=>true))
+            ->add('manufacturers', 'sonata_type_model_autocomplete', array('property' => 'name','required'=>true))
             ->add('nds', 'text', array('required'=>true))
             ->add('size', 'text', array('required'=>true))
             ->add('unit', 'choice', array('choices'=>
@@ -49,7 +49,6 @@ class ProductItemAdmin extends Admin
     {
         $list
             ->add('id')
-            ->add('name')
             ->add('manufacturer')
             ->add('nds')
             ->add('size')

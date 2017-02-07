@@ -21,6 +21,7 @@ class Builder implements ContainerAwareInterface
 
 
 $user = $this->container->get('security.token_storage')->getToken()->getUser();
+
 		foreach ($menues as $singleMenu)
 		{
 
@@ -29,7 +30,7 @@ $user = $this->container->get('security.token_storage')->getToken()->getUser();
 		}
 
 		$t = $this->container->get('request')->getPathInfo();
-//		dump($t);
+
 		if (is_object($user) && true ==$this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
 			$menu->addChild($user->getUsername())
 			->setUri('#')

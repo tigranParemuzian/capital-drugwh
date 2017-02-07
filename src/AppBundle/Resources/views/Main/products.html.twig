@@ -8,6 +8,8 @@
                         <h1 class="header-title">AAROGYA MED LLC <span>{{ name }}</span></h1>
                     </div>
                     <div class="panel-body container">
+                        {#{{ dump(products.menuItoms) }}#}
+                        {#{% for prduct in products.menuItoms %}#}
                         <div class="col-sm-6 col-md-4">
                             <div class="thumbnail">
                                 <img alt="100%x200" data-src="holder.js/100%x200" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKTO4taj282ptFp7RI4Ux-_laLY_e4TTDzfKmm8QkBG7r6Yvam" data-holder-rendered="true" style=" display: block;">
@@ -19,6 +21,7 @@
                                 </div>
                             </div>
                         </div>
+                            {#{% endfor %}#}
                     </div>
                 </div>
             </div>

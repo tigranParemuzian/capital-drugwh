@@ -61,3 +61,9 @@ services:
         tags:
             - {name: sonata.admin, manager_type: orm, group: Template, label: Menu Item, show_in_dashboard: true}
 
+    admin.manufacturer:
+        class: AppBundle\Admin\ManufacturerAdmin
+        arguments: [~, AppBundle\Entity\Manufacturer, ~]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: Product, label: Manufacturer, show_in_dashboard: true}
+
