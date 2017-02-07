@@ -45,21 +45,19 @@
                   <li><span>City:</span>RANCHO CUCAMONGA</li>
                   <li><span>State:</span>CA</li>
                   <li><span>Zip:</span>91730</li>
-                  <li><span>Web:</span> www.aamedllc.com</li>
               </ul>
               </div>
             <div class="col-md-4">
               <ul class="footer-info-list">
                   <li><span>Toll Free:</span>1-888-888-8888</li>
-                  <li><span>Cell:</span>1-909-682-8477</li>
-                  <li><span>Tel:</span>1-909-980-9900</li>
                   <li><span>Fax:</span>1-888-888-8888</li>
+                  <li><span>Web:</span> www.aamedllc.com</li>
                   <li><span>Email:</span> info@aamedllc.com</li>
               </ul>
           </div>
             <div class="col-md-12 text-center invoice-header">
 
-                <header><h1>Transaction History For Delivery ID {{ invoice.number }}</h1>
+                <header><h1>Transaction History ID {{ invoice.number }}</h1>
                 </header>
             </div>
         </div>
@@ -80,12 +78,11 @@
                 </div>
                 <div class="col-md-6">
                     <div class="col-md-3 text-right">
-                        <b>SELLER</b>
+                        <b>SHIPPING ADDRESS</b>
                     </div>
                     <div class="col-md-9">
                         <ul class="footer-info-list">
-                            <li>{{ userSettings.tradeName }}</li>
-                            <li>{{ userSettings.tradeAddress }}</li>
+                            <li> {{ invoice.user.userSettings.shippingAddressCity}} {{ invoice.user.userSettings.shippingAddressStreet}} {{ invoice.user.userSettings.shippingAddressNumber }}</li>
                         </ul>
                     </div>
                 </div>
@@ -115,7 +112,7 @@
                 <div class="col-md-2"><b>NDS</b></div>
                 <div class="col-md-1"><b>LOT</b></div>
                 <div class="col-md-1"><b>QTY</b></div>
-                <div class="col-md-1"><b>Expiry Date</b></div>
+                <div class="col-md-1"><b>Exp. Date</b></div>
             </div>
             {% set count = 1 %}
             {% set total = 0 %}
