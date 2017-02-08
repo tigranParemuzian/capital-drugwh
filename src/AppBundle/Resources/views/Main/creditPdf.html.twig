@@ -48,15 +48,13 @@
                         <li><span>City:</span>RANCHO CUCAMONGA</li>
                         <li><span>State:</span>CA</li>
                         <li><span>Zip:</span>91730</li>
-                        <li><span>Web:</span> www.aamedllc.com</li>
                     </ul>
                 </div>
                 <div class="col-md-4">
                     <ul class="footer-info-list">
                         <li><span>Toll Free:</span>1-888-888-8888</li>
-                        <li><span>Cell:</span>1-909-682-8477</li>
-                        <li><span>Tel:</span>1-909-980-9900</li>
                         <li><span>Fax:</span>1-888-888-8888</li>
+                        <li><span>Web:</span> www.aamedllc.com</li>
                         <li><span>Email:</span> info@aamedllc.com</li>
                     </ul>
                 </div>
@@ -101,7 +99,7 @@
                                     <span class="value-info">{{ otype }}</span></li>
                                 <li><span class="title-info">Legal Corporate Name Or Business:</span><span class="value-info">&nbsp;{{ userSettings.corporateName }}</span></li>
                                 <li><span class="title-info">Federal Tax I.D.:</span><span class="value-info">&nbsp;{{ userSettings.taxId }}</span></li>
-                                <li><span class="title-info">State Pharmacy License:</span><span class="value-info">&nbsp;{{ userSettings.statePharmacyLicense }}</span></li>
+                                <li><span class="title-info">State Pharmacy License/Distributor License:</span><span class="value-info">&nbsp;{{ userSettings.statePharmacyLicense }}</span></li>
                                 <li><span class="title-info">DEA License:</span><span class="value-info">&nbsp;{{ userSettings.deaLicense }}</span></li>
                                 <li><span class="title-info">State Controlled Substance License:</span><span class="value-info">&nbsp;{{ userSettings.stateControlledSubstanceLicense }}</span>
                                 </li>
@@ -111,7 +109,7 @@
                             <header><h1>Shipping Address</h1></header>
                             <p>
                                 <span class="title-info">Shipping Address:</span>
-                                <span class="value-info">&nbsp;{{ userSettings.shippingAddressState }}&nbsp;{{ userSettings.shippingAddressCity }}&nbsp;{{ userSettings.shippingAddressCounty }}&nbsp;{{ userSettings.shippingAddressStreet }}&nbsp;{{ userSettings.shippingAddressNumber}} &nbsp;{{ userSettings.shippingAddressZip}}</span>
+                                <span class="value-info">&nbsp;{{ userSettings.shippingAddressState }}&nbsp;{{ userSettings.shippingAddressCity }}&nbsp;{{ userSettings.shippingAddressStreet }}&nbsp;{{ userSettings.shippingAddressZip}}</span>
                             </p>
                         </div>
                         <div class="help-text bs-callout bs-callout-info" id="business_purchasing">
@@ -207,15 +205,25 @@
                                 <li>
                                     {% endif %}
                                     <span class="title-info">Bank Name:</span>
-                                    <span class="value-info">{{-userSettings.bankName-}}</span>
+                                    <span class="value-info">
+                                        {% if userSettings.bankName %}
+                                        {{-userSettings.bankName-}}{% else %}
+                                            <p style="border-bottom: black solid 2px; min-width: 100px;">
+                                    {% endif %}</span>
                                     <span class="title-info">Bank City:</span>
-                                    <span class="value-info">{{-userSettings.bankCity-}}</span>
+                                    <span class="value-info">
+                                        {% if userSettings.bankCity %}
+                                        {{-userSettings.bankCity-}}
+                                        {% else %}
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        {% endif %}
+                                    </span>
                                     <span class="title-info">Bank State:</span>
-                                    <span class="value-info">{{-userSettings.bankState-}}</span>
+                                    <span class="value-info">{% if userSettings.bankState %}{{-userSettings.bankState-}}{% else %}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{% endif %}</span>
                                     <span class="title-info">Bank Phone:</span>
-                                    <span class="value-info">{{-userSettings.bankPhone-}}</span>
+                                    <span class="value-info">{% if userSettings.bankPhone %}{{-userSettings.bankPhone-}}{% else %}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{% endif %}</span>
                                     <span class="title-info">Bank Account:</span>
-                                    <span class="value-info">{{-userSettings.bankAccount-}}</span>
+                                    <span class="value-info">{% if userSettings.bankAccount %}{{-userSettings.bankAccount-}}{% else %}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{% endif %}</span>
                                     {% if w2 >0 %}</li>
                                 <li>
                                     <span class="title-info">Bank Name:</span>

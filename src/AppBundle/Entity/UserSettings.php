@@ -106,11 +106,6 @@ class UserSettings
     private $stateControlledSubstanceLicense;
 
     /**
-     * @var $shippingAddressNumber
-     * @ORM\Column(name="shipping_address_number", type="string")
-     */
-    private $shippingAddressNumber;
-    /**
      * @var $shippingAddressStreet
      * @ORM\Column(name="shipping_address_street", type="string")
      */
@@ -132,12 +127,6 @@ class UserSettings
      * @ORM\Column(name="shipping_address_zip", type="string", length=5)
      */
     private $shippingAddressZip;
-
-    /**
-     * @var $shippingAddressCounty
-     * @ORM\Column(name="shipping_address_county", type="string", length=50, nullable=true)
-     */
-    private $shippingAddressCounty;
 
     /**
      * @var $primeryBusinessContact
@@ -1353,30 +1342,6 @@ class UserSettings
     }
 
     /**
-     * Set shippingAddressNumber
-     *
-     * @param string $shippingAddressNumber
-     *
-     * @return UserSettings
-     */
-    public function setShippingAddressNumber($shippingAddressNumber)
-    {
-        $this->shippingAddressNumber = $shippingAddressNumber;
-
-        return $this;
-    }
-
-    /**
-     * Get shippingAddressNumber
-     *
-     * @return string
-     */
-    public function getShippingAddressNumber()
-    {
-        return $this->shippingAddressNumber;
-    }
-
-    /**
      * Set shippingAddressStreet
      *
      * @param string $shippingAddressStreet
@@ -1470,30 +1435,6 @@ class UserSettings
     public function getShippingAddressZip()
     {
         return $this->shippingAddressZip;
-    }
-
-    /**
-     * Set shippingAddressCounty
-     *
-     * @param string $shippingAddressCounty
-     *
-     * @return UserSettings
-     */
-    public function setShippingAddressCounty($shippingAddressCounty)
-    {
-        $this->shippingAddressCounty = $shippingAddressCounty;
-
-        return $this;
-    }
-
-    /**
-     * Get shippingAddressCounty
-     *
-     * @return string
-     */
-    public function getShippingAddressCounty()
-    {
-        return $this->shippingAddressCounty;
     }
 
     /**
