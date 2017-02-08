@@ -89,11 +89,13 @@ ul.footer-info-image li a img:hover{
 
 tr.grid-row-filters > th .grid-filter-operator select, tr.grid-row-filters >th input{
     width: 150px;
+    margin-left: 10px;
 }
 
 tr.grid-row-filters > th:nth-child(5), tr.grid-row-filters > th:nth-child(6), tr.grid-row-filters > th:nth-child(7) select, tr.grid-row-filters > th:nth-child(7) input,
 tr.grid-row-cells > td:nth-child(5), tr.grid-row-cells > td:nth-child(6), tr.grid-row-cells > td:nth-child(7){
     max-width: 100px;
+    margin-left: 10px;
 }
 ul.grid-row-actions{
     display: inline-flex;
