@@ -4,8 +4,9 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use APY\DataGridBundle\Grid\Mapping as GRID;
+use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation as Serializer;
+use APY\DataGridBundle\Grid\Mapping as GRID;
 
 /**
  * Product
@@ -26,12 +27,14 @@ class Product
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @GRID\Column(visible=false)
+     * @Groups({"booking_list"})
      */
     private $id;
 
     /**
      * @var
      * @GRID\Column(title="show count")
+     * @Groups({"booking_list"})
      */
     private $showcount;
     /**
@@ -39,6 +42,7 @@ class Product
      *
      * @ORM\Column(name="name", type="string", length=255)
      * @GRID\Column(title="Name")
+     * @Groups({"booking_list"})
      */
     private $name;
 
@@ -48,6 +52,7 @@ class Product
      * @Gedmo\Slug(fields={"name"})
      * @ORM\Column(name="slug", type="string", length=255, unique=true)
      * @GRID\Column(visible=false)
+     * @Groups({"booking_list"})
      */
     private $slug;
 
@@ -55,11 +60,12 @@ class Product
      * @var
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\ProductItem", inversedBy="product")
      * @ORM\JoinColumn(name="product_item", referencedColumnName="id")
-     * @GRID\Column(field="productItem.nds", title="NDS", first="")
+     * @GRID\Column(field="productItem.nds", title="NDC", first="")
      * @GRID\Column(field="productItem.manufacturer", title="Manufacturer")
      * @GRID\Column(field="productItem.size", title="Size", filter=false, visible=false)
      * @GRID\Column(field="productItem.unit", title="Unit", filterable=false, visible=false)
      * @GRID\Column(field="productItem.strength", title="Strength", filterable=true)
+     * @Groups({"booking_list"})
      */
     private $productItem;
 
@@ -72,7 +78,8 @@ class Product
      * @var int
      *
      * @ORM\Column(name="count", type="integer")
-     * @GRID\Column(align="center", title="Count", size=30, type="number", filter="input")
+     * @GRID\Column(align="center", title="Count", size=100, type="number", filter="input")
+     * @Groups({"booking_list"})
      */
     private $count;
 
@@ -80,7 +87,8 @@ class Product
      * @var float
      *
      * @ORM\Column(name="price", type="float")
-     * @GRID\Column(align="center", title="Price", size=30)
+     * @GRID\Column(align="center", title="Price", size=100)
+     * @Groups({"booking_list"})
      */
     private $price;
 
@@ -88,6 +96,7 @@ class Product
      * @var string
      *
      * @ORM\Column(name="pricingCode", type="string", length=255, nullable=true)
+     * @Groups({"booking_list"})
      */
     private $pricingCode;
 

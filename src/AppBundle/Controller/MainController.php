@@ -146,6 +146,7 @@ class MainController extends Controller
             $pageUrl = $this->generateUrl('credit_pdf', array('userSettings'=>$userSettings->getId()), true); // use absolute path!
             $this->container->get('knp_snappy.pdf')->generate($pageUrl, $path);
 
+//        return new BinaryFileResponse($path);
             return new Response(
                 $this->get('knp_snappy.pdf')->getOutput($pageUrl),
                 200,

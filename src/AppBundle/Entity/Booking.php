@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
@@ -25,6 +26,7 @@ class Booking
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"booking_list"})
      */
     private $id;
 
@@ -32,6 +34,7 @@ class Booking
      * @var int
      *
      * @ORM\Column(name="count", type="integer")
+     * @Groups({"booking_list"})
      */
     private $count;
 
@@ -39,6 +42,7 @@ class Booking
      * @var int
      *
      * @ORM\Column(name="cost", type="integer")
+     * @Groups({"booking_list"})
      */
     private $cost;
 
@@ -46,6 +50,7 @@ class Booking
      * @var float
      *
      * @ORM\Column(name="subTotal", type="float")
+     * @Groups({"booking_list"})
      */
     private $subTotal;
 
@@ -53,6 +58,7 @@ class Booking
      * @var
      * @ORM\ManyToOne(targetEntity="Product", inversedBy="booking")
      * @ORM\JoinColumn(name="products_is", referencedColumnName="id")
+     * @Groups({"booking_list"})
      */
     private $product;
 
