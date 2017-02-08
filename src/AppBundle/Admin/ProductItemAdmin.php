@@ -50,7 +50,8 @@ class ProductItemAdmin extends Admin
         $list
             ->add('id')
             ->add('manufacturer')
-            ->add('nds')
+            ->add('strength')
+            ->add('nds', null, array('label'=>'NDC'))
             ->add('size')
             ->addIdentifier('unit', 'choice', array(
                 'choices'  => array(ProductItem::CT=>'ct', ProductItem::ML=>'ml',
@@ -58,7 +59,6 @@ class ProductItemAdmin extends Admin
                     ProductItem::GM=>'gm',
                 ),
             ))
-            ->add('strength')
             ->add('_action', 'actions',
                 array('actions'=>
                     array('show'=>array(), 'edit'=>array(), 'delete'=>array())
@@ -94,7 +94,7 @@ class ProductItemAdmin extends Admin
         $show
             ->add('id')
             ->add('manufacturer')
-            ->add('nds')
+            ->add('nds', null, array('label'=>'NDC'))
             ->add('size')
             ->add('unit', 'doctrine_orm_choice', array(),
                 'choice', array('choices' => array(ProductItem::CT=>'ct', ProductItem::ML=>'ml',

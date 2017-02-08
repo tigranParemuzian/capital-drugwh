@@ -37,4 +37,26 @@ class InvoiceRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('uid', $userId)
             ->getQuery()->getOneOrNullResult();
     }
+
+    /**
+     *
+     */
+    public function findByInvoiceIdForPdf($invId){
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('i.number, i.created, i.dueDate, i.terms, i.shippingHandling, i.trackNumber, u.id as userId,
+            p.name, p.price, pi.nds,
+            SUM(b.count) as counts, SUM(b.subTotal) as total')
+            ->from('AppBundle:Invoice', 'i')
+            ->leftJoin('i.booking', 'b')
+            ->leftJoin('i.user', 'u')
+            ->leftJoin('b.product', 'p')
+            ->leftJoin('p.productItem', 'pi')
+            ->where('i.id = :iid')
+            ->groupBy('p.name', 'p.price', 'pi.nds')
+            ->setParameter('iid', $invId)
+//            ->setMaxResults(1)
+            ->getQuery()->getResult()
+            ;
+    }
 }

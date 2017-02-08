@@ -65,7 +65,7 @@ class Invoice
 
     /**
      * @var
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Booking", mappedBy="invoice", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Booking", mappedBy="invoice", cascade={"all"}, orphanRemoval=true)
      */
     private $booking;
 
@@ -89,6 +89,12 @@ class Invoice
      */
     private $status;
 
+    /**
+     * @var
+     * @ORM\Column(name="track_number", type="string", length=50, nullable=true)
+     */
+    private $trackNumber;
+    
     /**
      * @var
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")

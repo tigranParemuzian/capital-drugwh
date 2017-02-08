@@ -25,7 +25,7 @@
                         <div class="col-md-2"><span>Date</span></div>
                         <div class="col-md-2"><span>Total</span></div>
                         <div class="col-md-2"><span>Status</span></div>
-                        <div class="col-md-2"><span>Track Number</span></div>
+                        <div class="col-md-2"><span>Tracking Number</span></div>
                         <div class="col-md-2"><span>Action</span></div>
                     </div>
                 {% if pagination != null %}
@@ -45,9 +45,11 @@
                                 Shipped
                                 {% endif %}
                             </span></div>
-                        <div class="col-md-2"><span>Not Available</span></div>
+                        <div class="col-md-2"><span>{% if invoice.trackNumber %}{{ invoice.trackNumber }}
+                        {% else %}Not Available{% endif %}</span></div>
                         <div class="col-md-2">
-                            <a href="{{ path('generate_invoice', {'invoiceId':invoice.id}) }}" target="_blank" class="btn btn-info" title="Download Pdf">
+                            <a {% if invoice.trackNumber %}href="{{ path('generate_invoice', {'invoiceId':invoice.id}) }}" target="_blank" class="btn btn-info"
+                               {% else %}href="#" class="btn btn-default"{% endif %}  title="Download Pdf">
                                 <span class="glyphicon glyphicon-floppy-disk"></span></a>&nbsp;
                             {% if removable == 1 %}
                             <a class="btn btn-danger" title="Remove">

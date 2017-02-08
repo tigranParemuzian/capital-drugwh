@@ -58,6 +58,7 @@ class InvoiceAdmin extends Admin
                     'description'=>'Categiry main create part'
                 ))
                     ->add('number')
+                    ->add('trackNumber', 'text', array('label'=>'Tracking Number'))
                     ->add('total')
                     ->add('status', 'choice', array('choices'=>
                 array(Invoice::IS_NEW=>'New', Invoice::IN_PROGRESS=>'On Progress',
@@ -87,6 +88,7 @@ class InvoiceAdmin extends Admin
     {
         $list
             ->add('number', 'text')
+            ->add('trackNumber', 'text', array('label'=>'Tracking Number'))
             ->add('total')
             ->add('status', 'choice', array('choices'=>
                 array(Invoice::IS_NEW=>'New', Invoice::IN_PROGRESS=>'On Progress',
@@ -110,6 +112,7 @@ class InvoiceAdmin extends Admin
     {
         $datagridMapper
             ->add('number')
+            ->add('trackNumber', null, array('label'=>'Tracking Number'))
             ->add('total')
             ->add('status', 'doctrine_orm_choice', array(),
                 'choice', array('choices' => array(Invoice::IS_NEW=>'New', Invoice::IN_PROGRESS=>'On Progress',
@@ -120,10 +123,6 @@ class InvoiceAdmin extends Admin
                 array('field_options_start' => array('format' => 'yyyy-MM-dd HH:mm:ss'),
                     'field_options_end' => array('format' => 'yyyy-MM-dd HH:mm:ss'))
             )
-//            ->add('updated', 'doctrine_orm_datetime_range', array(),'sonata_type_datetime_range_picker',
-//                array('field_options_start' => array('format' => 'yyyy-MM-dd HH:mm:ss'),
-//                    'field_options_end' => array('format' => 'yyyy-MM-dd HH:mm:ss'))
-//            )
         ;
     }
 
@@ -143,7 +142,6 @@ class InvoiceAdmin extends Admin
         ->add('user')
 
             ->add('created')
-//            ->add('updated')
         ;
     }
 
@@ -152,7 +150,6 @@ class InvoiceAdmin extends Admin
      */
     public function preUpdate($object)
     {
-//        dump($object->getBooking()); exit;
         if($object->getBooking()){
             foreach($object->getBooking() as $productIngredient) {
                 $productIngredient->setInvoice($object);
@@ -162,7 +159,6 @@ class InvoiceAdmin extends Admin
                 $productIngredient->setStatus(Booking::IS_ORDERED);
             }
         }
-//        $object->uploadFile();
     }
     /**
      * {@inheritdoc}
@@ -179,11 +175,6 @@ class InvoiceAdmin extends Admin
                 $productIngredient->setStatus(Booking::IS_ORDERED);
             }
         }
-//        $object->uploadFile();
     }
 
-//    public function batchActionCalculate(ProxyQueryInterface $selectedModelQuery)
-//    {
-//        ...
-//    }
 }

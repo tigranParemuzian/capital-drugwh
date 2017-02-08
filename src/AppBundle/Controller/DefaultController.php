@@ -231,6 +231,7 @@ class DefaultController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $secure = $this->container->get('security.authorization_checker');
+
         if(!$secure->isGranted("ROLE_SUPER_ADMIN")){
 
             $invoices = $em->getRepository('AppBundle:Invoice')->findUniqByAuthorAndId($this->getUser()->getId(), $invoiceId);
@@ -249,8 +250,9 @@ class DefaultController extends Controller
         $path = $this->container->getParameter('kernel.root_dir')."/../web/uploads/invoice/" . $filename;
 
         if(is_file($path)){
-            return new BinaryFileResponse($path);
-        }else{
+           unlink($path);
+        }
+
             $pageUrl = $this->generateUrl('pdf_generate', array('invoiceId'=>$invoiceId), true); // use absolute path!
             $this->container->get('knp_snappy.pdf')->generate($pageUrl, $path);
 
@@ -262,8 +264,6 @@ class DefaultController extends Controller
                     'Content-Disposition'   => sprintf('attachment; filename="%s"', $filename),
                 )
             );
-        }
-
     }
     /**
      *
@@ -279,10 +279,21 @@ class DefaultController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $invoice = $em->getRepository('AppBundle:Invoice')->find($invoiceId);
+        $invoice = $em->getRepository('AppBundle:Invoice')->findByInvoiceIdForPdf($invoiceId);
+
+        if(!count($invoice)){
+            $this->addFlash(
+                'notice',
+                'Please Submit order!'
+            );
+            return $this->redirectToRoute('submit_order');
+        }
+
+        $userSettings = $em->getRepository('AppBundle:UserSettings')->findByUser($invoice[0]['userId']);
+
         $invoiceSettings = $em->getRepository('AppBundle:InvoiceSettings')->findMax();
 
-        return array('invoiceSettings'=>$invoiceSettings, 'invoice'=>$invoice);
+        return array('invoiceSettings'=>$invoiceSettings, 'invoice'=>$invoice, 'userSettings'=>$userSettings);
 
     }
 

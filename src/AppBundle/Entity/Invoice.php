@@ -91,6 +91,12 @@ class Invoice
 
     /**
      * @var
+     * @ORM\Column(name="track_number", type="string", length=50, nullable=true)
+     */
+    private $trackNumber;
+    
+    /**
+     * @var
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
@@ -367,5 +373,29 @@ class Invoice
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set trackNumber
+     *
+     * @param string $trackNumber
+     *
+     * @return Invoice
+     */
+    public function setTrackNumber($trackNumber)
+    {
+        $this->trackNumber = $trackNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get trackNumber
+     *
+     * @return string
+     */
+    public function getTrackNumber()
+    {
+        return $this->trackNumber;
     }
 }

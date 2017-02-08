@@ -40,7 +40,7 @@
                                 {#{{ knp_menu_render('AppBundle:Builder:topMenu', { 'template': 'Menu/knp_menu.html.twig', 'currentAsLink': false, 'id':'navigation'}) }}#}
                                 <li class="active"><a href="{{ path('homepage') }}">Home<span class="sr-only">(current)</span></a></li>
                                 <li><a href="{{ path('about_us') }}">About Us</a></li>
-                                <li><a href="{{ path('why_directrex') }}">Why Directrex</a></li>
+                                <li><a href="{{ path('why_directrex') }}">Why Direct From US</a></li>
                                 <li><a href="{% if app.user == null %}{{ path('products') }}
                                 {% else %}{{ path('list') }}{% endif %}">Products</a></li>
                                 <li><a href="{{ path('services') }}">Services</a></li>

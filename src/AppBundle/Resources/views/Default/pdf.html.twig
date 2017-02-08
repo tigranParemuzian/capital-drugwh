@@ -64,11 +64,10 @@
                     </div>
                     <div class="col-md-9">
                         <ul class="footer-info-list">
-                            <li>Brett Keenan</li>
-                            <li>Small Town Pharmacy</li>
-                            <li>1 N West End Blvd</li>
-                            <li>Quakertown, PA 18951</li>
-                            <li>1-909-980-9900</li>
+                            <li>{{ userSettings.tradeName }}</li>
+                            <li>{{ userSettings.tradeAddress }}</li>
+                            <li>{{ userSettings.primeryBusinessContactEmail }}</li>
+                            <li>{{ userSettings.businessTelephone }}</li>
                         </ul>
                     </div>
                 </div>
@@ -78,11 +77,10 @@
                     </div>
                     <div class="col-md-9">
                         <ul class="footer-info-list">
-                            <li>Brett Keenan</li>
-                            <li>Small Town Pharmacy</li>
-                            <li>1 N West End Blvd</li>
-                            <li>Quakertown, PA 18951</li>
-                            <li>1-909-980-9900</li>
+                            <li>{{ userSettings.shippingAddressStreet }}</li>
+                            <li>{{ userSettings.shippingAddressCity }}</li>
+                            <li>{{ userSettings.shippingAddressState }}</li>
+                            <li>{{ userSettings.shippingAddressZip }}</li>
                         </ul>
                     </div>
                 </div>
@@ -107,16 +105,18 @@
                             <th><span>TERMS</span></th>
                             <th><span>SHIP DATE</span></th>
                             <th><span>SHIP VIA</span></th>
+                            {% if invoice[0].trackNumber %}<th><span>TRACKING NUMBER</span></th>{% endif %}
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><span>{{ invoice.number }}</span></td>
-                            <td><span>{{ invoice.created|date("m/d/Y") }}</span></td>
-                            <td><span>{{ invoice.dueDate|date("m/d/Y") }}</span></td>
-                            <td><span>{{ invoice.terms }}</span></td>
-                            <td><span>{{ invoice.shippingHandling|date("m/d/Y") }}</span></td>
+                            <td><span>{{ invoice[0].number }}</span></td>
+                            <td><span>{{ invoice[0].created|date("m/d/Y") }}</span></td>
+                            <td><span>{{ invoice[0].dueDate|date("m/d/Y") }}</span></td>
+                            <td><span>{{ invoice[0].terms }}</span></td>
+                            <td><span>{{ invoice[0].shippingHandling|date("m/d/Y") }}</span></td>
                             <td><span>Fedex</span></td>
+                            {% if invoice[0].trackNumber %}<th><span>{{ invoice[0].trackNumber }}</span></th>{% endif %}
                         </tr>
                     </tbody>
 
@@ -143,18 +143,20 @@
             </div>
             {% set count = 1 %}
             {% set total = 0 %}
-            {% for booking in invoice.booking %}
+            {% for booking in invoice %}
             <div class="col-md-12 text-uppercase text-left">
                 <div class="col-md-1"><b>{{ count }}</b></div>
-                <div class="col-md-3"><b>{{ booking.product.name }}</b></div>
-                <div class="col-md-3"><b>{{ booking.product.productItem.nds }}</b></div>
-                <div class="col-md-1"><b>{{ booking.count }}</b></div>
-                <div class="col-md-2"><b>{{ booking.product.price }} &nbsp;$</b></div>
-                <div class="col-md-2"><b>{{ booking.subTotal }} &nbsp;$</b></div>
+                <div class="col-md-3"><b>{{ booking.name }}</b></div>
+                <div class="col-md-3"><b>{{ booking.nds }}</b></div>
+                <div class="col-md-1"><b>{{ booking.counts }}</b></div>
+                <div class="col-md-2"><b>{{ booking.price|round(2, 'floor') }} &nbsp;$</b></div>
+                <div class="col-md-2"><b>{{ booking.total|round(2, 'floor') }} &nbsp;$</b></div>
             </div>
                 {% set count = count +1 %}
-                {% set total = total + booking.subTotal %}
+                {% set total = total + booking.total %}
             {% endfor %}
+
+            {#{{ dump(bookings) }}#}
             <hr>
             <div class="col-md-12">
                 <div class="col-md-6 text-left">
@@ -162,7 +164,7 @@
                         will be a 1.5% interest charge per month on late invoices.</p>
                 </div>
                 <div class="col-md-4 text-right"><h1>BALANCE DUE</h1></div>
-                <div class="col-md-2 text-right"><h1>{{ total }}&nbsp;$</h1>
+                <div class="col-md-2 text-right"><h1>{{ total|round(2, 'floor') }}&nbsp;$</h1>
                 </div>
             </div>
         </div>

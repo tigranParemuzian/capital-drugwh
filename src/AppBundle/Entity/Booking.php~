@@ -66,7 +66,7 @@ class Booking
     /**
      * @var
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Invoice", inversedBy="booking")
-     * @ORM\JoinColumn(name="invoice_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="invoice_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $invoice;
 
@@ -332,5 +332,53 @@ class Booking
     public function getInvoice()
     {
         return $this->invoice;
+    }
+
+    /**
+     * Set lot
+     *
+     * @param string $lot
+     *
+     * @return Booking
+     */
+    public function setLot($lot)
+    {
+        $this->lot = $lot;
+
+        return $this;
+    }
+
+    /**
+     * Get lot
+     *
+     * @return string
+     */
+    public function getLot()
+    {
+        return $this->lot;
+    }
+
+    /**
+     * Set expiryDate
+     *
+     * @param \DateTime $expiryDate
+     *
+     * @return Booking
+     */
+    public function setExpiryDate($expiryDate)
+    {
+        $this->expiryDate = $expiryDate;
+
+        return $this;
+    }
+
+    /**
+     * Get expiryDate
+     *
+     * @return \DateTime
+     */
+    public function getExpiryDate()
+    {
+        return $this->expiryDate;
     }
 }
