@@ -22,7 +22,7 @@ nav.navbar{
 }
 
 #bs-example-navbar-collapse-1{
-    max-width: 1000px;
+    max-width: 5000px;
     margin: 0 auto;
     text-align: center;
 }
@@ -270,6 +270,8 @@ ul.nav-tabs li:active a{
 ul.nav-tabs li a{
     color: #0DA15A;
 }
+
+.page-cart{min-height: 350px;}
 @media (min-width: 768px){
     .navbar-nav {
         margin: 0;

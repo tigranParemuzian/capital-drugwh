@@ -33,7 +33,17 @@ class MainController extends Controller
      */
     public function whyDirectrxAction(Request $request){
 
-        return array('name'=>'Why Directrx');
+        return array('name'=>'Why Direct from US');
+
+    }
+
+    /**
+     * @Route("terms-and-conditions", name="terms_and_conditions")
+     * @Template()
+     */
+    public function termsAndConditionsAction(Request $request){
+
+        return array('name'=>'Terms And Conditions');
 
     }
 

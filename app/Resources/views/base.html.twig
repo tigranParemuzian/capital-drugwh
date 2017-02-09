@@ -44,6 +44,7 @@
                                 <li><a href="{% if app.user == null %}{{ path('products') }}
                                 {% else %}{{ path('list') }}{% endif %}">Products</a></li>
                                 <li><a href="{{ path('services') }}">Services</a></li>
+                                <li><a href="{{ path('terms_and_conditions') }}">Terms And Conditions</a></li>
                                 {% if app.user == null %}
                                 <li><a href="{{ path('fos_user_security_login') }}">Login</a></li>
                                     {% else %}
