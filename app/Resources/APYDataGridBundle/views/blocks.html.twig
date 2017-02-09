@@ -161,7 +161,7 @@
                             {% endif %}
                             <td class="grid-column-{{ column.renderBlockId }}{% if column.class %} {{ column.class }}{% endif %}{% if column.align != 'left'%} align-{{ column.align }}{% endif %}{% if loop.last %} last-column{% endif %}{% if last_row %} last-row{% endif %}">{{- grid_cell(column, row, grid)|raw|replace({' ':''})|split('&nbsp;')[0] -}}&nbsp;{{ uni }}</td>
                     {% elseif column.renderBlockId=='price' %}
-                        <td class="grid-column-{{ column.renderBlockId }}{% if column.class %} {{ column.class }}{% endif %}{% if column.align != 'left'%} align-{{ column.align }}{% endif %}{% if loop.last %} last-column{% endif %}{% if last_row %} last-row{% endif %}">{{- grid_cell(column, row, grid)|raw|round(2, 'floor') -}}&nbsp;$</td>
+                        <td class="grid-column-{{ column.renderBlockId }}{% if column.class %} {{ column.class }}{% endif %}{% if column.align != 'left'%} align-{{ column.align }}{% endif %}{% if loop.last %} last-column{% endif %}{% if last_row %} last-row{% endif %}">$&nbsp;{{- grid_cell(column, row, grid)|raw|round(2, 'floor') -}}</td>
                     {% elseif column.renderBlockId=='strength_size' %}
                         {% set Suni='' %}
                         {% set val=grid_cell(column, row, grid)|raw|replace({' ':''})|split('&nbsp;')[1] %}
@@ -287,7 +287,7 @@
         {% endif %}
         </li>
         <li>
-            <button class="btn btn-success " style="display: none" type="button" id="add_{{ row.field('id') }}" onclick="addByBag(this.id, 0, '{{ row.field('slug') }}')">Add To</button>
+            <button class="btn btn-success " style="display: none" type="button" id="add_{{ row.field('id') }}" onclick="addByBag(this.id, 0, '{{ row.field('slug') }}')">Add</button>
         </li>
     {% endfor %}
     </ul>

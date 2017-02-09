@@ -41,11 +41,11 @@ function updateData(getId, status){
     }else {
         var price = my_input.closest('tr').children('td.grid-column-price').text();
         count = my_input.val();
-        var totl_itom = (parseFloat(price) * count).toFixed(2);
+        var totl_itom = (parseFloat(price.substring(2)) * count).toFixed(2);
 
         if(status != 1){
             $('#add_'+id).show();
-            my_input.css({'border': "2px inset"}).closest('.grid-column-buy_count').children('div.help-text').html('<b>'+ totl_itom +'$</b>');
+            my_input.css({'border': "2px inset"}).closest('.grid-column-buy_count').children('div.help-text').html('<b>$ '+ totl_itom +'</b>');
         }else {
             my_input.css({'border': "2px inset"}).closest('.grid-column-buy_count').children('div.help-text').html('');
         }
@@ -83,9 +83,9 @@ function writeOrder(orders){
     $('table.order>tbody').append('<tr> <td >'+ orders.product.name +'</td>' +
         '<td>' + orders.product.product_item.strength +'</td>' +
         '<td>' + orders.product.product_item.size + ' ' + unt +'</td>' +
-        '<td>' + orders.product.price.toFixed(2) +' $</td>'+
+        '<td>$ ' + orders.product.price.toFixed(2) +'</td>'+
         '<td>' + orders.count +' </td>'+
-        '<td>' + orders.sub_total +' $</td>'+
+        '<td>$ ' + orders.sub_total +'</td>'+
         '<td> <button id="remove_' + orders.product.id +'" onclick="addByBag(this.id, 1)" class="btn btn-danger">' +
         '<span class="glyphicon glyphicon glyphicon-remove"></span>' +
         '</button>' +
@@ -116,14 +116,14 @@ function getDataTerminals() {
             }
 
             $('.total-count').html('<span>Items Count </span> '+result.length);
-            $('.total-price').html('<span>Total price </span>' + total.toFixed(2) + ' $');
+            $('.total-price').html('<span>Total price </span>$ ' + total.toFixed(2));
             $('.selected_infos').html('My&nbsp;Bag&nbsp;<span class="badge">'+result.length+'</span>')
         },
         error: function (jqXHR, textStatus, errorThrown) {
             if(errorThrown==='Not Found'){
                 $('table.order>tbody').html('');
                 $('.total-count').html('<span>Items Count </span> 0');
-                $('.total-price').html('<span>Total price </span>0 $');
+                $('.total-price').html('<span>Total price </span>$ 0');
                 $('.selected_infos').html('My&nbsp;Bag&nbsp;<span class="badge">0</span>')
             }
             console.log(jqXHR, textStatus, errorThrown);

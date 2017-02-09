@@ -108,8 +108,7 @@
             <div class="col-md-12 text-uppercase text-left">
                 <div class="col-md-1"><b>#</b></div>
                 <div class="col-md-4"><b>Manufacturer info</b></div>
-                <div class="col-md-2"><b>Name</b></div>
-                <div class="col-md-1"><b>Strength</b></div>
+                <div class="col-md-3"><b>Name/Strength</b></div>
                 <div class="col-md-1"><b>NDC</b></div>
                 <div class="col-md-1"><b>LOT</b></div>
                 <div class="col-md-1"><b>QTY</b></div>
@@ -122,8 +121,7 @@
                 <div class="col-md-1"><b>{{ count }}</b></div>
                 <div class="col-md-4"><span>SUPPLIER NAME&nbsp;</span><b>{{ booking.product.productItem.manufacturers.name }}</b>
                 <p><span>SUPPLIER ADDRESS&nbsp;</span>{{ booking.product.productItem.manufacturers.address }}</p></div>
-                <div class="col-md-2"><b>{{ booking.product.name }}</b></div>
-                <div class="col-md-1"><b>{{ booking.product.productItem.strength }}</b></div>
+                <div class="col-md-3"><b>{{ booking.product.name }}&nbsp;{{ booking.product.productItem.strength }}</b></div>
                 <div class="col-md-1"><b>{{ booking.product.productItem.nds }}</b></div>
                 <div class="col-md-1"><b>{{ booking.lot }}</b></div>
                 <div class="col-md-1"><b>{{ booking.count }}</b></div>
