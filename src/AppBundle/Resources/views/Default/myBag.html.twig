@@ -40,8 +40,8 @@
                             {% if app.user.isValid == 1 %}
                             <a href="{{ path('submit_order')}}" class="btn btn-success">Submit order</a>
                             {% else %}
-                                <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-info"><span class="glyphicon glyphicon-edit"></span>&nbsp;Edit Profile</a>
-                            <p>TODO info about user settings</p>
+                                <a href="{{ path('user_settings') }}" class="btn btn-info"><span class="glyphicon glyphicon-edit"></span>&nbsp;Credit Application</a>
+                            <p>Please write your credit application</p>
                             {% endif %}
                         </td>
                     </tr>
