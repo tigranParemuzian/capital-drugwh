@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\UserSettings;
+use AppBundle\Form\CreditApplicationUploadType;
 use AppBundle\Form\UserSettingsType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -11,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class MainController extends Controller
 {
@@ -108,16 +110,55 @@ class MainController extends Controller
 
         $userSettings = $this->getUser()->getUserSettings();
 
-        if(!$userSettings){
+        if(!$userSettings) {
             $this->addFlash(
                 'error',
                 'Please add Credit Application and Agreement informations.!'
             );
             return $this->redirect($this->generateUrl('user_settings'));
+        }
+            $em = $this->getDoctrine()->getManager();
+
+        $form = $this->createForm(new CreditApplicationUploadType());
+
+
+        // determination file types
+        if($request->isMethod('POST')) {
+
+            // get request & check
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+
+                $data = $form->getData();
+                $file = $data['file'];
+                // corrections of uploaded file name because is sended from cli
+//                $fileName = $this->getUser()->getId().(str_replace( ' ', '_', str_replace('(', '_', str_replace(')', '_', $file->getClientOriginalName()))));
+                // save file in /web/uploads/files folder
+//                $brochuresDir = $this->container->getParameter('kernel.root_dir').'/../web/uploads/credit_application_uploads';
+//                $mainDir = str_replace('/app', '/', $this->container->getParameter('kernel.root_dir'));
+//                $form->get('file');
+                if (is_file($file) && in_array($file->getMimeType(), array('application/pdf')))
+                {
+                    // move file to uploda directory
+//                    $file->move($brochuresDir, $fileName);
+
+//                    $file = $brochuresDir.'/'.$fileName;
+
+                        $userSettings->setFile($file);
+                        $userSettings->uploadFile();
+                        $em->persist($userSettings);
+                        $em->flush();
+
+                    $this->addFlash(
+                        'notice',
+                        'Credit Application file file successfully uploaded.'
+                    );
+                }
+        }
 
         }
 
-        return array('userSettings'=>$userSettings);
+        return array('userSettings'=>$userSettings, 'form' => $form->createView());
     }
 
     /**
@@ -176,6 +217,28 @@ class MainController extends Controller
 
         return array('userSettings'=>$userSettings);
 
+    }
+
+    /**
+     * @param Request $request
+     * @Route("/credit-application/{userSettId}", name="credit-application")
+     * @Security("has_role('ROLE_SUPER_ADMIN')")
+     */
+    public function downloadCreditApplication(Request $request, $userSettId){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $usersettings = $em->getRepository('AppBundle:UserSettings')->find($userSettId);
+        if(!$usersettings || strlen($usersettings->getFileName()) <0 ){
+
+            return $this->redirect($this->generateUrl('user_settings'));
+        }
+
+        $file = $usersettings->getDownloadLink();
+        $response = new BinaryFileResponse($this->container->getParameter('kernel.root_dir')."/../web".$file);
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
+
+        return $response;
     }
 
 }

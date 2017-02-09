@@ -160,13 +160,13 @@ class InvoiceAdmin extends Admin
             }
         }
     }
+
     /**
      * {@inheritdoc}
      */
     public function prePersist($object)
     {
         if($object->getBooking()){
-//            dump($object->getBooking()); exit;
             foreach($object->getBooking() as $productIngredient) {
                 $productIngredient->setInvoice($object);
                 $productIngredient->setClient($object->getUser());

@@ -112,11 +112,11 @@ class RestMainController extends FOSRestController
 
                 $booking = new Booking();
             }
-            if($product->getCount() < $count && $count !=0){
-
-                return new JsonResponse("Ops {$product->getName()} is limited. Limit is {$product->getCount()}" , Response::HTTP_BAD_REQUEST);
-
-            }
+//            if($product->getCount() < $count && $count !=0){
+//
+//                return new JsonResponse("Ops {$product->getName()} is limited. Limit is {$product->getCount()}" , Response::HTTP_BAD_REQUEST);
+//
+//            }
 
         $booking->setClient($currentUser);
         $booking->setProduct($product);
@@ -129,7 +129,7 @@ class RestMainController extends FOSRestController
 
         $validator = $this->get('validator');
 
-        $errors = $validator->validate($product);
+        $errors = $validator->validate($booking);
 
         if(count($errors) > 0 ) {
 

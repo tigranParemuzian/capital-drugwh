@@ -344,6 +344,12 @@ class UserSettings
      */
     private $businessMonthlyBrandSales;
 
+    public function __toString()
+    {
+        return $this->id ? $this->tradeName : 'new Credit Application';
+        // TODO: Implement __toString() method.
+    }
+
     /**
      * Get id
      *

@@ -73,3 +73,9 @@ services:
         tags:
             - {name: sonata.admin, manager_type: orm, group: Invoice, label: Booking, show_in_dashboard: true}
 
+    admin.user_settings:
+        class: AppBundle\Admin\UserSettingsAdmin
+        arguments: [~, AppBundle\Entity\UserSettings, ~]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: User, label: Credit Application, show_in_dashboard: true}
+

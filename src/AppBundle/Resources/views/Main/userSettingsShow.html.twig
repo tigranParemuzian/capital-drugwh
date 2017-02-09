@@ -1,6 +1,13 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
 {{ parent()}}
+    <style type="text/css">
+       .file-left{
+           width: 200px;
+           float: left;
+           margin-left: 20px;
+       }
+    </style>
 {% endblock %}
 {% block content %}
 
@@ -307,14 +314,22 @@
                     <a href="{{ path('credit_application_crete') }}" class="btn btn-info"><span class="glyphicon glyphicon-print"></span>&nbsp;Create Pdf</a>
                 </div>
                 <div class="col-md-5">
-                    <form rel="form" action="#" method="post" aria-multiline="true">
-                        <div class="form-group">
-                        <input class="form-control" type="file" data-placeholder-focus="coose pdf" style="max-width: 250px;
-    float: left;
-    right: -22px;">
-                        <button class="btn btn-info" type="submit"><span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;Upload Pdf</button>
-                        </div>
-                    </form>
+                    {{ form_start(form) }}
+                        {#{{ form_label(form.file) }}#}
+                        {{ form_widget(form.file) }}
+                        {{ form_errors(form.file) }}
+
+                    {{ form_widget(form.save) }}
+                </div>
+                {{ form_end(form) }}
+                    {#<form rel="form" action="#" method="post" aria-multiline="true">#}
+                        {#<div class="form-group">#}
+                        {#<input class="form-control" type="file" data-placeholder-focus="coose pdf" style="max-width: 250px;#}
+    {#float: left;#}
+    {#right: -22px;">#}
+                        {#<button class="btn btn-info" type="submit"><span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;Upload Pdf</button>#}
+                        {#</div>#}
+                    {#</form>#}
                 </div>
             </div>
         </div>

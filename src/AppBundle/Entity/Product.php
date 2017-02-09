@@ -15,8 +15,8 @@ use APY\DataGridBundle\Grid\Mapping as GRID;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductRepository")
  * @ORM\HasLifecycleCallbacks()
  * @GRID\Column(id="name", type="text")
- * @GRID\Source(columns="id, name, productItem.strength, productItem.manufacturer, productItem.nds, slug, count, price, unit_size, productItem.size, productItem.unit")
- * @GRID\Column(id="unit_size", type="join", title="Size", columns={"productItem.size", "productItem.unit"}, size=30)
+ * @GRID\Source(columns="id, name, productItem.strength, productItem.manufacturer, productItem.nds, slug, price, unit_size, productItem.size, productItem.unit")
+ * @GRID\Column(id="unit_size", type="join", title="Size", columns={"productItem.size", "productItem.unit"}, size=30, filter=false)
  */
 class Product
 {
@@ -78,7 +78,6 @@ class Product
      * @var int
      *
      * @ORM\Column(name="count", type="integer")
-     * @GRID\Column(align="center", title="Count", size=100, type="number", filter="input")
      * @Groups({"booking_list"})
      */
     private $count;
@@ -87,7 +86,7 @@ class Product
      * @var float
      *
      * @ORM\Column(name="price", type="float")
-     * @GRID\Column(align="center", title="Price", size=100)
+     * @GRID\Column(align="center", title="Price", size=100, filter=false)
      * @Groups({"booking_list"})
      */
     private $price;

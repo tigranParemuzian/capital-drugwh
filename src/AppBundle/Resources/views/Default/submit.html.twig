@@ -5,7 +5,7 @@
     {% endblock %}
 
     <div class="wrapper top-panel">
-        <div class="row">
+        <div class="">
             <div class="panel panel-success">
                 <div class="panel-heading">
                     <h1 class="header-title">AAROGYA MED LLC <span>Invoices</span></h1>
@@ -23,18 +23,18 @@
                     <div class="col-md-12">
                         <div class="col-md-2"><span>Number</span></div>
                         <div class="col-md-2"><span>Date</span></div>
-                        <div class="col-md-2"><span>Total</span></div>
-                        <div class="col-md-2"><span>Status</span></div>
+                        <div class="col-md-1"><span>Total</span></div>
+                        <div class="col-md-1"><span>Status</span></div>
                         <div class="col-md-2"><span>Tracking Number</span></div>
-                        <div class="col-md-2"><span>Action</span></div>
+                        <div class="col-md-4"><span>Action</span></div>
                     </div>
                 {% if pagination != null %}
                     {% for invoice in pagination %}
                     <div class="col-md-12">
                         <div class="col-md-2"><span>{{ invoice.number }}</span></div>
                         <div class="col-md-2"><span>{{ invoice.created|date('Y M d') }}</span></div>
-                        <div class="col-md-2"><span>{{ invoice.total }}&nbsp;$</span></div>
-                        <div class="col-md-2"><span>
+                        <div class="col-md-1"><span>{{ invoice.total }}&nbsp;$</span></div>
+                        <div class="col-md-1"><span>
                                 {% set removable = 0 %}
                             {% if invoice.status == 0 %}
                                 {% set removable = 1 %}
@@ -47,10 +47,13 @@
                             </span></div>
                         <div class="col-md-2"><span>{% if invoice.trackNumber %}{{ invoice.trackNumber }}
                         {% else %}Not Available{% endif %}</span></div>
-                        <div class="col-md-2">
-                            <a {% if invoice.trackNumber %}href="{{ path('generate_invoice', {'invoiceId':invoice.id}) }}" target="_blank" class="btn btn-info"
-                               {% else %}href="#" class="btn btn-default"{% endif %}  title="Download Pdf">
-                                <span class="glyphicon glyphicon-floppy-disk"></span></a>&nbsp;
+                        <div class="col-md-4">
+                            <a href="{{ path('generate_invoice', {'invoiceId':invoice.id}) }}" {% if invoice.trackNumber %} target="_blank"   class="btn btn-info"
+                               {% else %} class="btn btn-default"{% endif %}  title="Download Pdf">
+                                Invoice</a>&nbsp;
+                            <a href="{{ path('generate_t3_statment', {'invoiceId':invoice.id}) }}" target="_blank"  {% if invoice.trackNumber %} class="btn btn-info"
+                               {% else %} class="btn btn-default"{% endif %}  title="Download Pdf">
+                                T3 Statment</a>&nbsp;
                             {% if removable == 1 %}
                             <a class="btn btn-danger" title="Remove">
                                 <span class="glyphicon glyphicon glyphicon-remove"></span></a>

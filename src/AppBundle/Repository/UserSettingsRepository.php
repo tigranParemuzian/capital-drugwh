@@ -10,15 +10,15 @@ namespace AppBundle\Repository;
  */
 class UserSettingsRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findByUser($userId)
+    public function findByUser()
     {
         return $this->getEntityManager()
             ->createQueryBuilder()
             ->select('u')
             ->from('AppBundle:UserSettings', 'u')
             ->innerJoin('u.user', 'cu')
-            ->where('cu.id =:cid')
-            ->setParameter('cid', $userId)
+            ->where('cu.roles LIKE :rol')
+            ->setParameter('rol', '%ROLE_SUPER_ADMIN%')
             ->setMaxResults(1)
             ->getQuery()->getOneOrNullResult();
     }

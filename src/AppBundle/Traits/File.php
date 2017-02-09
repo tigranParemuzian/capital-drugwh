@@ -16,7 +16,7 @@ trait File
 {
 
     /**
-     * @Assert\Image()
+     * @Assert\File()
      */
     protected  $file;
 
@@ -137,7 +137,7 @@ trait File
      */
     protected function getPath()
     {
-        return 'images';
+        return 'credit_application_uploads';
     }
 
     /**

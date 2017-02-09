@@ -151,11 +151,11 @@ function sendRequest(data, method)
 
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            if(jqXHR.status ===400){
+            /*if(jqXHR.status ===400){
                 $('h4.modal-title').text('Cannot add');
                 $('div.modal-body').html('<p>'+ jqXHR.responseJSON +'</p>');
                 $('.modal').addClass('in').css({'display':'block'})
-            }
+            }*/
             console.log(jqXHR, textStatus, errorThrown);
         }
     });

@@ -244,6 +244,16 @@ class DefaultController extends Controller
                 return $this->redirectToRoute('submit_order');
             }
 
+            if(!$invoices->getTrackNumber()){
+                $this->addFlash(
+                    'notice',
+                    'Sorry invoice is not ready!!'
+                );
+                return $this->redirectToRoute('submit_order');
+            }
+
+
+
         }
 
         $filename = sprintf('invoice-%s.pdf', $invoiceId);
@@ -317,6 +327,14 @@ class DefaultController extends Controller
                 return $this->redirectToRoute('submit_order');
             }
 
+            if(!$invoices->getTrackNumber()){
+                $this->addFlash(
+                    'notice',
+                    'Sorry T3 statment is not ready!!'
+                );
+                return $this->redirectToRoute('submit_order');
+            }
+
         }
 
         $filename = sprintf('t3_statment_%s.pdf', $invoiceId);
@@ -357,7 +375,9 @@ class DefaultController extends Controller
         $invoice = $em->getRepository('AppBundle:Invoice')->find($invoiceId);
         $invoiceSettings = $em->getRepository('AppBundle:InvoiceSettings')->findMax();
 
-        $userSettings = $em->getRepository('AppBundle:UserSettings')->findByUser($cuserId);
+        $userSettings = $em->getRepository('AppBundle:UserSettings')->findByUser();
+
+
 
         return array('invoiceSettings'=>$invoiceSettings, 'invoice'=>$invoice, 'userSettings'=>$userSettings);
 
