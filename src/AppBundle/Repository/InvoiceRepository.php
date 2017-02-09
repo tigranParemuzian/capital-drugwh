@@ -19,6 +19,7 @@ class InvoiceRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('i.user','u')
             ->leftJoin('i.booking', 'b')
             ->where('u.id =:uid')
+            ->orderBy('i.created','DESC')
             ->setParameter('uid', $userId)
             ->getQuery()->getResult();
     }
@@ -45,7 +46,7 @@ class InvoiceRepository extends \Doctrine\ORM\EntityRepository
         return $this->getEntityManager()
             ->createQueryBuilder()
             ->select('i.number, i.created, i.dueDate, i.terms, i.shippingHandling, i.trackNumber, u.id as userId,
-            p.name, p.price, pi.nds,
+            p.name, p.price, pi.nds, pi.strength,
             SUM(b.count) as counts, SUM(b.subTotal) as total')
             ->from('AppBundle:Invoice', 'i')
             ->leftJoin('i.booking', 'b')

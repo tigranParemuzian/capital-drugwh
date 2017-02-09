@@ -81,6 +81,7 @@ function writeOrder(orders){
     slugItem = orders.product.slug;
 
     $('table.order>tbody').append('<tr> <td >'+ orders.product.name +'</td>' +
+        '<td>' + orders.product.product_item.strength +'</td>' +
         '<td>' + orders.product.product_item.size + ' ' + unt +'</td>' +
         '<td>' + orders.product.price.toFixed(2) +' $</td>'+
         '<td>' + orders.count +' </td>'+

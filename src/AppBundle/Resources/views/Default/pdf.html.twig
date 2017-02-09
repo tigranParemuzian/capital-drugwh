@@ -136,9 +136,10 @@
             <div class="col-md-12 text-uppercase text-left">
                 <div class="col-md-1"><b>#</b></div>
                 <div class="col-md-3"><b>Name</b></div>
-                <div class="col-md-3"><b>NDC</b></div>
+                <div class="col-md-2"><b>strength</b></div>
+                <div class="col-md-2"><b>NDC</b></div>
                 <div class="col-md-1"><b>QTY</b></div>
-                <div class="col-md-2"><b>Price</b></div>
+                <div class="col-md-1"><b>Price</b></div>
                 <div class="col-md-2"><b>Amount</b></div>
             </div>
             {% set count = 1 %}
@@ -147,10 +148,11 @@
             <div class="col-md-12 text-uppercase text-left">
                 <div class="col-md-1"><b>{{ count }}</b></div>
                 <div class="col-md-3"><b>{{ booking.name }}</b></div>
-                <div class="col-md-3"><b>{{ booking.nds }}</b></div>
+                <div class="col-md-2"><b>{{ booking.strength }}</b></div>
+                <div class="col-md-2"><b>{{ booking.nds }}</b></div>
                 <div class="col-md-1"><b>{{ booking.counts }}</b></div>
-                <div class="col-md-2"><b>{{ booking.price|round(2, 'floor') }} &nbsp;$</b></div>
-                <div class="col-md-2"><b>{{ booking.total|round(2, 'floor') }} &nbsp;$</b></div>
+                <div class="col-md-1"><b>{{ booking.price|round(2, 'floor') }}&nbsp;$</b></div>
+                <div class="col-md-2"><b>{{ booking.total|round(2, 'floor') }}&nbsp;$</b></div>
             </div>
                 {% set count = count +1 %}
                 {% set total = total + booking.total %}

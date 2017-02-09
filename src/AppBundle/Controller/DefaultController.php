@@ -131,7 +131,7 @@ class DefaultController extends Controller
             $errorData = array();
             foreach($bookings as $booking){
 
-                if($booking->getCount() <= $booking->getProduct()->getCount()){
+//                if($booking->getCount() <= $booking->getProduct()->getCount()){
                     $product=$booking->getProduct();
                     $product->setCount($product->getCount() - $booking->getCount());
                     $booking->setStatus(Booking::IS_ORDERED);
@@ -141,21 +141,21 @@ class DefaultController extends Controller
                     $em->persist($product);
                     $em->persist($booking);
                     $total +=$booking->getCost();
-                }else{
-                    $errorData[]=array('message'=>"Product by name {$booking->getProduct()->getName()}
-                    and NDS {$booking->getProduct()->getProductItem()->getNds()} count is limited
-                    {$booking->getProduct()->getCount()}", 'bookingId'=>$booking->getId());
-                    $this->addFlash(
-                        'count_error',
-                        "Product by name {$booking->getProduct()->getName()}
-                    and NDS {$booking->getProduct()->getProductItem()->getNds()} count is limited
-                    {$booking->getProduct()->getCount()} !!"
-                    );
-
-                    $booking->setStatus(Booking::IS_CHANGED);
-                    $booking->setCount($booking->getProduct()->getCount());
-                    $em->persist($booking);
-                }
+//                }else{
+//                    $errorData[]=array('message'=>"Product by name {$booking->getProduct()->getName()}
+//                    and NDS {$booking->getProduct()->getProductItem()->getNds()} count is limited
+//                    {$booking->getProduct()->getCount()}", 'bookingId'=>$booking->getId());
+//                    $this->addFlash(
+//                        'count_error',
+//                        "Product by name {$booking->getProduct()->getName()}
+//                    and NDS {$booking->getProduct()->getProductItem()->getNds()} count is limited
+//                    {$booking->getProduct()->getCount()} !!"
+//                    );
+//
+//                    $booking->setStatus(Booking::IS_CHANGED);
+//                    $booking->setCount($booking->getProduct()->getCount());
+//                    $em->persist($booking);
+//                }
 
 
             }
