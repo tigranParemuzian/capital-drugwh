@@ -195,11 +195,11 @@ class MainController extends Controller
         }
 
             $pageUrl = $this->generateUrl('credit_pdf', array('userSettings'=>$userSettings->getId()), true); // use absolute path!
-            $this->container->get('knp_snappy.pdf')->generate($pageUrl, $path);
+            $this->container->get('knp_snappy.pdf')->generate($pageUrl, $path, array('orientation'=>'Portrait'));
 
 //        return new BinaryFileResponse($path);
             return new Response(
-                $this->get('knp_snappy.pdf')->getOutput($pageUrl),
+                $this->get('knp_snappy.pdf')->getOutput($pageUrl, array('orientation'=>'Portrait')),
                 200,
                 array(
                     'Content-Type'          => 'application/pdf',
