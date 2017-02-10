@@ -371,7 +371,7 @@ class DefaultController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $invoice = $em->getRepository('AppBundle:Invoice')->find($invoiceId);
+        $invoice = $em->getRepository('AppBundle:Invoice')->findOneByNumber($invoiceId);
         $invoiceSettings = $em->getRepository('AppBundle:InvoiceSettings')->findMax();
 
         $userSettings = $em->getRepository('AppBundle:UserSettings')->findByUser();

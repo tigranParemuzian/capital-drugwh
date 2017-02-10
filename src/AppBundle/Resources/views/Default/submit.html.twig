@@ -48,10 +48,10 @@
                         <div class="col-md-2"><span>{% if invoice.trackNumber %}{{ invoice.trackNumber }}
                         {% else %}Not Available{% endif %}</span></div>
                         <div class="col-md-4">
-                            <a href="{{ path('generate_invoice', {'invoiceId':invoice.id}) }}" {% if invoice.trackNumber %} target="_blank"   class="btn btn-info"
+                            <a href="{{ path('generate_invoice', {'invoiceId':invoice.number}) }}" {% if invoice.trackNumber %} target="_blank"   class="btn btn-info"
                                {% else %} class="btn btn-default"{% endif %}  title="Download Pdf">
                                 Invoice</a>&nbsp;
-                            <a href="{{ path('generate_t3_statment', {'invoiceId':invoice.id}) }}" {% if invoice.trackNumber %} class="btn btn-info" target="_blank"
+                            <a href="{{ path('generate_t3_statment', {'invoiceId':invoice.number}) }}" {% if invoice.trackNumber %} class="btn btn-info" target="_blank"
                             {% else %} class="btn btn-default"{% endif %}  title="Download Pdf">
                                 T3 Statment</a>&nbsp;
                             {% if removable == 1 %}
