@@ -179,7 +179,15 @@ form > div >header {
 .top-panel{
     margin-top: 50px;
 }
-.invoice-header > header > h1, .invoice-header > header > h2 {
+.invoice-header > header > ul{
+    display: inline-flex;
+    list-style-type: none;
+}
+
+.invoice-header > header > ul li{
+    margin-left: 20px;
+}
+.invoice-header > header > h1, .invoice-header > header > h2 , header > ul li h1{
     font-family: Helvetica, Arial, sans-serif;
     font-weight: 900;
     font-size: 25px;

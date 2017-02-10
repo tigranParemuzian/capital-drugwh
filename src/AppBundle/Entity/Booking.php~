@@ -393,4 +393,28 @@ class Booking
     {
         return $this->expiryDate;
     }
+
+    /**
+     * Set shipDate
+     *
+     * @param \DateTime $shipDate
+     *
+     * @return Booking
+     */
+    public function setShipDate($shipDate)
+    {
+        $this->shipDate = $shipDate;
+
+        return $this;
+    }
+
+    /**
+     * Get shipDate
+     *
+     * @return \DateTime
+     */
+    public function getShipDate()
+    {
+        return $this->shipDate;
+    }
 }

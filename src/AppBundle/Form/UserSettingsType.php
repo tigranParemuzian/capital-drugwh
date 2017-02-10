@@ -64,13 +64,13 @@ class UserSettingsType extends AbstractType
                 array('class'=>'text-capitalize'), 'required'=>true))
             ->add('primeryBusinessContactTitle', 'text',  array('label'=>'business title', 'label_attr'=>
                 array('class'=>'text-capitalize'), 'required'=>true))
-            ->add('primeryBusinessContactEmail', 'text',  array('label'=>'business email', 'label_attr'=>
+            ->add('primeryBusinessContactEmail', 'email',  array('label'=>'business email', 'label_attr'=>
                 array('class'=>'text-capitalize'), 'required'=>true))
             ->add('primeryPurchasingContact', 'text',  array('label'=>'purchasing contact', 'label_attr'=>
                 array('class'=>'text-capitalize'), 'required'=>true))
             ->add('primeryPurchasingContactTitle', 'text',  array('label'=>'purchasing title', 'label_attr'=>
                 array('class'=>'text-capitalize'), 'required'=>true))
-            ->add('primeryPurchasingContactEmail', 'text',  array('label'=>'purchasing email', 'label_attr'=>
+            ->add('primeryPurchasingContactEmail', 'email',  array('label'=>'purchasing email', 'label_attr'=>
                 array('class'=>'text-capitalize'), 'required'=>true))
 
             ->add('businessTelephone','text',  array('label'=>'business telephone', 'label_attr'=>

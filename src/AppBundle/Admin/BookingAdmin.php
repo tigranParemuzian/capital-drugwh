@@ -47,7 +47,7 @@ class BookingAdmin extends Admin
                 'widget' => 'single_text',
                 'format' => 'y-dd-MM',
                 'required' => true,
-                'label'=>'Ship date',
+                'label'=>'SUP date',
                 'attr'=>['style' => 'width: 100px !important']
             ))
 //            ->add('client', null, array('required'=>false))

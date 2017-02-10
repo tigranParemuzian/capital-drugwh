@@ -82,6 +82,12 @@ class User extends BaseUser
      */
     private $isValid;
 
+    /**
+     * @var
+     * @ORM\Column(name="customer_id", type="integer")
+     */
+    private $customerId;
+
     public function __toString()
     {
         return $this->id ? $this->username : '';
@@ -92,6 +98,7 @@ class User extends BaseUser
     {
         parent::__construct();
         $this->isValid=false;
+        $this->customerId =  rand(1000,10000) . $this->id;
     }
 
     /**
@@ -221,5 +228,29 @@ class User extends BaseUser
     public function getIsValid()
     {
         return $this->isValid;
+    }
+
+    /**
+     * Set customerId
+     *
+     * @param integer $customerId
+     *
+     * @return User
+     */
+    public function setCustomerId($customerId)
+    {
+        $this->customerId = $customerId;
+
+        return $this;
+    }
+
+    /**
+     * Get customerId
+     *
+     * @return integer
+     */
+    public function getCustomerId()
+    {
+        return $this->customerId;
     }
 }

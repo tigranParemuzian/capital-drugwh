@@ -50,8 +50,12 @@
               </ul>
           </div>
             <div class="col-md-12 text-center invoice-header">
-
-                <header><h1>INVOICE</h1></header>
+                <header>
+                    <ul>
+                        <li><h1>Invoice ID {{ invoice[0].number }}</h1></li>
+                        <li><h1>Customer ID {{ invoice[0].customerId }}</h1></li>
+                    </ul>
+                </header>
             </div>
         </div>
     </div>
@@ -65,9 +69,9 @@
                     <div class="col-md-9">
                         <ul class="footer-info-list">
                             <li>{{ userSettings.tradeName }}</li>
-                            <li>{{ userSettings.tradeAddress }}</li>
-                            <li>{{ userSettings.primeryBusinessContactEmail }}</li>
-                            <li>{{ userSettings.businessTelephone }}</li>
+                            <li>{{ userSettings.shippingAddressStreet }}</li>
+                            <li>{{ userSettings.shippingAddressCity }}&nbsp;{{ userSettings.shippingAddressState }}</li>
+                            <li>{{ userSettings.shippingAddressZip }}</li>
                         </ul>
                     </div>
                 </div>
@@ -77,9 +81,9 @@
                     </div>
                     <div class="col-md-9">
                         <ul class="footer-info-list">
+                            <li>{{ userSettings.tradeName }}</li>
                             <li>{{ userSettings.shippingAddressStreet }}</li>
-                            <li>{{ userSettings.shippingAddressCity }}</li>
-                            <li>{{ userSettings.shippingAddressState }}</li>
+                            <li>{{ userSettings.shippingAddressCity }}&nbsp;{{ userSettings.shippingAddressState }}</li>
                             <li>{{ userSettings.shippingAddressZip }}</li>
                         </ul>
                     </div>

@@ -299,8 +299,7 @@ class DefaultController extends Controller
             return $this->redirectToRoute('submit_order');
         }
 
-        $userSettings = $em->getRepository('AppBundle:UserSettings')->findByUser($invoice[0]['userId']);
-
+        $userSettings = $em->getRepository('AppBundle:UserSettings')->findByUserId($invoice[0]['userId']);
         $invoiceSettings = $em->getRepository('AppBundle:InvoiceSettings')->findMax();
 
         return array('invoiceSettings'=>$invoiceSettings, 'invoice'=>$invoice, 'userSettings'=>$userSettings);

@@ -22,4 +22,17 @@ class UserSettingsRepository extends \Doctrine\ORM\EntityRepository
             ->setMaxResults(1)
             ->getQuery()->getOneOrNullResult();
     }
+
+    public function findByUserId($userId)
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('u')
+            ->from('AppBundle:UserSettings', 'u')
+            ->innerJoin('u.user', 'cu')
+            ->where('cu.id =:uid')
+            ->setParameter('uid', $userId)
+            ->setMaxResults(1)
+            ->getQuery()->getOneOrNullResult();
+    }
 }

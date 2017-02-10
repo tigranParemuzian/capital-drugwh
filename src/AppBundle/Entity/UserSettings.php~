@@ -143,6 +143,7 @@ class UserSettings
     /**
      * @var $primeryBusinessContactEmail
      * @ORM\Column(name="primery_business_contact_email", type="string")
+     * @Assert\Email()
      */
     private $primeryBusinessContactEmail;
 
@@ -161,6 +162,7 @@ class UserSettings
     /**
      * @var $primeryPurchasingContactEmail
      * @ORM\Column(name="primery_purchasing_contact_email", type="string")
+     * @Assert\Email()
      */
     private $primeryPurchasingContactEmail;
 
@@ -347,7 +349,6 @@ class UserSettings
     public function __toString()
     {
         return $this->id ? $this->tradeName : 'new Credit Application';
-        // TODO: Implement __toString() method.
     }
 
     /**

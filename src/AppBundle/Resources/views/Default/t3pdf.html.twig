@@ -56,8 +56,11 @@
               </ul>
           </div>
             <div class="col-md-12 text-center invoice-header">
-
-                <header><h1>Transaction History ID {{ invoice.number }}</h1>
+                <header>
+                    <ul>
+                        <li><h1>Transaction History ID {{ invoice.number }}</h1></li>
+                        <li><h1>Customer ID {{ invoice.user.customerId }}</h1></li>
+                    </ul>
                 </header>
             </div>
         </div>
@@ -65,48 +68,47 @@
     <div class="container" style="margin-top: 20px">
         <div class="row">
             <div class="col-md-12 container">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="col-md-3 text-right">
                         <b>BUYER ADDRESS</b>
                     </div>
                     <div class="col-md-9">
                         <ul class="footer-info-list">
-                            <li>{{ invoice.user.userSettings.tradeName }}</li>
                             <li>{{ invoice.user.userSettings.tradeAddress }}</li>
                         </ul>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="col-md-3 text-right">
                         <b>SELLER ADDRESS</b>
                     </div>
                     <div class="col-md-9">
                         <ul class="footer-info-list">
                             <li>
-                                &nbsp;{{ userSettings.tradeAddress }}
+                                8351 ELM AVE #103, RANCHO CUCAMONGA, CA, 91730
                             </li>
                         </ul>
                     </div>
                 </div>
-                <div class="col-md-2">
-                    <div class="col-md-3 text-right">
-                        <b>SHIP DATE</b>
+                <div class="col-md-3">
+                    <div class="col-md-6 text-right">
+                        <b>TRANSACTION DATE</b>
                     </div>
-                    <div class="col-md-9">
-                        <ul class="footer-info-list">
-                            <li>{{ invoice.shippingHandling|date('Y M d') }}</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="col-md-3 text-right">
-                        <b>SENT DATE</b>
-                    </div>
-                    <div class="col-md-9">
+                    <div class="col-md-6">
                         <ul class="footer-info-list">
                             <li>
-                                {{ invoice.dueDate|date('Y M d') }}
+                                {{ invoice.created|date('Y M d') }}
                             </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="col-md-6 text-right">
+                        <b>SHIP DATE</b>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="footer-info-list">
+                            <li>{{ invoice.shippingHandling|date('Y M d') }}</li>
                         </ul>
                     </div>
                 </div>

@@ -45,7 +45,8 @@ class InvoiceRepository extends \Doctrine\ORM\EntityRepository
     public function findByInvoiceIdForPdf($invId){
         return $this->getEntityManager()
             ->createQueryBuilder()
-            ->select('i.number, i.created, i.dueDate, i.terms, i.shippingHandling, i.trackNumber, u.id as userId,
+            ->select('i.number, i.created, i.dueDate, i.terms, i.shippingHandling, i.trackNumber,
+            u.id as userId, u.customerId as customerId,
             p.name, p.price, pi.nds, pi.strength,
             SUM(b.count) as counts, SUM(b.subTotal) as total')
             ->from('AppBundle:Invoice', 'i')
