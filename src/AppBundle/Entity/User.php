@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Entity\User as BaseUser;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\VirtualProperty;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContext;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -17,6 +18,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="fos_user")
  * @ORM\Entity(repositoryClass="AppBundle\Repositories\UserRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity("phone")
  */
 class User extends BaseUser
 {

@@ -70,7 +70,7 @@ class UserSettingsType extends AbstractType
                 array('class'=>'text-capitalize'), 'required'=>true))
             ->add('primeryPurchasingContactTitle', 'text',  array('label'=>'purchasing title', 'label_attr'=>
                 array('class'=>'text-capitalize'), 'required'=>true))
-            ->add('primeryPurchasingContactEmail', 'text',  array('label'=>'purchasing emil', 'label_attr'=>
+            ->add('primeryPurchasingContactEmail', 'text',  array('label'=>'purchasing email', 'label_attr'=>
                 array('class'=>'text-capitalize'), 'required'=>true))
 
             ->add('businessTelephone','text',  array('label'=>'business telephone', 'label_attr'=>

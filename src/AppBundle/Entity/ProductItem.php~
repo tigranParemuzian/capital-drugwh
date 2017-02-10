@@ -5,6 +5,8 @@ namespace AppBundle\Entity;
 use APY\DataGridBundle\Grid\Mapping\Column;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\VirtualProperty;
 
 /**
@@ -27,6 +29,7 @@ class ProductItem
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"booking_list"})
      */
     private $id;
 
@@ -34,6 +37,7 @@ class ProductItem
      * @var string
      *
      * @ORM\Column(name="manufacturer", type="string", length=255)
+     * @Groups({"booking_list"})
      */
     private $manufacturer;
 
@@ -41,7 +45,7 @@ class ProductItem
      * @var
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Manufacturer", inversedBy="productItom")
      * @ORM\JoinColumn(name="manufacturer_id", referencedColumnName="id")
-
+     * @Groups({"booking_list"})
      */
     private $manufacturers;
 
@@ -49,6 +53,7 @@ class ProductItem
      * @var string
      *
      * @ORM\Column(name="nds", type="string", length=255, unique=true)
+     * @Groups({"booking_list"})
      */
     private $nds;
 
@@ -56,6 +61,7 @@ class ProductItem
      * @var float
      *
      * @ORM\Column(name="size", type="float")
+     * @Groups({"booking_list"})
      */
     private $size;
 
@@ -63,6 +69,7 @@ class ProductItem
      * @var int
      *
      * @ORM\Column(name="unit", type="smallint")
+     * @Groups({"booking_list"})
      */
     private $unit;
 
@@ -89,6 +96,7 @@ class ProductItem
     /**
      * @var
      * @ORM\Column(name="strength", type="string", nullable=true)
+     * @Groups({"booking_list"})
      */
     private $strength;
 

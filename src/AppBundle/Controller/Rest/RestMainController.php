@@ -58,8 +58,9 @@ class RestMainController extends FOSRestController
         $em = $this->getDoctrine()->getManager();
 
         // get projectChartfield by project id
+//        dump($currentUser->getId()); exit;
         $bookings = $em->getRepository('AppBundle:Booking')->findAllNewByClient($currentUser->getId());
-
+//dump($bookings); exit;
         if(!$bookings){
             return new JsonResponse('0 bookings' , Response::HTTP_NOT_FOUND);
         }

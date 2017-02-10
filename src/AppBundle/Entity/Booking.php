@@ -108,6 +108,12 @@ class Booking
      */
     private $expiryDate;
 
+    /**
+     * @var
+     * @ORM\Column(name="ship_date", type="datetime", nullable=true)
+     */
+    private $shipDate;
+
     public function __toString()
     {
         return $this->id ? $this->product . ' count: ' . $this->count :"new order";
@@ -386,5 +392,29 @@ class Booking
     public function getExpiryDate()
     {
         return $this->expiryDate;
+    }
+
+    /**
+     * Set shipDate
+     *
+     * @param \DateTime $shipDate
+     *
+     * @return Booking
+     */
+    public function setShipDate($shipDate)
+    {
+        $this->shipDate = $shipDate;
+
+        return $this;
+    }
+
+    /**
+     * Get shipDate
+     *
+     * @return \DateTime
+     */
+    public function getShipDate()
+    {
+        return $this->shipDate;
     }
 }

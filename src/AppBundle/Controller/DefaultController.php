@@ -121,7 +121,7 @@ class DefaultController extends Controller
 
         $bookings = $em->getRepository('AppBundle:Booking')->findAllNewByClient($userId);
 
-        if(count($bookings)>0){
+        if(count($bookings)>0 && !is_null($this->getUser()->getUserSettings())){
 
             $invoice = new Invoice();
             $invoice->setStatus(Invoice::IS_NEW);

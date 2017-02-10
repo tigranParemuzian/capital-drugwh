@@ -28,9 +28,10 @@ class BookingAdmin extends Admin
                 'box-class' => 'box box-solid box-danger',
                 'description'=>'Products main create part'
             ))
-            ->add('product', 'sonata_type_model_autocomplete', array('property' => 'name','required'=>true))
+            ->add('product', 'sonata_type_model_autocomplete',
+                array('property' => 'name','required'=>true))
             ->add('count')
-            ->add('cost', null, array('required'=>false))
+            ->add('cost', null, array('required'=>false, 'label'=>'Cost $'))
             ->add('lot', null, array('required'=>false))
             ->add('expiryDate','sonata_type_date_picker', array(
                 'dp_side_by_side'       => false,
@@ -40,12 +41,21 @@ class BookingAdmin extends Admin
                 'required' => true,
                 'attr'=>['style' => 'width: 100px !important']
             ))
-            ->add('client', null, array('required'=>false))
+            ->add('shipDate','sonata_type_date_picker', array(
+                'dp_side_by_side'       => false,
+                'dp_use_current'        => false,
+                'widget' => 'single_text',
+                'format' => 'y-dd-MM',
+                'required' => true,
+                'label'=>'Ship date',
+                'attr'=>['style' => 'width: 100px !important']
+            ))
+//            ->add('client', null, array('required'=>false))
 //            ->add('invoice', 'text', array('required'=>true))
-            ->add('status', 'choice', array('choices'=>
-                array(Booking::IS_NEW=>'New', Booking::IS_ORDERED=>'In order',
-                    Booking::IS_CHANGED=>'Changed'), 'multiple'=>false
-            ), array('required'=>false))
+//            ->add('status', 'choice', array('choices'=>
+//                array(Booking::IS_NEW=>'New', Booking::IS_ORDERED=>'In order',
+//                    Booking::IS_CHANGED=>'Changed'), 'multiple'=>false
+//            ), array('required'=>false))
         ->end()
         ->end()
     ;

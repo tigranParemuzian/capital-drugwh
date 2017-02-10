@@ -13,7 +13,7 @@ class RegistrationType extends AbstractType
     {
         $builder->add('firstName', 'text', array('required'=>true, 'attr'=>array('class'=>'form-control')))
             ->add('lastName','text',array('required'=>true, 'attr'=>array('class'=>'form-control')))
-            ->add('phone', 'text', array('required'=>true));
+            ->add('phone', 'text', array('required'=>true, 'attr'=>array('oninvalid'=>"setCustomValidity('Your name cannot contain a number')")));
     }
 
     public function getParent()

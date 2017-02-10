@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as Serializer;
+use JMS\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -28,6 +29,7 @@ class Manufacturer
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=100)
+     * @Groups({"booking_list"})
      */
     private $name;
 
@@ -36,6 +38,7 @@ class Manufacturer
      *
      * @Gedmo\Slug(fields={"name"})
      * @ORM\Column(name="slug", type="string", length=255, unique=true)
+     * @Groups({"booking_list"})
      */
     private $slug;
 
@@ -43,6 +46,7 @@ class Manufacturer
      * @var string
      *
      * @ORM\Column(name="address", type="string", length=255, nullable=true)
+     * @Groups({"booking_list"})
      */
     private $address;
 

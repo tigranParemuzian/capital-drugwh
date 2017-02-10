@@ -374,4 +374,28 @@ class Invoice
     {
         return $this->user;
     }
+
+    /**
+     * Set trackNumber
+     *
+     * @param string $trackNumber
+     *
+     * @return Invoice
+     */
+    public function setTrackNumber($trackNumber)
+    {
+        $this->trackNumber = $trackNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get trackNumber
+     *
+     * @return string
+     */
+    public function getTrackNumber()
+    {
+        return $this->trackNumber;
+    }
 }
