@@ -51,8 +51,8 @@
                             <a href="{{ path('generate_invoice', {'invoiceId':invoice.id}) }}" {% if invoice.trackNumber %} target="_blank"   class="btn btn-info"
                                {% else %} class="btn btn-default"{% endif %}  title="Download Pdf">
                                 Invoice</a>&nbsp;
-                            <a href="{{ path('generate_t3_statment', {'invoiceId':invoice.id}) }}" target="_blank"  {% if invoice.trackNumber %} class="btn btn-info"
-                               {% else %} class="btn btn-default"{% endif %}  title="Download Pdf">
+                            <a href="{{ path('generate_t3_statment', {'invoiceId':invoice.id}) }}" {% if invoice.trackNumber %} class="btn btn-info" target="_blank"
+                            {% else %} class="btn btn-default"{% endif %}  title="Download Pdf">
                                 T3 Statment</a>&nbsp;
                             {% if removable == 1 %}
                             <a class="btn btn-danger" title="Remove">
