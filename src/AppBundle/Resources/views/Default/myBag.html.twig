@@ -9,7 +9,8 @@
     <div class="">
         <div class="panel panel-success">
             <div class="panel-heading">
-                <h1 class="header-title">AAROGYA MED LLC <span class="uppercase">{{ app.user.firstname }} Bag</span></h1>
+                <h1 class="header-title">AAROGYA MED LLC <span class="uppercase">{% if app.user.userSettings.tradeName %}
+                        {{ app.user.userSettings.tradeName }} Bag {% endif %}</span></h1>
                 {% for flash_message in app.session.flashBag.get('notice') %}
                     <div class="flash-notice">
                         <p>{{ flash_message }}</p>
@@ -38,7 +39,7 @@
                         <td class="total-price" colspan="2"><span>Selected price </span> $0</td>
                         <td class="create_invoice" colspan="2">
                             {% if app.user.isValid == 1 %}
-                            <a href="{{ path('submit_order')}}" class="btn btn-success">Submit order</a>
+                            <a href="{{ path('submit_order', {'state':1})}}" class="btn btn-success">Submit order</a>
                             {% else %}
                                 <a href="{{ path('user_settings') }}" class="btn btn-info"><span class="glyphicon glyphicon-edit"></span>&nbsp;Credit Application</a>
                             <p>Please write your credit application</p>
@@ -54,5 +55,4 @@
     {% endblock content %}
     {% block javascripts %}
         {{ parent() }}
-        <script type="text/javascript" src="{{ asset('bundles/app/js/main.js') }}"></script>
     {% endblock %}

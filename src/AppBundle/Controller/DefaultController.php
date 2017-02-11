@@ -12,6 +12,9 @@ use APY\DataGridBundle\Grid\Column\DateColumn;
 use APY\DataGridBundle\Grid\Column\TextColumn;
 use APY\DataGridBundle\Grid\Export\CSVExport;
 use APY\DataGridBundle\Grid\Source\Source;
+use FOS\RestBundle\Controller\Annotations\QueryParam;
+use FOS\RestBundle\Request\ParamFetcher;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use Proxies\__CG__\AppBundle\Entity\Booking;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -108,12 +111,12 @@ class DefaultController extends Controller
 
     /**
      * @Route("/orders", name="submit_order")
+     * @QueryParam(name="state", nullable=true, requirements="\d+")
      * @Template()
      * @param Request $request
      * @Security("has_role('ROLE_USER')")
      */
-    public function submitAction(Request $request){
-
+    public function submitAction(Request $request, ParamFetcher $paramFetcher){
 
         $userId = $this->getUser()->getId();
 
@@ -121,7 +124,7 @@ class DefaultController extends Controller
 
         $bookings = $em->getRepository('AppBundle:Booking')->findAllNewByClient($userId);
 
-        if(count($bookings)>0 && !is_null($this->getUser()->getUserSettings())){
+        if(count($bookings)>0 && !is_null($this->getUser()->getUserSettings()) && !empty($paramFetcher->get('state')) && (int)$paramFetcher->get('state') == 1){
 
             $invoice = new Invoice();
             $invoice->setStatus(Invoice::IS_NEW);
@@ -275,6 +278,35 @@ class DefaultController extends Controller
                 )
             );
     }
+
+    /**
+     * @Route("/booking/cancel/{invoiceNumber}", name="booking_cancel")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function cancelAction(Request $request, $invoiceNumber){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $invoice = $em->getRepository('AppBundle:Invoice')->findUniqByAuthorAndId($this->getUser()->getId(), $invoiceNumber, Invoice::IS_NEW);
+
+        if(!$invoice){
+            $this->addFlash(
+                'error',
+                'Sorry You not have a permission for delete this invoice!'
+            );
+            return $this->redirectToRoute('submit_order');
+        }
+
+        $em->remove($invoice);
+        $em->flush();
+
+            $this->addFlash(
+                'notice',
+                "Invoice #{$invoiceNumber} has been removed!"
+            );
+            return $this->redirectToRoute('submit_order');
+    }
+
     /**
      *
      * @Route("/pdf/{invoiceId}", name="pdf_generate")

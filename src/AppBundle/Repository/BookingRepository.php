@@ -46,6 +46,7 @@ class BookingRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('b.product', 'p')
             ->where('b.status =:st')
             ->andWhere('c.id =:cid')
+            ->orderBy('p.name','ASC')
             ->setParameter('st', Booking::IS_NEW)
             ->setParameter('cid', $userId)
             ->getQuery()->getResult();

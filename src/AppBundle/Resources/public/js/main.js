@@ -99,7 +99,7 @@ function writeOrder(orders){
 function getDataTerminals() {
 
     jQuery.ajax({
-        url: "/api/bag/my/bag",
+        url: "/app_dev.php/api/bag/my/bag",
         type: "GET",
         contentType: 'application/json; charset=utf-8',
         async: true,
@@ -139,7 +139,7 @@ function getDataTerminals() {
 function sendRequest(data, method)
 {
     jQuery.ajax({
-        url: '/api/bags/datas',
+        url: '/app_dev.php/api/bags/datas',
         type: "POST",
         contentType: 'application/json; charset=utf-8',
         async: true,

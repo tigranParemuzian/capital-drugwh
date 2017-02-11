@@ -17,6 +17,11 @@
                             <p>{{ flash_message }}</p>
                         </div>
                     {% endfor %}
+                    {% for flash_message in app.session.flashBag.get('error') %}
+                        <div class="flash-notice">
+                            <p style="color: red">{{ flash_message }}</p>
+                        </div>
+                    {% endfor %}
                 </div>
                 <div class="panel-body container invoice-body">
 
@@ -55,7 +60,7 @@
                             {% else %} class="btn btn-default"{% endif %}  title="Download Pdf">
                                 T3 Statment</a>&nbsp;
                             {% if removable == 1 %}
-                            <a class="btn btn-danger" title="Remove">
+                            <a class="btn btn-danger" href="{{ path('booking_cancel', {'invoiceNumber':invoice.number}) }}" title="Remove">
                                 <span class="glyphicon glyphicon glyphicon-remove"></span></a>
                                 {% endif %}
 

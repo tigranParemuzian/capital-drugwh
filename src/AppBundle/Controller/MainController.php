@@ -112,7 +112,7 @@ class MainController extends Controller
     }
 
     /**
-     * @Route("/user-settings-show", name="user_settings_show")
+     * @Route("/credit-application-show", name="user_settings_show")
      * @Template()
      * @Security("has_role('ROLE_USER')")
      */

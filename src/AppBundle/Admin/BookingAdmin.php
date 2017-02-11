@@ -52,10 +52,10 @@ class BookingAdmin extends Admin
             ))
 //            ->add('client', null, array('required'=>false))
 //            ->add('invoice', 'text', array('required'=>true))
-//            ->add('status', 'choice', array('choices'=>
-//                array(Booking::IS_NEW=>'New', Booking::IS_ORDERED=>'In order',
-//                    Booking::IS_CHANGED=>'Changed'), 'multiple'=>false
-//            ), array('required'=>false))
+            ->add('status', 'choice', array('choices'=>
+                array(Booking::IS_NEW=>'New', Booking::IS_ORDERED=>'In order',
+                    Booking::IS_CHANGED=>'Changed'), 'multiple'=>false
+            ), array('required'=>false))
         ->end()
         ->end()
     ;

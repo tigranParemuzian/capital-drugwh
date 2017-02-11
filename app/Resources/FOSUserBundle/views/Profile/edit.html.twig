@@ -1,12 +1,30 @@
 {% extends "base.html.twig" %}
 
 {% block content %}
+<div class="container">
+    <div class="row main-content">
     {{ parent() }}
     <form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit">
+        {{ form_label(form.username) }}
+        {{ form_widget(form.username) }}
+        {{ form_errors(form.username) }}
+
+        {{ form_label(form.email) }}
+        {{ form_widget(form.email) }}
+        {{ form_errors(form.email) }}
+
+
+        {{ form_label(form.current_password) }}
+        {{ form_widget(form.current_password) }}
+        {{ form_errors(form.current_password) }}
+
         {{ form_widget(form) }}
         <div>
             <input type="submit" value="{{ 'profile.edit.submit'|trans({}, 'FOSUserBundle') }}" />
         </div>
     </form>
+    </div>
+</div>
+
 
 {% endblock %}

@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Invoice;
+
 /**
  * InvoiceRepository
  *
@@ -24,19 +26,23 @@ class InvoiceRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()->getResult();
     }
 
-    public function findUniqByAuthorAndId($userId, $id){
+    public function findUniqByAuthorAndId($userId, $id, $state = null){
 
-        return $this->getEntityManager()
+        $q = $this->getEntityManager()
             ->createQueryBuilder()
             ->select('i')
             ->from('AppBundle:Invoice', 'i')
             ->leftJoin('i.user','u')
             ->leftJoin('i.booking', 'b')
             ->where('i.number =:id')
-            ->andWhere('u.id =:uid')
-            ->setParameter('id', $id)
+            ->andWhere('u.id =:uid');
+        $state === Invoice::IS_NEW ? $q->andWhere('i.status =:st') :'';
+        $q    ->setParameter('id', $id)
             ->setParameter('uid', $userId)
-            ->getQuery()->getOneOrNullResult();
+            ;
+        $state === Invoice::IS_NEW ? $q->setParameter('st', $state) :'';
+
+        return $q->getQuery()->getOneOrNullResult();
     }
 
     /**
