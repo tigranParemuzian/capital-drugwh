@@ -117,14 +117,14 @@ function getDataTerminals() {
 
             $('.total-count').html('<span>Items Count </span> '+result.length);
             $('.total-price').html('<span>Total price </span>$ ' + total.toFixed(2));
-            $('.selected_infos').html('My&nbsp;Bag&nbsp;<span class="badge">'+result.length+'</span>')
+            $('.selected_infos').html('Bag&nbsp;<span class="badge">'+result.length+'</span>')
         },
         error: function (jqXHR, textStatus, errorThrown) {
             if(errorThrown==='Not Found'){
                 $('table.order>tbody').html('');
                 $('.total-count').html('<span>Items Count </span> 0');
                 $('.total-price').html('<span>Total price </span>$ 0');
-                $('.selected_infos').html('My&nbsp;Bag&nbsp;<span class="badge">0</span>')
+                $('.selected_infos').html('Bag&nbsp;<span class="badge">0</span>')
             }
             console.log(jqXHR, textStatus, errorThrown);
         }
