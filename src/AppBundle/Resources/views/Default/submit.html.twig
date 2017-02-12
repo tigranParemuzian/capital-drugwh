@@ -8,7 +8,10 @@
         <div class="">
             <div class="panel panel-success">
                 <div class="panel-heading">
-                    <h1 class="header-title">Mainspring Distribution LLC DSCSA Paperwork</h1>
+                    <h1 class="header-title">
+                        {% if app.user.userSettings.tradeName %}
+                            {{ app.user.userSettings.tradeName }} DSCSA Paperwork {% else %}DSCSA Paperwork{% endif %}
+                        </h1>
                 </div>
                 <div class="col-md-12 text-center invoice-header">
                     <header><h1 class="text-uppercase">INVOICES and t3</h1></header>

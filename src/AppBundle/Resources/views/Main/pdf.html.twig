@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    {% block metadata %}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="">
+        <meta name="author" content="">
+    {% endblock %}
+    <title>{% block title %}Packing Slip at &nbsp;{{ "now"|date("m/d/Y") }}!{% endblock %}</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" type="text/css" href="{{ asset('jquery_components/bootstrap/dist/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('jquery_components/bootstrap/dist/css/bootstrap-theme.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/app/css/style.css') }}">
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+<body>
+{% block body %}
+    {% block content %}
+    <div class="wrapper invoice">
+        <div class="row">
+            <div class="col-md-3 text-center">
+                <div class="col-md-6">
+                    <a href="{{ path('homepage') }}" target="_blank">
+                        <img src="{{ asset('bundles/app/images/logo.png') }}" class="img-responsive img-circle invoice-logo">
+                    </a>
+                </div>
+                <div class="col-md-6 text-center"><h1>AAMED LLC</h1></div>
+
+            </div>
+
+            <div class="col-md-4">
+              <ul class="footer-info-list">
+                  <li><span>Address:</span>8351 ELM AVE, #103</li>
+                  <li><span>City:</span>RANCHO CUCAMONGA</li>
+                  <li><span>State:</span>CA</li>
+                  <li><span>Zip:</span>91730</li>
+              </ul>
+              </div>
+            <div class="col-md-4">
+              <ul class="footer-info-list">
+                  <li><span>Toll Free:</span>1-888-975-8728</li>
+                  <li><span>Fax:</span>1-888-624-2851</li>
+                  <li><span>Web:</span> www.aamedllc.com</li>
+                  <li><span>Email:</span> info@aamedllc.com</li>
+              </ul>
+          </div>
+            <div class="col-md-12 text-center invoice-header">
+                <header>
+                    <ul>
+                        <li><h1>Packing Slip ID {{ invoice[0].number }}</h1></li>
+                        <li><h1>Customer ID {{ invoice[0].customerId }}</h1></li>
+                    </ul>
+                </header>
+            </div>
+        </div>
+    </div>
+    <div class="container" style="margin-top: 20px">
+        <div class="row">
+            <div class="col-md-12 container">
+                <div class="col-md-6">
+                    <div class="col-md-3 text-right">
+                        <b>BILL TO</b>
+                    </div>
+                    <div class="col-md-9">
+                        <ul class="footer-info-list">
+                            <li>{{ userSettings.tradeName }}</li>
+                            <li>{{ userSettings.shippingAddressStreet }}</li>
+                            <li>{{ userSettings.shippingAddressCity }}&nbsp;{{ userSettings.shippingAddressState }}</li>
+                            <li>{{ userSettings.shippingAddressZip }}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="col-md-3 text-right">
+                        <b>SHIP TO</b>
+                    </div>
+                    <div class="col-md-9">
+                        <ul class="footer-info-list">
+                            <li>{{ userSettings.tradeName }}</li>
+                            <li>{{ userSettings.shippingAddressStreet }}</li>
+                            <li>{{ userSettings.shippingAddressCity }}&nbsp;{{ userSettings.shippingAddressState }}</li>
+                            <li>{{ userSettings.shippingAddressZip }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="wrapper">
+            <div class="row">
+                <div class="col-md-12 separator" style="margin-bottom: -25px;">
+                    <hr/>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th><span>INVOICE</span></th>
+                            <th><span>DATE</span></th>
+                            <th><span>DUE DATE</span></th>
+                            <th><span>TERMS</span></th>
+                            <th><span>SHIP DATE</span></th>
+                            <th><span>SHIP VIA</span></th>
+                            {% if invoice[0].trackNumber %}<th><span>TRACKING NUMBER</span></th>{% endif %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span>{{ invoice[0].number }}</span></td>
+                            <td><span>{{ invoice[0].created|date("m/d/Y") }}</span></td>
+                            <td><span>{{ invoice[0].dueDate|date("m/d/Y") }}</span></td>
+                            <td><span>{{ invoice[0].terms }}</span></td>
+                            <td><span>{{ invoice[0].shippingHandling|date("m/d/Y") }}</span></td>
+                            <td><span>Fedex</span></td>
+                            {% if invoice[0].trackNumber %}<th><span>{{ invoice[0].trackNumber }}</span></th>{% endif %}
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+</div>
+        <div class="wrapper">
+            <div class="row">
+
+                <div class="col-md-12 separator" style="margin-top: -40px;">
+                    <hr/>
+                </div>
+            </div>
+        </div>
+    <div class="container">
+        <div class="row invoice-body">
+            <div class="col-md-12 text-uppercase text-left">
+                <div class="col-md-1"><b>#</b></div>
+                <div class="col-md-3"><b>Name</b></div>
+                <div class="col-md-3"><b>strength</b></div>
+                <div class="col-md-3"><b>NDC</b></div>
+                <div class="col-md-2"><b>QTY</b></div>
+                {#<div class="col-md-1"><b>Price</b></div>
+                <div class="col-md-2"><b>Amount</b></div>#}
+            </div>
+            {% set count = 1 %}
+            {% set total = 0 %}
+            {% for booking in invoice %}
+            <div class="col-md-12 text-uppercase text-left">
+                <div class="col-md-1"><b>{{ count }}</b></div>
+                <div class="col-md-3"><b>{{ booking.name }}</b></div>
+                <div class="col-md-3"><b>{{ booking.strength }}</b></div>
+                <div class="col-md-3"><b>{{ booking.nds }}</b></div>
+                <div class="col-md-2"><b>{{ booking.counts }}</b></div>
+                {#<div class="col-md-1"><b>$&nbsp;{{ booking.price|round(2, 'floor') }}</b></div>
+                <div class="col-md-2"><b>$&nbsp;{{ booking.total|round(2, 'floor') }}</b></div>#}
+            </div>
+                {% set count = count +1 %}
+                {% set total = total + booking.total %}
+            {% endfor %}
+            <hr>
+            <div class="col-md-12">
+                <div class="col-md-8 text-left">
+                    <h1 style="max-width: 100%;">Thank you for your purchase.</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+    {% block footer %}
+       <br>
+       <br>
+       <br>
+    {% endblock %}
+{% endblock %}
+<script type="text/javascript" src="{{ asset('jquery_components/jquery/dist/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('jquery_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+{% block javascripts %}
+{% endblock %}
+</body>
+</html>

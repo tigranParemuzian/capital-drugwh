@@ -84,6 +84,12 @@ class User extends BaseUser
 
     /**
      * @var
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserEmails", mappedBy="user", cascade={"all"}, orphanRemoval=true)
+     */
+    private $userEmails;
+
+    /**
+     * @var
      * @ORM\Column(name="customer_id", type="integer")
      */
     private $customerId;
@@ -252,5 +258,39 @@ class User extends BaseUser
     public function getCustomerId()
     {
         return $this->customerId;
+    }
+
+    /**
+     * Add userEmail
+     *
+     * @param \AppBundle\Entity\UserEmails $userEmail
+     *
+     * @return User
+     */
+    public function addUserEmail(\AppBundle\Entity\UserEmails $userEmail)
+    {
+        $this->userEmails[] = $userEmail;
+
+        return $this;
+    }
+
+    /**
+     * Remove userEmail
+     *
+     * @param \AppBundle\Entity\UserEmails $userEmail
+     */
+    public function removeUserEmail(\AppBundle\Entity\UserEmails $userEmail)
+    {
+        $this->userEmails->removeElement($userEmail);
+    }
+
+    /**
+     * Get userEmails
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUserEmails()
+    {
+        return $this->userEmails;
     }
 }

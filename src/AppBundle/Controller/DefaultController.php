@@ -134,33 +134,15 @@ class DefaultController extends Controller
             $errorData = array();
             foreach($bookings as $booking){
 
-//                if($booking->getCount() <= $booking->getProduct()->getCount()){
-                    $product=$booking->getProduct();
-                    $product->setCount($product->getCount() - $booking->getCount());
-                    $booking->setStatus(Booking::IS_ORDERED);
+                $product=$booking->getProduct();
+                $product->setCount($product->getCount() - $booking->getCount());
+                $booking->setStatus(Booking::IS_ORDERED);
 
-                    $booking->setInvoice($invoice);
+                $booking->setInvoice($invoice);
 
-                    $em->persist($product);
-                    $em->persist($booking);
-                    $total +=$booking->getCost();
-//                }else{
-//                    $errorData[]=array('message'=>"Product by name {$booking->getProduct()->getName()}
-//                    and NDS {$booking->getProduct()->getProductItem()->getNds()} count is limited
-//                    {$booking->getProduct()->getCount()}", 'bookingId'=>$booking->getId());
-//                    $this->addFlash(
-//                        'count_error',
-//                        "Product by name {$booking->getProduct()->getName()}
-//                    and NDS {$booking->getProduct()->getProductItem()->getNds()} count is limited
-//                    {$booking->getProduct()->getCount()} !!"
-//                    );
-//
-//                    $booking->setStatus(Booking::IS_CHANGED);
-//                    $booking->setCount($booking->getProduct()->getCount());
-//                    $em->persist($booking);
-//                }
-
-
+                $em->persist($product);
+                $em->persist($booking);
+                $total +=$booking->getCost();
             }
 
             $invoiceSettings = $em->getRepository('AppBundle:InvoiceSettings')->findMax();
@@ -172,6 +154,7 @@ class DefaultController extends Controller
                 );
                 return $this->redirectToRoute('my_bag');
             }
+
             $dueDate = clone $now;
             $shippingHandling = clone $now;
             $invoice->setTotal($total);
@@ -181,7 +164,6 @@ class DefaultController extends Controller
             $invoice->setShippingHandling($shippingHandling->modify('+1 day'));
             $invoice->setUser($this->getUser());
             $em->persist($invoice);
-
 
             $validator = $this->get('validator');
 

@@ -94,7 +94,7 @@ class UserAdmin extends Admin
             ))
             ->add('enabled', null, array('editable'=>true))
             ->add('isValid', null, array('editable'=>true, 'label'=>'Valid'))
-            ->add('created')
+//            ->add('created')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),
@@ -124,11 +124,11 @@ class UserAdmin extends Admin
             ->with('General', array('class'=> 'col-md-6'))
             ->add('email')
             ->add('username')
-            ->add('birthday', 'sonata_type_date_picker', array(
-                'dp_side_by_side'       => false,
-                'dp_use_current'        => false,
-                'widget' => 'single_text',
-                'format' => 'y-dd-MM', 'required'=>false))
+//            ->add('birthday', 'sonata_type_date_picker', array(
+//                'dp_side_by_side'       => false,
+//                'dp_use_current'        => false,
+//                'widget' => 'single_text',
+//                'format' => 'y-dd-MM', 'required'=>false))
             ->add('roles', 'choice', array(
                 'choices'  => array('ROLE_USER'=>'User', 'ROLE_ADMIN'=>'Admin'),
                 'multiple' => true
@@ -146,8 +146,23 @@ class UserAdmin extends Admin
             ->add('lastName')
             ->add('firstName')
             ->end()
+            ->with('Emails', array('class' =>'col-sm-12',
+                'box-class' => 'box box-solid box-danger',
+                'description'=>'User parent emails'))
+            ->add('userEmails', 'sonata_type_collection', array(), array(
+                    'edit' => 'inline',
+                    'inline' => 'table',
+                    'sortable'  => 'id',
+                    'delete'=>true
+                )
+            )
+            ->end()
         ;
     }
+
+    protected $formOptions = array(
+        'cascade_validation' => true
+    );
 
     /**
      * @param ShowMapper $showMapper
@@ -171,6 +186,12 @@ class UserAdmin extends Admin
 
         $this->updatePassword($object);
 
+        if($object->getUserEmails()){
+            foreach($object->getUserEmails() as $email) {
+                $email->setUser($object);
+            }
+        }
+
     }
 
     public function prePersist($object)
@@ -179,6 +200,11 @@ class UserAdmin extends Admin
 
         $this->updatePassword($object);
 
+        if($object->getUserEmails()){
+            foreach($object->getUserEmails() as $email) {
+                $email->setUser($object);
+            }
+        }
     }
 
 //    /**

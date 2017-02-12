@@ -141,30 +141,20 @@ class MainController extends Controller
 
                 $data = $form->getData();
                 $file = $data['file'];
-                // corrections of uploaded file name because is sended from cli
-//                $fileName = $this->getUser()->getId().(str_replace( ' ', '_', str_replace('(', '_', str_replace(')', '_', $file->getClientOriginalName()))));
-                // save file in /web/uploads/files folder
-//                $brochuresDir = $this->container->getParameter('kernel.root_dir').'/../web/uploads/credit_application_uploads';
-//                $mainDir = str_replace('/app', '/', $this->container->getParameter('kernel.root_dir'));
-//                $form->get('file');
+
                 if (is_file($file) && in_array($file->getMimeType(), array('application/pdf')))
                 {
-                    // move file to uploda directory
-//                    $file->move($brochuresDir, $fileName);
-
-//                    $file = $brochuresDir.'/'.$fileName;
-
-                        $userSettings->setFile($file);
-                        $userSettings->uploadFile();
-                        $em->persist($userSettings);
-                        $em->flush();
+                    $userSettings->setFile($file);
+                    $userSettings->uploadFile();
+                    $em->persist($userSettings);
+                    $em->flush();
 
                     $this->addFlash(
                         'notice',
                         'Credit Application file file successfully uploaded.'
                     );
                 }
-        }
+            }
 
         }
 
@@ -197,7 +187,6 @@ class MainController extends Controller
             $pageUrl = $this->generateUrl('credit_pdf', array('userSettings'=>$userSettings->getId()), true); // use absolute path!
             $this->container->get('knp_snappy.pdf')->generate($pageUrl, $path, array('orientation'=>'Portrait'));
 
-//        return new BinaryFileResponse($path);
             return new Response(
                 $this->get('knp_snappy.pdf')->getOutput($pageUrl, array('orientation'=>'Portrait')),
                 200,
@@ -251,4 +240,119 @@ class MainController extends Controller
         return $response;
     }
 
+    /**
+     *
+     * @Route("/packing-slip/{invoiceNumber}", name="packing_slip")
+     * @Security("has_role('ROLE_SUPER_ADMIN')")
+     *
+     */
+    public function packingSlipAction(Request $request, $invoiceNumber){
+
+        $filename = sprintf('packing-slip-%s.pdf', $invoiceNumber);
+        $path = $this->container->getParameter('kernel.root_dir')."/../web/uploads/packing_slip/" . $filename;
+
+        if(is_file($path)){
+            unlink($path);
+        }
+
+        $pageUrl = $this->generateUrl('pdf_generate_slip', array('invoiceId'=>$invoiceNumber), true); // use absolute path!
+        $this->container->get('knp_snappy.pdf')->generate($pageUrl, $path);
+
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutput($pageUrl),
+            200,
+            array(
+                'Content-Type'          => 'application/pdf',
+                'Content-Disposition'   => sprintf('attachment; filename="%s"', $filename),
+            )
+        );
+    }
+
+    /**
+     *
+     * @Route("/slip/pdf/{invoiceId}", name="pdf_generate_slip")
+     * @Template()
+     * @param Request $request
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function pdfAction(Request $request, $invoiceId){
+
+
+        $em = $this->getDoctrine()->getManager();
+
+        $invoice = $em->getRepository('AppBundle:Invoice')->findByInvoiceIdForPdf($invoiceId);
+
+        if(!count($invoice)){
+            $this->addFlash(
+                'notice',
+                'Please Submit order!'
+            );
+            return $this->redirectToRoute('submit_order');
+        }
+
+        $userSettings = $em->getRepository('AppBundle:UserSettings')->findByUserId($invoice[0]['userId']);
+        $invoiceSettings = $em->getRepository('AppBundle:InvoiceSettings')->findMax();
+
+        return array('invoiceSettings'=>$invoiceSettings, 'invoice'=>$invoice, 'userSettings'=>$userSettings);
+
+    }
+
+//    /**
+//     * @param Request $request
+//     * @Route("/send-email/{invoiceNumber}", name="send_email")
+//     * @Security("has_role('ROLE_SUPER_ADMIN')")
+//     */
+//    public function sendEmailAction(Request $request, $invoiceNumber){
+//
+//        $em = $this->getDoctrine()->getManager();
+//
+//        $userEmails = $em->getRepository('AppBundle:UserEmails')->findByInvoice($invoiceNumber);
+//
+////        foreach ($userEmails->getUser()->getUserEmails() as $emails){
+////            dump($emails);
+////        }
+////        dump($userEmails->getUser()->getUserEmails()); exit;
+//        if(!$userEmails){
+//
+//            $this->addFlash(
+//                'error',
+//                "Sorry Invoice by invoice number {$invoiceNumber} not found."
+//            );
+//
+//            return $this->redirect($this->generateUrl('admin_app_invoice_list'));
+//        }
+//
+//try{
+//    $message = \Swift_Message::newInstance()
+//        ->setSubject('Hello Email')
+//        ->setFrom('info@aamedllc.com')
+//        ->setTo('tigranparemuzian@gmail.com')
+//        ->setBody(
+//            $this->renderView(
+//            // app/Resources/views/Emails/registration.html.twig
+//                '@App/Main/email_content.html.twig',
+//                array('name' => 'Conpany name')
+//            ),
+//            'text/html'
+//        );
+////dump($message); exit;
+//    $t = $this->get('mailer')->send($message);
+//    dump($t); exit;
+//} catch (\Swift_Message $exception){
+//    echo 'A mandrill error occurred: ' . get_class($exception) . ' - ' . $exception->getMessage();
+//    throw $exception;
+//}
+//exit;
+//
+//
+//        return  $this->addFlash(
+//            'notice',
+//            "Invoice document by invoice number {$invoiceNumber} send."
+//        );
+//
+//        return $this->redirect($this->generateUrl('admin_app_invoice_list'));
+//
+//    }
 }

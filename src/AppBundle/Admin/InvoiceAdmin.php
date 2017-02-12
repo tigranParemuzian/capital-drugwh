@@ -26,6 +26,7 @@ class InvoiceAdmin extends Admin
         $collection->clearExcept(array('list', 'delete', 'edit', 'batch'));
         $collection->add('invoice_pdf');
         $collection->add('t3_statement_pdf');
+        $collection->add('packing_slip');
 
     }
 
@@ -42,6 +43,7 @@ class InvoiceAdmin extends Admin
             // define calculate action
             $actions['invoice_pdf']= array ('label' => 'Generate Pdf', 'ask_confirmation'  => true );
             $actions['t3_statement_pdf']= array ('label' => 'T3 Statement Pdf', 'ask_confirmation'  => true );
+            $actions['packing_slip']= array ('label' => 'Packing Slip Pdf', 'ask_confirmation'  => true );
 
         }
 
@@ -95,12 +97,13 @@ class InvoiceAdmin extends Admin
                     Invoice::IS_SHIPPED=>'Shipped'), 'editable'=>true
             ))
             ->add('user')
-            ->add('created')
+            ->add('created','date',array('date_format' => 'yyyy-MM-dd'))
             ->add('_action', 'actions',
                 array('actions'=>
                     array(
                         'invoice_pdf' => array('template' => 'AppBundle:CRUD:generate_pdf.html.twig'),
                         't3_statement_pdf' => array('template' => 'AppBundle:CRUD:t3_statment_pdf.html.twig'),
+                        'packing_slip' => array('template' => 'AppBundle:CRUD:packing_slip.html.twig'),
                         'delete'=>array(), 'edit'=>array()
                     )
                 ))
