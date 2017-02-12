@@ -15,7 +15,7 @@ use APY\DataGridBundle\Grid\Source\Source;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Request\ParamFetcher;
 use JMS\SecurityExtraBundle\Annotation\Secure;
-use Proxies\__CG__\AppBundle\Entity\Booking;
+use AppBundle\Entity\Booking;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
