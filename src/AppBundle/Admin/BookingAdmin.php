@@ -123,5 +123,25 @@ class BookingAdmin extends Admin
         ;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function preUpdate($object)
+    {
+        $object->setCost(round($object->getProduct()->getPrice() * $object->getCount(), 2));
+        $object->setSubTotal(round($object->getProduct()->getPrice() * $object->getCount(), 2));
+        $object->setStatus(Booking::IS_ORDERED);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function prePersist($object)
+    {
+        $object->setCost(round($object->getProduct()->getPrice() * $object->getCount(), 2));
+        $object->setSubTotal(round($object->getProduct()->getPrice() * $object->getCount(), 2));
+        $object->setStatus(Booking::IS_ORDERED);
+    }
+
 
 }
