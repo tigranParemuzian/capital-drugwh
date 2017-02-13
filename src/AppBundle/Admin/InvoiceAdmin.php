@@ -70,12 +70,7 @@ class InvoiceAdmin extends Admin
             ->with('Bookings', array('class' => 'col-sm-12',
                 'box-class' => 'box box-solid box-danger',
                 'description' => 'Bookings part'))
-            ->add('booking', 'sonata_type_collection', array(), array(
-                    'edit' => 'inline',
-                    'inline' => 'table',
-                    'sortable' => 'id',
-                    'delete' => true
-                )
+            ->add('booking', null, array('label'=>'Bookngs')
             )
             ->end();
 
