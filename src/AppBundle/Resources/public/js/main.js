@@ -170,7 +170,7 @@ function sendRequest(data, method)
 function changeCount(ids, state) {
 
     var id = ids.replace(/order_id_/g, '');
-    
+
     $('#order_add_'+id).show();
     $('#used_count_'+id).val($('#'+ids).val());
 }
