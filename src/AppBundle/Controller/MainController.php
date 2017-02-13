@@ -307,6 +307,8 @@ class MainController extends Controller
     public function sendEmailAction(Request $request, $invoiceNumber){
 
        $this->sendEmail($invoiceNumber);
+
+        return $this->redirect($this->generateUrl('admin_app_invoice_list'));
     }
 
 
@@ -323,30 +325,39 @@ class MainController extends Controller
                     'error',
                     "Sorry Invoice by invoice number {$invoiceNumber} not found."
                 );
-//            return $this->redirect($this->generateUrl('admin_app_invoice_list'));
+            return $this->redirect($this->generateUrl('admin_app_invoice_list'));
             }
 
             try{
-                $email = array();
-
-
 
                 $filename = sprintf('invoice-%s.pdf', $invoiceNumber);
+                $pathInv = $this->container->getParameter('kernel.root_dir')."/../web/uploads/invoice/" . $filename;
+
+                if(is_file($pathInv)){
+                    unlink($pathInv);
+                }
+
+                $pageUrl = $this->generateUrl('pdf_generate', array('invoiceId'=>$invoiceNumber), true); // use absolute path!
+                $this->container->get('knp_snappy.pdf')->generate($pageUrl, $pathInv);
+
+                $filename = sprintf('t3_statment_%s.pdf', $invoiceNumber);
                 $path = $this->container->getParameter('kernel.root_dir')."/../web/uploads/invoice/" . $filename;
 
                 if(is_file($path)){
                     unlink($path);
                 }
 
-                $pageUrl = $this->generateUrl('pdf_generate', array('invoiceId'=>$invoiceNumber), true); // use absolute path!
+                $pageUrl = $this->generateUrl('t3_pdf_generate', array('invoiceId'=>$invoiceNumber, 'cuserId'=>1), true); // use absolute path!
                 $this->container->get('knp_snappy.pdf')->generate($pageUrl, $path);
+
                 $email = array();
                 foreach ($userEmails->getUser()->getUserEmails() as $emails){
                     $email[] = $emails;
                 }
+
                 $message = \Swift_Message::newInstance()
-                    ->setSubject("We’ve received your order. Order {$invoiceNumber}" )
-                    ->setFrom('info@aamedllc.com')
+                    ->setSubject("Order Invoice & T3 {$invoiceNumber}" )
+                    ->setFrom('RXtrace@aamedllc.com')
                     ->setTo("{$email[0]}");
                 for ($i = 1; $i<count($email); $i++){
                     $message
@@ -356,14 +367,14 @@ class MainController extends Controller
                     $this->renderView(
                     // app/Resources/views/Emails/registration.html.twig
                         '@App/Main/email_content.html.twig',
-                        array('name' => 'Conpany name')
+                        array('name' => 't3_o')
                     ),
                     'text/html'
                 )
+                    ->attach(\Swift_Attachment::fromPath($pageUrl))
                     ->attach(\Swift_Attachment::fromPath($path));
                 $this->get('mailer')->send($message);
 
-//            return $this->redirect($this->generateUrl('admin_app_invoice_list'));
             } catch (\Swift_Message $exception){
 
                 $this->addFlash(
