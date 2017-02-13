@@ -38,7 +38,7 @@ class BookingAdmin extends Admin
                 'dp_use_current'        => false,
                 'widget' => 'single_text',
                 'format' => 'y-dd-MM',
-                'required' => true,
+                'required' => false,
                 'attr'=>['style' => 'width: 100px !important']
             ))
             ->add('shipDate','sonata_type_date_picker', array(
@@ -46,7 +46,7 @@ class BookingAdmin extends Admin
                 'dp_use_current'        => false,
                 'widget' => 'single_text',
                 'format' => 'y-dd-MM',
-                'required' => true,
+                'required' => false,
                 'label'=>'SUP date',
                 'attr'=>['style' => 'width: 100px !important']
             ))
