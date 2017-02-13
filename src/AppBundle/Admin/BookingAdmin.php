@@ -73,6 +73,9 @@ class BookingAdmin extends Admin
             ->add('product')
             ->add('client')
             ->add('count')
+            ->add('lot')
+            ->add('expiryDate')
+            ->add('shipDate')
             ->add('cost')
             ->addIdentifier('status', 'choice', array(
                 'choices'  =>  array(Booking::IS_ORDERED=>'In order', Booking::IS_NEW=>'New',
@@ -98,6 +101,15 @@ class BookingAdmin extends Admin
             ->add('client')
             ->add('count')
             ->add('cost')
+            ->add('lot')
+            ->add('expiryDate', 'doctrine_orm_datetime_range', array(),'sonata_type_datetime_range_picker',
+                array('field_options_start' => array('format' => 'yyyy-MM-dd HH:mm:ss'),
+                    'field_options_end' => array('format' => 'yyyy-MM-dd HH:mm:ss'))
+            )
+            ->add('shipDate', 'doctrine_orm_datetime_range', array(),'sonata_type_datetime_range_picker',
+                array('field_options_start' => array('format' => 'yyyy-MM-dd HH:mm:ss'),
+                    'field_options_end' => array('format' => 'yyyy-MM-dd HH:mm:ss'))
+            )
             ->add('status', 'doctrine_orm_choice', array(),
                 'choice', array('choices'  =>  array(Booking::IS_NEW=>'New', Booking::IS_ORDERED=>'In order',
                     Booking::IS_CHANGED=>'Changed'))
