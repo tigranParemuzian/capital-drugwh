@@ -20,7 +20,9 @@ nav.navbar{
 #myCarousel{
     top: 50px;
 }
-
+.prod_count > input{
+    max-width :50px;
+}
 #bs-example-navbar-collapse-1{
     max-width: 5000px;
     margin: 0 auto;

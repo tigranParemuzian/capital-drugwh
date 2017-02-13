@@ -12,7 +12,19 @@
                     <li><span>Name: </span>{{ product.name }}</li>
                     <li><span>Manufacturer: </span>{{ product.productItem.manufacturer }}</li>
                     <li><span>Price:</span>{{ product.price }}</li>
-                    <li><span>Size</span>{{ product.productItem.size }}&nbsp;{{ product.productItem.unit }}</li>
+                    <li><span>Size</span>{{ product.productItem.size }}&nbsp;
+                        {% set uni='' %}
+                        {% set val=product.productItem.unit %}
+                        {% if  val==0  %}
+                            {% set uni='ct' %}
+                        {% elseif val == 1 %}
+                            {% set uni='ml' %}
+                        {% elseif val == 2 %}
+                            {% set uni='s ea' %}
+                        {% elseif val == 3 %}
+                            {% set uni='gm' %}
+                        {% endif %}
+                        {{ uni }}</li>
                 </ul>
             </div>
         </div>

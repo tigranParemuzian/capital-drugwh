@@ -6,6 +6,7 @@ getDataTerminals();
 const GET = 'GET';
 const POST = 'POST';
 var slugItem;
+var bookings = {};
 function addByBag(getId, state, slug){
     if(typeof slug=='undefined'){
         slug = slugItem
@@ -84,7 +85,9 @@ function writeOrder(orders){
         '<td>' + orders.product.product_item.strength +'</td>' +
         '<td>' + orders.product.product_item.size + ' ' + unt +'</td>' +
         '<td>$ ' + orders.product.price.toFixed(2) +'</td>'+
-        '<td class="prod_count">' + orders.count +' </td>'+
+        '<td class="prod_count"><input id="order_id_'+ orders.product.id +'" type="text" value="' + orders.count +'" onkeydown="changeCount(this.id, 0)" onkeyup="changeCount(this.id, 0)" onchange="changeCount(this.id, 1)"> ' +
+        '<button class="btn btn-success" style="display: none" type="button" id="order_add_'+ orders.product.id +'" onclick="submitAs('+orders.product.id+')">Add</button>' +
+        '</td>'+
         '<td>$ ' + orders.sub_total +'</td>'+
         '<td> <button id="remove_' + orders.product.id +'" onclick="addByBag(this.id, 1)" class="btn btn-danger">' +
         '<span class="glyphicon glyphicon glyphicon-remove"></span>' +
@@ -104,6 +107,7 @@ function getDataTerminals() {
         contentType: 'application/json; charset=utf-8',
         async: true,
         success: function (resultData) {
+            bookings = resultData;
             var result = resultData, counts;
             var total = 0;
 
@@ -138,6 +142,7 @@ function getDataTerminals() {
  */
 function sendRequest(data, method)
 {
+    console.log(data);
     jQuery.ajax({
         url: '/api/bags/datas',
         type: "POST",
@@ -162,10 +167,20 @@ function sendRequest(data, method)
     });
 }
 
-function changeCount() {
-    $('.prod_count').on('dblclick', function () {
-        var t = $('.prod_count').text();
+function changeCount(ids, state) {
 
+    var id = ids.replace(/order_id_/g, '');
+    
+    $('#order_add_'+id).show();
+    $('#used_count_'+id).val($('#'+ids).val());
+}
 
-    })
+function submitAs(id){
+
+    bookings.forEach(function (element) {
+        if(element.product.id == id){
+            sendRequest({slug:element.product.slug, count:$('#order_id_'+id).val()})
+        }
+    });
+
 }
