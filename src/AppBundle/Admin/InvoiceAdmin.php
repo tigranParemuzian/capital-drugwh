@@ -239,7 +239,7 @@ class InvoiceAdmin extends Admin
                     '<br><b>Thank you</b>',
                     'text/html'
                 )
-                    ->attach(\Swift_Attachment::fromPath($pageUrl))
+                    ->attach(\Swift_Attachment::fromPath($pathInv))
                     ->attach(\Swift_Attachment::fromPath($path));
                 $containerAdmin->get('mailer')->send($message);
 
