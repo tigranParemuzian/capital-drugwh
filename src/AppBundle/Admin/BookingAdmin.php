@@ -69,6 +69,7 @@ class BookingAdmin extends Admin
     {
         $list
             ->add('id')
+            ->add('invoice')
             ->add('product')
             ->add('client')
             ->add('count')
@@ -92,6 +93,7 @@ class BookingAdmin extends Admin
     {
         $filter
             ->add('id')
+            ->add('invoice')
             ->add('product')
             ->add('client')
             ->add('count')
