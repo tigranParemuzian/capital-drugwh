@@ -299,60 +299,67 @@ class MainController extends Controller
 
     }
 
-//    /**
-//     * @param Request $request
-//     * @Route("/send-email/{invoiceNumber}", name="send_email")
-//     * @Security("has_role('ROLE_SUPER_ADMIN')")
-//     */
-//    public function sendEmailAction(Request $request, $invoiceNumber){
-//
-//        $em = $this->getDoctrine()->getManager();
-//
-//        $userEmails = $em->getRepository('AppBundle:UserEmails')->findByInvoice($invoiceNumber);
-//
-////        foreach ($userEmails->getUser()->getUserEmails() as $emails){
-////            dump($emails);
-////        }
-////        dump($userEmails->getUser()->getUserEmails()); exit;
-//        if(!$userEmails){
-//
-//            $this->addFlash(
-//                'error',
-//                "Sorry Invoice by invoice number {$invoiceNumber} not found."
-//            );
-//
-//            return $this->redirect($this->generateUrl('admin_app_invoice_list'));
+    /**
+     * @param Request $request
+     * @Route("/send-email/{invoiceNumber}", name="send_email")
+     * @Security("has_role('ROLE_SUPER_ADMIN')")
+     */
+    public function sendEmailAction(Request $request, $invoiceNumber){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $userEmails = $em->getRepository('AppBundle:UserEmails')->findByInvoice($invoiceNumber);
+
+//        foreach ($userEmails->getUser()->getUserEmails() as $emails){
+//            dump($emails);
 //        }
-//
-//try{
-//    $message = \Swift_Message::newInstance()
-//        ->setSubject('Hello Email')
-//        ->setFrom('info@aamedllc.com')
-//        ->setTo('tigranparemuzian@gmail.com')
-//        ->setBody(
-//            $this->renderView(
-//            // app/Resources/views/Emails/registration.html.twig
-//                '@App/Main/email_content.html.twig',
-//                array('name' => 'Conpany name')
-//            ),
-//            'text/html'
-//        );
-////dump($message); exit;
-//    $t = $this->get('mailer')->send($message);
+//        dump($userEmails->getUser()->getUserEmails()); exit;
+        if(!$userEmails){
+
+            $this->addFlash(
+                'error',
+                "Sorry Invoice by invoice number {$invoiceNumber} not found."
+            );
+
+            return $this->redirect($this->generateUrl('admin_app_invoice_list'));
+        }
+
+try{
+    $message = \Swift_Message::newInstance()
+        ->setSubject('Hello Email')
+        ->setFrom('info@aamedllc.com')
+        ->setTo('tigranparemuzian@gmail.com')
+        ->setBody(
+            $this->renderView(
+            // app/Resources/views/Emails/registration.html.twig
+                '@App/Main/email_content.html.twig',
+                array('name' => 'Conpany name')
+            ),
+            'text/html'
+        );
+//dump($message); exit;
+    $this->get('mailer')->send($message);
+    return $this->redirect($this->generateUrl('admin_app_invoice_list'));
 //    dump($t); exit;
-//} catch (\Swift_Message $exception){
+} catch (\Swift_Message $exception){
+    $this->addFlash(
+        'error',
+        "Sorry Invoice by invoice number {$invoiceNumber} not found."
+    );
+
+    return $this->redirect($this->generateUrl('admin_app_invoice_list'));
 //    echo 'A mandrill error occurred: ' . get_class($exception) . ' - ' . $exception->getMessage();
 //    throw $exception;
-//}
+}
 //exit;
-//
-//
+
+
 //        return  $this->addFlash(
 //            'notice',
 //            "Invoice document by invoice number {$invoiceNumber} send."
 //        );
 //
 //        return $this->redirect($this->generateUrl('admin_app_invoice_list'));
-//
-//    }
+
+    }
 }
