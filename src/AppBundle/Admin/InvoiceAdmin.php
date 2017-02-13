@@ -147,7 +147,6 @@ class InvoiceAdmin extends Admin
      */
     public function preUpdate($object)
     {
-//        dump('sss'); exit;
         if ($object->getBooking()) {
             foreach ($object->getBooking() as $productIngredient) {
                 $productIngredient->setInvoice($object);
@@ -159,7 +158,6 @@ class InvoiceAdmin extends Admin
         }
 
         if ($object->getStatus() === Invoice::IS_SHIPPED) {
-//            dump('sss'); exit;
             $this->sendEmail($object->getNumber());
         }
     }
