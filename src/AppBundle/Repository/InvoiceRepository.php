@@ -91,4 +91,19 @@ class InvoiceRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()->getResult()
             ;
     }
+
+    public function findUserInfo($invNumber){
+
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('i, u, use, ue')
+            ->from('AppBundle:Invoice', 'i')
+            ->leftJoin('i.user', 'u')
+            ->leftJoin('u.userSettings', 'use')
+            ->leftJoin('u.userEmails', 'ue')
+            ->where('i.number = :invNum')
+            ->setParameter('invNum', $invNumber)
+            ->getQuery()->getOneOrNullResult();
+
+    }
 }

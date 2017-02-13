@@ -197,6 +197,8 @@ class DefaultController extends Controller
                 'notice',
                 'Your order were saved!'
             );
+
+            $this->sendEmail((string)$now->getTimestamp());
         }
 
         $invoices = $em->getRepository('AppBundle:Invoice')->findByAuthor($this->getUser()->getId());
@@ -390,4 +392,70 @@ class DefaultController extends Controller
         return array('invoice'=>$invoice);
 
     }
+
+    public function sendEmail($invoiceNumber){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $userEmails = $em->getRepository('AppBundle:Invoice')->findUserInfo($invoiceNumber);
+
+        if(!$userEmails){
+
+            $this->addFlash(
+                'error',
+                "Sorry Invoice by invoice number {$invoiceNumber} not found."
+            );
+//            return $this->redirect($this->generateUrl('admin_app_invoice_list'));
+        }
+
+        try{
+            $email = array();
+
+
+
+            $filename = sprintf('invoice-%s.pdf', $invoiceNumber);
+            $path = $this->container->getParameter('kernel.root_dir')."/../web/uploads/invoice/" . $filename;
+
+            if(is_file($path)){
+                unlink($path);
+            }
+
+            $pageUrl = $this->generateUrl('pdf_generate', array('invoiceId'=>$invoiceNumber), true); // use absolute path!
+            $this->container->get('knp_snappy.pdf')->generate($pageUrl, $path);
+            $email = array();
+            foreach ($userEmails->getUser()->getUserEmails() as $emails){
+                $email[] = $emails;
+            }
+            $message = \Swift_Message::newInstance()
+                ->setSubject("We’ve received your order. Order {$invoiceNumber}" )
+                ->setFrom('info@aamedllc.com')
+                ->setTo("{$email[0]}");
+                for ($i = 1; $i<count($email); $i++){
+                    $message
+                        ->setCc("{$email[$i]}");
+                }
+            $message->setBody(
+                    $this->renderView(
+                    // app/Resources/views/Emails/registration.html.twig
+                        '@App/Main/email_content.html.twig',
+                        array('name' => 'Conpany name')
+                    ),
+                    'text/html'
+                )
+            ->attach(\Swift_Attachment::fromPath($path));
+            $this->get('mailer')->send($message);
+
+//            return $this->redirect($this->generateUrl('admin_app_invoice_list'));
+        } catch (\Swift_Message $exception){
+
+            $this->addFlash(
+                'error',
+                "Sorry Invoice by invoice number {$invoiceNumber} not found."
+            );
+
+        }
+    }
 }
+
+
+

@@ -11,19 +11,4 @@ namespace AppBundle\Repository;
 class UserEmailsRepository extends \Doctrine\ORM\EntityRepository
 {
 
-
-    public function findByInvoice($invNumber){
-
-        return $this->getEntityManager()
-            ->createQueryBuilder()
-            ->select('i')
-            ->from('AppBundle:Invoice', 'i')
-            ->leftJoin('i.user', 'u')
-            ->leftJoin('u.userSettings', 'use')
-            ->leftJoin('u.userEmails', 'ue')
-            ->where('i.number = :invNum')
-            ->setParameter('invNum', $invNumber)
-            ->getQuery()->getOneOrNullResult();
-
-    }
 }
