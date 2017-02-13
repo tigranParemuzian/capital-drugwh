@@ -117,7 +117,7 @@ class Booking
     public function __toString()
     {
         return $this->id ? $this->product . ' count: ' . $this->count  .
-            'Lot:' . $this->lot :"new order";
+            ' Lot:' . $this->lot :"new order";
         // TODO: Implement __toString() method.
     }
 
