@@ -58,8 +58,8 @@
             <div class="col-md-12 text-center invoice-header">
                 <header>
                     <ul>
-                        <li><h1>Transaction History ID {{ invoice.number }}</h1></li>
-                        <li><h1>Customer ID {{ invoice.user.customerId }}</h1></li>
+                        <li><h1>Transaction History ID {{ invoice[0].number }}</h1></li>
+                        <li><h1>Customer ID {{ invoice[0].customerId }}</h1></li>
                     </ul>
                 </header>
             </div>
@@ -74,7 +74,7 @@
                     </div>
                     <div class="col-md-9">
                         <ul class="footer-info-list">
-                            <li>{{ invoice.user.userSettings.tradeAddress }}</li>
+                            <li>{{ invoice[0].tradeAddress }}</li>
                         </ul>
                     </div>
                 </div>
@@ -97,7 +97,7 @@
                     <div class="col-md-6">
                         <ul class="footer-info-list">
                             <li>
-                                {{ invoice.created|date('Y M d') }}
+                                {{ invoice[0].created|date('Y M d') }}
                             </li>
                         </ul>
                     </div>
@@ -108,7 +108,7 @@
                     </div>
                     <div class="col-md-6">
                         <ul class="footer-info-list">
-                            <li>{{ invoice.shippingHandling|date('Y M d') }}</li>
+                            <li>{{ invoice[0].shippingHandling|date('Y M d') }}</li>
                         </ul>
                     </div>
                 </div>
@@ -141,16 +141,16 @@
             </div>
             {% set count = 1 %}
             {% set total = 0 %}
-            {% for booking in invoice.booking %}
+            {% for booking in invoice %}
             <div class="col-md-12 text-uppercase text-left">
                 <div class="col-md-1"><b>{{ count }}</b></div>
                 <div class="col-md-4">
-                    <span>SUPPLIER NAME&nbsp;</span><b>{{ booking.product.productItem.manufacturers.name }}</b>
-                    <span>SUPPLIER ADDRESS&nbsp;</span><b>{{ booking.product.productItem.manufacturers.address }}</b><br>
+                    <span>SUPPLIER NAME&nbsp;</span><b>{{ booking.manName }}</b>
+                    <span>SUPPLIER ADDRESS&nbsp;</span><b>{{ booking.manAddress }}</b><br>
                     <span>SUPPLIER SHIP DATE&nbsp;</span><b>{{ booking.shipDate|date('Y-m-d') }}</b>
                 </div>
-                <div class="col-md-3"><b>{{ booking.product.name }}&nbsp;{{ booking.product.productItem.strength }}</b></div>
-                <div class="col-md-1"><b>{{ booking.product.productItem.nds }}</b></div>
+                <div class="col-md-3"><b>{{ booking.name }}&nbsp;{{ booking.strength }}</b></div>
+                <div class="col-md-1"><b>{{ booking.nds }}</b></div>
                 <div class="col-md-1"><b>{{ booking.lot }}</b></div>
                 <div class="col-md-1"><b>{{ booking.count }}</b></div>
                 <div class="col-md-1"><b>{{ booking.expiryDate|date('Y-m-d') }}</b></div>

@@ -84,7 +84,7 @@ function writeOrder(orders){
         '<td>' + orders.product.product_item.strength +'</td>' +
         '<td>' + orders.product.product_item.size + ' ' + unt +'</td>' +
         '<td>$ ' + orders.product.price.toFixed(2) +'</td>'+
-        '<td>' + orders.count +' </td>'+
+        '<td class="prod_count">' + orders.count +' </td>'+
         '<td>$ ' + orders.sub_total +'</td>'+
         '<td> <button id="remove_' + orders.product.id +'" onclick="addByBag(this.id, 1)" class="btn btn-danger">' +
         '<span class="glyphicon glyphicon glyphicon-remove"></span>' +
@@ -160,4 +160,12 @@ function sendRequest(data, method)
             console.log(jqXHR, textStatus, errorThrown);
         }
     });
+}
+
+function changeCount() {
+    $('.prod_count').on('dblclick', function () {
+        var t = $('.prod_count').text();
+
+
+    })
 }

@@ -67,4 +67,28 @@ class InvoiceRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()->getResult()
             ;
     }
+
+    public function findForT3($invoiceNumber){
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('i.number, i.created, i.dueDate, i.terms, i.shippingHandling, i.trackNumber,
+            u.id as userId, u.customerId as customerId, user_settings.tradeAddress,
+            p.name, pi.nds, pi.strength, 
+            mi.name as manName, mi.address as manAddress,
+            b.count , b.expiryDate , b.shipDate, b.lot')
+            ->from('AppBundle:Invoice', 'i')
+            ->leftJoin('i.user', 'u')
+            ->leftJoin('u.userSettings', 'user_settings')
+            ->leftJoin('i.booking', 'b')
+            ->leftJoin('b.product', 'p')
+            ->leftJoin('p.productItem', 'pi')
+            ->leftJoin('pi.manufacturers', 'mi')
+            ->where('i.number = :nb')
+            ->groupBy('b.id')
+            ->orderBy('p.name','ASC')
+            ->addOrderBy('b.count','ASC')
+            ->setParameter('nb', $invoiceNumber)
+            ->getQuery()->getResult()
+            ;
+    }
 }
