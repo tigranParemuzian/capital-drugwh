@@ -51,7 +51,7 @@ class BookingAdmin extends Admin
                 'attr'=>['style' => 'width: 100px !important']
             ))
             ->add('client', null, array('required'=>false))
-            ->add('invoice', 'text', array('required'=>true))
+            ->add('invoice', null, array('required'=>true))
             ->add('status', 'choice', array('choices'=>
                 array(Booking::IS_NEW=>'New', Booking::IS_ORDERED=>'In order',
                     Booking::IS_CHANGED=>'Changed'), 'multiple'=>false
