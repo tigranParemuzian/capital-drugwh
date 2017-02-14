@@ -9,7 +9,7 @@
     <div class="">
         <div class="panel panel-success">
             <div class="panel-heading">
-                <h1 class="header-title"><span class="uppercase">{% if app.user.userSettings.tradeName %}
+                <h1 class="header-title"><span class="uppercase">{% if app.user.userSettings %}
                         {{ app.user.userSettings.tradeName }}'s Bag {% endif %}</span></h1>
                 {% for flash_message in app.session.flashBag.get('notice') %}
                     <div class="flash-notice">

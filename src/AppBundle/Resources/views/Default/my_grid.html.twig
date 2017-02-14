@@ -15,7 +15,7 @@
                     <div class="panel-heading" role="tab" id="headingOne">
                       <h4 class="panel-title">
                         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            {% if app.user.userSettings.tradeName %}
+                            {% if app.user.userSettings %}
                             {{ app.user.userSettings.tradeName }}'s Bag{% else %}Bag{% endif %}&nbsp;<span class="badge total-count"></span>&nbsp;<span class="badge total-price"></span>
                         </a>
                       </h4>

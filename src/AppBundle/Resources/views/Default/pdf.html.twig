@@ -190,8 +190,8 @@
                 </div>
                 <div class="col-md-3">
                     <div class="col-md-1"><b>{{ booking.counts }}</b></div>
-                    <div class="col-md-4"><b>$&nbsp;{{ booking.price|round(2, 'floor') }}</b></div>
-                    <div class="col-md-6"><b>$&nbsp;{{ booking.total|round(2, 'floor') }}</b></div>
+                    <div class="col-md-4"><b>$&nbsp;{{ booking.price|round(2, 'floor')|number_format(2, '.', ',') }}</b></div>
+                    <div class="col-md-6"><b>$&nbsp;{{ booking.total|round(2, 'floor')|number_format(2, '.', ',') }}</b></div>
                 </div>
             </div>
                 {% set count = count +1 %}
@@ -204,7 +204,7 @@
                         will be a 1.5% interest charge per month on late invoices.</p>
                 </div>
                 <div class="col-md-4 text-right"><h1>BALANCE DUE</h1></div>
-                <div class="col-md-2 text-right"><h1>$&nbsp;{{ total|round(2, 'floor') }}</h1>
+                <div class="col-md-2 text-right"><h1>$&nbsp;{{ total|round(2, 'floor')|number_format(2, '.', ',') }}</h1>
                 </div>
             </div>
         </div>
