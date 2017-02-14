@@ -53,7 +53,8 @@ class InvoiceRepository extends \Doctrine\ORM\EntityRepository
             ->createQueryBuilder()
             ->select('i.number, i.created, i.dueDate, i.terms, i.shippingHandling, i.trackNumber,
             u.id as userId, u.customerId as customerId,
-            p.name, p.price, pi.nds, pi.strength,
+            p.name, p.price, 
+            pi.nds, pi.strength, pi.size as psize, pi.unit as punit,
             SUM(b.count) as counts, SUM(b.subTotal) as total')
             ->from('AppBundle:Invoice', 'i')
             ->leftJoin('i.booking', 'b')
