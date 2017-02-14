@@ -144,15 +144,15 @@
                     </div>
                     <div class="col-md-10"><b>Name</b></div>
                 </div>
-                <div class="col-md-5">
-                    <div class="col-md-4"><b>Strength</b></div>
-                    <div class="col-md-2"><b>Size</b></div>
-                    <div class="col-md-4"><b>NDC</b></div>
+                <div class="col-md-6">
+                    <div class="col-md-6"><b>Strength</b></div>
+                    <div class="col-md-3"><b>Size</b></div>
+                    <div class="col-md-3"><b>NDC</b></div>
                 </div>
-                <div class="col-md-4">
-                    <div class="col-md-3"><b>QTY</b></div>
+                <div class="col-md-3">
+                    <div class="col-md-2"><b>QTY</b></div>
                     <div class="col-md-3"><b>Price</b></div>
-                    <div class="col-md-6"><b>Amount</b></div>
+                    <div class="col-md-7"><b>Amount</b></div>
                 </div>
             </div>
             {% set count = 1 %}
@@ -165,9 +165,9 @@
                     </div>
                     <div class="col-md-10"><b>{{ booking.name }}</b></div>
                 </div>
-                <div class="col-md-5">
-                    <div class="col-md-4"><b>{{ booking.strength }}</b></div>
-                    <div class="col-md-2"><b>{{ booking.psize }}
+                <div class="col-md-6">
+                    <div class="col-md-6"><b>{{ booking.strength }}</b></div>
+                    <div class="col-md-3"><b>{{ booking.psize }}
                             {% set uni='' %}
                             {% set val=booking.unit %}
                             {% if  val==0  %}
@@ -180,12 +180,12 @@
                                 {% set uni='gm' %}
                             {% endif %}{{ uni }}
                         </b></div>
-                    <div class="col-md-4"><b>{{ booking.nds }}</b></div>
+                    <div class="col-md-3"><b>{{ booking.nds }}</b></div>
                 </div>
-                <div class="col-md-4">
-                    <div class="col-md-3"><b>{{ booking.counts }}</b></div>
+                <div class="col-md-3">
+                    <div class="col-md-2"><b>{{ booking.counts }}</b></div>
                     <div class="col-md-3"><b>$&nbsp;{{ booking.price|round(2, 'floor') }}</b></div>
-                    <div class="col-md-6"><b>$&nbsp;{{ booking.total|round(2, 'floor') }}</b></div>
+                    <div class="col-md-7"><b>$&nbsp;{{ booking.total|round(2, 'floor') }}</b></div>
                 </div>
             </div>
                 {% set count = count +1 %}
