@@ -140,16 +140,11 @@
                     </div>
                 </div>
                 <div class="col-md-3"><b>Name/Strength</b></div>
-                <div class="col-md-3">
-                    <div class="col-md-2"><b>Size</b></div>
-                    <div class="col-md-6"><b>NDC</b></div>
-                    <div class="col-md-4"><b>LOT</b></div>
-                </div>
-                <div class="col-md-2">
-                    <div class="col-md-1">
-                        <b>QTY</b></div>
-                    <div class="col-md-10"><b>Exp. Date</b></div>
-                </div>
+                <div class="col-md-1"><b>Size</b></div>
+                <div class="col-md-1"><b>NDC</b></div>
+                <div class="col-md-1"><b>LOT</b></div>
+                <div class="col-md-1"><b>QTY</b></div>
+                <div class="col-md-1"><b>Exp. Date</b></div>
             </div>
             {% set count = 1 %}
             {% set total = 0 %}
@@ -165,8 +160,7 @@
                     </div>
                 </div>
                 <div class="col-md-3"><b>{{ booking.name }}&nbsp;{{ booking.strength }}</b></div>
-                <div class="col-md-3">
-                    <div class="col-md-2"><b>{{ booking.psize }}
+                <div class="col-md-1"><b>{{ booking.psize }}
                             {% set uni='' %}
                             {% set val=booking.unit %}
                             {% if  val==0  %}
@@ -177,17 +171,13 @@
                                 {% set uni='s ea' %}
                             {% elseif val == 3 %}
                                 {% set uni='gm' %}
-                            {% endif %}{{ uni }}</b>
-                    </div>
-                    <div class="col-md-6"><b>{{ booking.nds }}</b></div>
-                    <div class="col-md-4"><b>{{ booking.lot }}</b></div>
-                </div>
-
-                <div class="col-md-2">
+                            {% endif %}{{ uni }}</b></div>
+                    <div class="col-md-1"><b>{{ booking.nds }}</b></div>
+                    <div class="col-md-1"><b>{{ booking.lot }}</b></div>
                     <div class="col-md-1">
                         <b>{{ booking.count }}</b>
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-md-1">
                         <b>{{ booking.expiryDate|date('Y-m-d') }}</b>
                     </div>
                 </div>
