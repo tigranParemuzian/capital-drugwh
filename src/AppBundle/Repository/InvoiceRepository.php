@@ -74,7 +74,7 @@ class InvoiceRepository extends \Doctrine\ORM\EntityRepository
             ->createQueryBuilder()
             ->select('i.number, i.created, i.dueDate, i.terms, i.shippingHandling, i.trackNumber,
             u.id as userId, u.customerId as customerId, user_settings.tradeName, user_settings.tradeAddress,
-            p.name, pi.nds, pi.strength, 
+            p.name, pi.nds, pi.strength, pi.size as psize, pi.unit,
             mi.name as manName, mi.address as manAddress,
             b.count , b.expiryDate , b.shipDate, b.lot')
             ->from('AppBundle:Invoice', 'i')
