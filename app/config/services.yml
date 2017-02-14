@@ -69,7 +69,7 @@ services:
 
     admin.booking:
         class: AppBundle\Admin\BookingAdmin
-        arguments: [~, AppBundle\Entity\Booking, ~]
+        arguments: [~, AppBundle\Entity\Booking, AppBundle:CloneAdmin, ~]
         tags:
             - {name: sonata.admin, manager_type: orm, group: Invoice, label: Booking, show_in_dashboard: true}
 

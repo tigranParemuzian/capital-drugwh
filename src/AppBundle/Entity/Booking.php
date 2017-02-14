@@ -122,6 +122,14 @@ class Booking
     }
 
     /**
+     * set clone function configs
+     */
+    public function __clone() {
+
+        $this->id = null;
+
+    }
+    /**
      * Get id
      *
      * @return int

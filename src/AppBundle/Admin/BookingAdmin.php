@@ -14,10 +14,23 @@ use Sonata\AdminBundle\Admin\AbstractAdmin as Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 
 class BookingAdmin extends Admin
 {
+
+    protected $datagridValues = array(
+        '_page' => 1,
+        '_sort_order' => 'DESC', // sort direction
+        '_sort_by' => 'id' // field name
+    );
+
+
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->add('clone', $this->getRouterIdParameter().'/clone');
+    }
 
     protected function configureFormFields(FormMapper $formMapper)
     {
@@ -83,7 +96,9 @@ class BookingAdmin extends Admin
             ))
             ->add('_action', 'actions',
                 array('actions'=>
-                    array('show'=>array(), 'edit'=>array(), 'delete'=>array())
+                    array(
+                        'clone' => array('template' => 'AppBundle:CRUD:list__action_clone.html.twig'),
+                        'show'=>array(), 'edit'=>array(), 'delete'=>array())
                 ))
         ;
 
