@@ -46,7 +46,7 @@ function updateData(getId, status){
 
         if(status != 1){
             $('#add_'+id).show();
-            my_input.css({'border': "2px inset"}).closest('.grid-column-buy_count').children('div.help-text').html('<b>$ '+ totl_itom +'</b>');
+            my_input.css({'border': "2px inset"}).closest('.grid-column-buy_count').children('div.help-text').html('<b>$ '+ number_format(totl_itom, 2) +'</b>');
         }else {
             my_input.css({'border': "2px inset"}).closest('.grid-column-buy_count').children('div.help-text').html('');
         }
@@ -84,7 +84,7 @@ function writeOrder(orders){
     $('table.order>tbody').append('<tr> <td >'+ orders.product.name +'</td>' +
         '<td>' + orders.product.product_item.strength +'</td>' +
         '<td>' + orders.product.product_item.size + ' ' + unt +'</td>' +
-        '<td>$ ' + orders.product.price.toFixed(2) +'</td>'+
+        '<td>$ ' + number_format(orders.product.price.toFixed(2), 2) +'</td>'+
         '<td class="prod_count"><input id="order_id_'+ orders.product.id +'" type="text" value="' + orders.count +'" onkeydown="changeCount(this.id, 0)" onkeyup="changeCount(this.id, 0)" onchange="changeCount(this.id, 1)"> ' +
         '<button class="btn btn-success" style="display: none" type="button" id="order_add_'+ orders.product.id +'" onclick="submitAs('+orders.product.id+')">Add</button>' +
         '</td>'+
@@ -120,7 +120,7 @@ function getDataTerminals() {
             }
 
             $('.total-count').html('<span>Items Count </span> '+result.length);
-            $('.total-price').html('<span>Total price </span>$ ' + total.toFixed(2));
+            $('.total-price').html('<span>Total price </span>$ ' + number_format(total.toFixed(2), 2));
             $('.selected_infos').html('Bag&nbsp;<span class="badge">'+result.length+'</span>')
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -183,4 +183,38 @@ function submitAs(id){
         }
     });
 
+}
+
+function number_format( number, decimals, dec_point, thousands_sep ) {  // Format a number with grouped thousands
+    //
+    // +   original by: Jonas Raoni Soares Silva (http://www.jsfromhell.com)
+    // +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+    // +     bugfix by: Michael White (http://crestidg.com)
+
+    var i, j, kw, kd, km;
+
+    // input sanitation & defaults
+    if( isNaN(decimals = Math.abs(decimals)) ){
+        decimals = 2;
+    }
+    if( dec_point == undefined ){
+        dec_point = ",";
+    }
+    if( thousands_sep == undefined ){
+        thousands_sep = ".";
+    }
+
+    i = parseInt(number = (+number || 0).toFixed(decimals)) + "";
+
+    if( (j = i.length) > 3 ){
+        j = j % 3;
+    } else{
+        j = 0;
+    }
+
+    km = (j ? i.substr(0, j) + thousands_sep : "");
+    kw = i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands_sep);
+    //kd = (decimals ? dec_point + Math.abs(number - i).toFixed(decimals).slice(2) : "");
+    kd = (decimals ? dec_point + Math.abs(number - i).toFixed(decimals).replace(/-/, 0).slice(2) : "");
+    return km + kw + kd;
 }
