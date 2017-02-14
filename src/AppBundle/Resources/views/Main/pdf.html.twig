@@ -141,8 +141,9 @@
                 <div class="col-md-1"><b>#</b></div>
                 <div class="col-md-3"><b>Name</b></div>
                 <div class="col-md-3"><b>strength</b></div>
-                <div class="col-md-3"><b>NDC</b></div>
-                <div class="col-md-2"><b>QTY</b></div>
+                <div class="col-md-2"><b>Size</b></div>
+                <div class="col-md-2"><b>NDC</b></div>
+                <div class="col-md-1"><b>QTY</b></div>
                 {#<div class="col-md-1"><b>Price</b></div>
                 <div class="col-md-2"><b>Amount</b></div>#}
             </div>
@@ -153,8 +154,21 @@
                 <div class="col-md-1"><b>{{ count }}</b></div>
                 <div class="col-md-3"><b>{{ booking.name }}</b></div>
                 <div class="col-md-3"><b>{{ booking.strength }}</b></div>
-                <div class="col-md-3"><b>{{ booking.nds }}</b></div>
-                <div class="col-md-2"><b>{{ booking.counts }}</b></div>
+                <div class="col-md-2"><b>{{ booking.psize }}
+                        {% set uni='' %}
+                        {% set val=booking.unit %}
+                        {% if  val==0  %}
+                            {% set uni='ct' %}
+                        {% elseif val == 1 %}
+                            {% set uni='ml' %}
+                        {% elseif val == 2 %}
+                            {% set uni='s ea' %}
+                        {% elseif val == 3 %}
+                            {% set uni='gm' %}
+                        {% endif %}{{ uni }}
+                    </b></div>
+                <div class="col-md-2"><b>{{ booking.nds }}</b></div>
+                <div class="col-md-1"><b>{{ booking.counts }}</b></div>
                 {#<div class="col-md-1"><b>$&nbsp;{{ booking.price|round(2, 'floor') }}</b></div>
                 <div class="col-md-2"><b>$&nbsp;{{ booking.total|round(2, 'floor') }}</b></div>#}
             </div>
