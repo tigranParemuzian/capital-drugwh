@@ -332,7 +332,7 @@ class DefaultController extends Controller
         $secure = $this->container->get('security.authorization_checker');
         if(!$secure->isGranted("ROLE_SUPER_ADMIN")){
 
-            $invoices = $em->getRepository('AppBundle:Invoice')->findUniqByAuthorAndId($this->getUser()->getId(), $invoiceId);
+            $invoices = $em->getRepository('AppBundle:Invoice')->findDupl($this->getUser()->getId(), $invoiceId, Invoice::IS_SHIPPED);
 
             if(!$invoices){
                 $this->addFlash(

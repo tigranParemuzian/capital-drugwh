@@ -45,6 +45,25 @@ class InvoiceRepository extends \Doctrine\ORM\EntityRepository
         return $q->getQuery()->getOneOrNullResult();
     }
 
+    public function findDupl($userId, $id, $state = null){
+
+        $q = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('i')
+            ->from('AppBundle:Invoice', 'i')
+            ->leftJoin('i.user','u')
+            ->leftJoin('i.booking', 'b')
+            ->where('i.number =:id')
+            ->andWhere('u.id =:uid');
+        $state === Invoice::IS_SHIPPED ? $q->andWhere('i.status =:st') :'';
+        $q    ->setParameter('id', $id)
+            ->setParameter('uid', $userId)
+            ;
+        $state === Invoice::IS_SHIPPED ? $q->setParameter('st', $state) :'';
+
+        return $q->getQuery()->getOneOrNullResult();
+    }
+
     /**
      *
      */
