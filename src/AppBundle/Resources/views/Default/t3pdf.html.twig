@@ -155,8 +155,8 @@
             <div class="col-md-12 text-uppercase text-left">
 
                 <div class="col-md-4">
-                    <div class="col-md-1"><b>{{ count }}</b></div>
-                    <div class="col-md-11">
+                    <div class="col-md-2"><b>{{ count }}</b></div>
+                    <div class="col-md-10">
                         <span>SUPPLIER NAME&nbsp;</span><b>{{ booking.manName }}</b>
                         <span>SUPPLIER ADDRESS&nbsp;</span><b>{{ booking.manAddress }}</b><br>
                         <span>SUPPLIER SHIP DATE&nbsp;</span><b>{{ booking.shipDate|date('Y-m-d') }}</b>
@@ -179,9 +179,9 @@
                 <div class="col-md-1"><b>{{ booking.nds }}</b></div>
                 <div class="col-md-1"><b>{{ booking.lot }}</b></div>
                 <div class="col-md-2">
-                    <div class="col-md-1">
+                    <div class="col-md-2">
                         <b>{{ booking.count }}</b></div>
-                    <div class="col-md-11"><b>{{ booking.expiryDate|date('Y-m-d') }}</b></div>
+                    <div class="col-md-10"><b>{{ booking.expiryDate|date('Y-m-d') }}</b></div>
                 </div>
             </div>
                 {% set count = count +1 %}
