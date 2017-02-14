@@ -184,8 +184,8 @@ class BookingAdmin extends Admin
             'Invoice' => 'invoice',
             'Total' => 'invoice.total',
             'Product' => 'product.name',
-            'Product Strength' => 'product.productItem.strength',
             'Product Manufacturer' => 'product.productItem.manufacturer',
+            'Product Strength' => 'product.productItem.strength',
             'Count' => 'count',
             'Cost $' => 'cost',
         );
