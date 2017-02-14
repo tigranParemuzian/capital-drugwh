@@ -88,7 +88,7 @@ function writeOrder(orders){
         '<td class="prod_count"><input id="order_id_'+ orders.product.id +'" type="text" value="' + orders.count +'" onkeydown="changeCount(this.id, 0)" onkeyup="changeCount(this.id, 0)" onchange="changeCount(this.id, 1)"> ' +
         '<button class="btn btn-success" style="display: none" type="button" id="order_add_'+ orders.product.id +'" onclick="submitAs('+orders.product.id+')">Add</button>' +
         '</td>'+
-        '<td>$ ' + orders.sub_total +'</td>'+
+        '<td>$ ' + number_format(orders.sub_total, 2) +'</td>'+
         '<td> <button id="remove_' + orders.product.id +'" onclick="addByBag(this.id, 1)" class="btn btn-danger">' +
         '<span class="glyphicon glyphicon glyphicon-remove"></span>' +
         '</button>' +
