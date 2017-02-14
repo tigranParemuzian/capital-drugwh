@@ -169,7 +169,7 @@
                     <div class="col-md-4"><b>{{ booking.strength }}</b></div>
                     <div class="col-md-2"><b>{{ booking.psize }}
                             {% set uni='' %}
-                            {% set val=booking.punit %}
+                            {% set val=booking.unit %}
                             {% if  val==0  %}
                                 {% set uni='ct' %}
                             {% elseif val == 1 %}
@@ -178,7 +178,7 @@
                                 {% set uni='s ea' %}
                             {% elseif val == 3 %}
                                 {% set uni='gm' %}
-                            {% endif %}{{ booking.uni }}
+                            {% endif %}{{ uni }}
                         </b></div>
                     <div class="col-md-4"><b>{{ booking.nds }}</b></div>
                 </div>
