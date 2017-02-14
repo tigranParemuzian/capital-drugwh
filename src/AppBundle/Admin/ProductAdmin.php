@@ -59,7 +59,7 @@ class ProductAdmin extends Admin
         $list
             ->add('id')
             ->add('name')
-            ->add('productItem')
+            ->add('productItem', null, array('sortable' => 'productItem.nds'))
             ->add('category')
             ->add('alternative')
             ->addIdentifier('count')
