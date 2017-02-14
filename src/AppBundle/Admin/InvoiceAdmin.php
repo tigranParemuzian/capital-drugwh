@@ -66,6 +66,15 @@ class InvoiceAdmin extends Admin
                     Invoice::IS_SHIPPED => 'Shipped'), 'multiple' => false
             ), array('required' => true))
             ->add('user')
+            ->add('shippingHandling','sonata_type_date_picker', array(
+                'dp_side_by_side'       => false,
+                'dp_use_current'        => false,
+                'widget' => 'single_text',
+                'format' => 'y-dd-MM',
+                'required' => false,
+                'label'=>'Ship Date',
+                'attr'=>['style' => 'width: 100px !important']
+            ))
             ->end()
             ->with('Bookings', array('class' => 'col-sm-12',
                 'box-class' => 'box box-solid box-danger',
@@ -90,6 +99,7 @@ class InvoiceAdmin extends Admin
                     Invoice::IS_SHIPPED => 'Shipped'), 'editable' => true
             ))
             ->add('user')
+            ->add('shippingHandling', null, array('label'=>'Ship. Date'))
             ->add('created', 'date', array('date_format' => 'yyyy-MM-dd'))
             ->add('_action', 'actions',
                 array('actions' =>
@@ -114,6 +124,10 @@ class InvoiceAdmin extends Admin
                     Invoice::IS_SHIPPED => 'Shipped'))
             )
             ->add('user')
+//            ->add('shippingHandling', 'doctrine_orm_datetime_range', array(),'sonata_type_datetime_range_picker',
+//                array('field_options_start' => array('format' => 'yyyy-MM-dd HH:mm:ss'),
+//                    'field_options_end' => array('format' => 'yyyy-MM-dd HH:mm:ss'))
+//            )
             ->add('created', 'doctrine_orm_datetime_range', array(), 'sonata_type_datetime_range_picker',
                 array('field_options_start' => array('format' => 'yyyy-MM-dd HH:mm:ss'),
                     'field_options_end' => array('format' => 'yyyy-MM-dd HH:mm:ss'))
