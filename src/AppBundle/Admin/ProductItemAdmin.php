@@ -105,5 +105,28 @@ class ProductItemAdmin extends Admin
         ;
     }
 
+//manufacturer
+
+    /**
+     * {@inheritdoc}
+     */
+    public function preUpdate($object)
+    {
+        if ($object->getManufacturers()) {
+
+            $object->setManufacturer($object->getManufacturers()->getName());
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function prePersist($object)
+    {
+        if ($object->getManufacturers()) {
+
+            $object->setManufacturer($object->getManufacturers()->getName());
+        }
+    }
 
 }

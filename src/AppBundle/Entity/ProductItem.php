@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use JMS\Serializer\Annotation\VirtualProperty;
 
 /**
@@ -14,6 +15,7 @@ use JMS\Serializer\Annotation\VirtualProperty;
  *
  * @ORM\Table(name="product_item")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductItemRepository")
+ * @UniqueEntity("nds")
  * @ORM\HasLifecycleCallbacks()
  */
 class ProductItem
@@ -54,6 +56,7 @@ class ProductItem
      *
      * @ORM\Column(name="nds", type="string", length=255, unique=true)
      * @Groups({"booking_list"})
+     *
      */
     private $nds;
 
