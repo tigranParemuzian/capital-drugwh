@@ -106,7 +106,7 @@ class InvoiceRepository extends \Doctrine\ORM\EntityRepository
             ->where('i.number = :nb')
             ->groupBy('b.id')
             ->orderBy('p.name','ASC')
-            ->addOrderBy('pi.strength','ASC')
+            ->addOrderBy('pi.strength','DESC')
             ->addOrderBy('pi.size','ASC')
             ->addOrderBy('b.count','ASC')
             ->setParameter('nb', $invoiceNumber)
