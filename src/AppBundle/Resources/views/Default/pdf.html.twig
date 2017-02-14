@@ -139,10 +139,10 @@
         <div class="row invoice-body">
             <div class="col-md-12 text-uppercase text-left">
                 <div class="col-md-3">
-                    <div class="col-md-1">
+                    <div class="col-md-2">
                         <b>#</b>
                     </div>
-                    <div class="col-md-11"><b>Name</b></div>
+                    <div class="col-md-10"><b>Name</b></div>
                 </div>
                 <div class="col-md-5">
                     <div class="col-md-4"><b>Strength</b></div>
@@ -159,13 +159,13 @@
             {% set total = 0 %}
             {% for booking in invoice %}
             <div class="col-md-12 text-uppercase text-left">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="col-md-2">
                         <b>{{ count }}</b>
                     </div>
                     <div class="col-md-10"><b>{{ booking.name }}</b></div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <div class="col-md-4"><b>{{ booking.strength }}</b></div>
                     <div class="col-md-2"><b>{{ booking.psize }}
                             {% set uni='' %}
