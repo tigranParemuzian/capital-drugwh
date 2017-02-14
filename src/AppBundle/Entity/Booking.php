@@ -11,13 +11,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * Booking
  *
- * @ORM\Table(name="booking", uniqueConstraints={@ORM\UniqueConstraint(name="booking_product_lat_validation_unique_idx", columns={"invoice_id", "lot", "products_is"})})
+ * @ORM\Table(name="booking")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\BookingRepository")
- * @UniqueEntity(
- *     fields={"invoice", "lot","product"},
- *     errorPath="email",
- *     message="This email is already in use on that user."
- * )
+ *
  * @ORM\HasLifecycleCallbacks()
  */
 class Booking
