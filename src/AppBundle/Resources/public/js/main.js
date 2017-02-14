@@ -42,7 +42,7 @@ function updateData(getId, status){
     }else {
         var price = my_input.closest('tr').children('td.grid-column-price').text();
         count = my_input.val();
-        var totl_itom = (parseFloat(price.substring(2)) * count).toFixed(2);
+        var totl_itom = (parseFloat(price.replace(/,/g, '').substring(2)) * count).toFixed(2);
 
         if(status != 1){
             $('#add_'+id).show();
