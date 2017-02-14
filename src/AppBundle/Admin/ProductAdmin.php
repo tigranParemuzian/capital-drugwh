@@ -91,7 +91,7 @@ class ProductAdmin extends Admin
             ->add('price')
             ->add('productItem', null, array(), 'entity', array(
                 'class'    => 'AppBundle\Entity\ProductItem',
-                'property' => 'Manufacturer',
+                'property' => 'nds',
             ))
             ->add('category', null, array(), 'entity', array(
                 'class'    => 'AppBundle\Entity\Category',

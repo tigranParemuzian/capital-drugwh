@@ -28,7 +28,7 @@ class ProductItemAdmin extends Admin
                 'description'=>'Products main create part'
             ))
             ->add('manufacturers', 'sonata_type_model_autocomplete', array('property' => 'name','required'=>true))
-            ->add('nds', 'text', array('required'=>true))
+            ->add('nds', 'text', array('required'=>true, 'label'=>'NDC'))
             ->add('size', 'text', array('required'=>true))
             ->add('unit', 'choice', array('choices'=>
                 array(ProductItem::CT=>'ct', ProductItem::ML=>'ml',
