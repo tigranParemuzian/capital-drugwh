@@ -23,7 +23,7 @@ class InvoiceAdmin extends Admin
 
     protected function configureRoutes(RouteCollection $collection)
     {
-        $collection->clearExcept(array('list', 'delete', 'edit', 'batch'));
+        $collection->clearExcept(array('list', 'delete', 'edit', 'batch', 'export'));
         $collection->add('invoice_pdf');
         $collection->add('t3_statement_pdf');
         $collection->add('packing_slip');

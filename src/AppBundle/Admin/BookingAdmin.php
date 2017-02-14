@@ -89,7 +89,9 @@ class BookingAdmin extends Admin
             ->add('lot')
             ->add('expiryDate')
             ->add('shipDate')
-            ->add('cost', null, array('label'=>'Cost $'))
+            ->add('cost', 'currency', array(
+                'currency' => 'Cost &'
+            ))
             ->addIdentifier('status', 'choice', array(
                 'choices'  =>  array(Booking::IS_ORDERED=>'In order', Booking::IS_NEW=>'New',
                     Booking::IS_CHANGED=>'Changed'),
@@ -171,4 +173,32 @@ class BookingAdmin extends Admin
     }
 
 
+
+    /**
+     * @return array
+     */
+    public function getExportFields()
+    {
+        return array(
+            'Id' => 'id',
+            'Invoice' => 'invoice',
+            'Total' => 'invoice.total',
+            'Product' => 'product.name',
+            'Product Strength' => 'product.productItem.strength',
+            'Product Manufacturer' => 'product.productItem.manufacturer',
+            'Count' => 'count',
+            'Cost $' => 'cost',
+        );
+    }
+
+    /**
+     * @return
+     */
+    public function getDataSourceIterator()
+    {
+        $datagrid = $this->getDatagrid();
+        $datagrid->buildPager();
+
+        return $this->getModelManager()->getDataSourceIterator($datagrid, $this->getExportFields());
+    }
 }
