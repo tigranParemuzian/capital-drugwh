@@ -140,11 +140,13 @@
                     </div>
                 </div>
                 <div class="col-md-3"><b>Name/Strength</b></div>
-                <div class="col-md-1"><b>Size</b></div>
-                <div class="col-md-1"><b>NDC</b></div>
-                <div class="col-md-1"><b>LOT</b></div>
+                <div class="col-md-3">
+                    <div class="col-md-2"><b>Size</b></div>
+                    <div class="col-md-6"><b>NDC</b></div>
+                    <div class="col-md-4"><b>LOT</b></div>
+                </div>
                 <div class="col-md-2">
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         <b>QTY</b></div>
                     <div class="col-md-10"><b>Exp. Date</b></div>
                 </div>
@@ -163,25 +165,31 @@
                     </div>
                 </div>
                 <div class="col-md-3"><b>{{ booking.name }}&nbsp;{{ booking.strength }}</b></div>
-                <div class="col-md-1"><b>{{ booking.psize }}
-                                {% set uni='' %}
-                                {% set val=booking.unit %}
-                                {% if  val==0  %}
-                                    {% set uni='ct' %}
-                                {% elseif val == 1 %}
-                                    {% set uni='ml' %}
-                                {% elseif val == 2 %}
-                                    {% set uni='s ea' %}
-                                {% elseif val == 3 %}
-                                    {% set uni='gm' %}
-                                {% endif %}{{ uni }}</b>
+                <div class="col-md-3">
+                    <div class="col-md-2"><b>{{ booking.psize }}
+                            {% set uni='' %}
+                            {% set val=booking.unit %}
+                            {% if  val==0  %}
+                                {% set uni='ct' %}
+                            {% elseif val == 1 %}
+                                {% set uni='ml' %}
+                            {% elseif val == 2 %}
+                                {% set uni='s ea' %}
+                            {% elseif val == 3 %}
+                                {% set uni='gm' %}
+                            {% endif %}{{ uni }}</b>
+                    </div>
+                    <div class="col-md-6"><b>{{ booking.nds }}</b></div>
+                    <div class="col-md-4"><b>{{ booking.lot }}</b></div>
                 </div>
-                <div class="col-md-1"><b>{{ booking.nds }}</b></div>
-                <div class="col-md-1"><b>{{ booking.lot }}</b></div>
+
                 <div class="col-md-2">
-                    <div class="col-md-2">
-                        <b>{{ booking.count }}</b></div>
-                    <div class="col-md-10"><b>{{ booking.expiryDate|date('Y-m-d') }}</b></div>
+                    <div class="col-md-1">
+                        <b>{{ booking.count }}</b>
+                    </div>
+                    <div class="col-md-10">
+                        <b>{{ booking.expiryDate|date('Y-m-d') }}</b>
+                    </div>
                 </div>
             </div>
                 {% set count = count +1 %}
