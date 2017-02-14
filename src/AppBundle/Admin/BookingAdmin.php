@@ -182,9 +182,9 @@ class BookingAdmin extends Admin
         return array(
             'Id' => 'id',
             'Invoice' => 'invoice',
-            'Total' => 'invoice.total',
+//            'Total' => 'invoice.total',
             'Product' => 'product.name',
-            'Product Manufacturer' => 'product.productItem.manufacturer',
+//            'Product Manufacturer' => 'product.productItem.manufacturer',
             'Product Strength' => 'product.productItem.strength',
             'Count' => 'count',
             'Cost $' => 'cost',
