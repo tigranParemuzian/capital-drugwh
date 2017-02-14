@@ -198,10 +198,10 @@ function number_format( number, decimals, dec_point, thousands_sep ) {  // Forma
         decimals = 2;
     }
     if( dec_point == undefined ){
-        dec_point = ",";
+        dec_point = ".";
     }
     if( thousands_sep == undefined ){
-        thousands_sep = ".";
+        thousands_sep = ",";
     }
 
     i = parseInt(number = (+number || 0).toFixed(decimals)) + "";
