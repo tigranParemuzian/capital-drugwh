@@ -62,6 +62,7 @@ class DefaultController extends Controller
         $rowAction1 = new RowAction('Show', 'show_single_id', false, '_self', array('class'=>'show_custom'));
         $rowAction1->setColumn('action_column');
         $grid->addRowAction($rowAction1);
+        $grid->setDefaultOrder('name', 'ASC');
         return $grid->getGridResponse('AppBundle:Default:my_grid.html.twig');
     }
 
