@@ -69,14 +69,14 @@ class BookingAdmin extends Admin
     {
         $list
             ->add('id')
-            ->add('invoice')
-            ->add('product')
-            ->add('client')
+            ->add('invoice', null, array('sortable' => 'invoice.number'))
+            ->add('product', null, array('sortable' => 'product.name'))
+            ->add('client', null, array('sortable' => 'client.username'))
             ->add('count')
             ->add('lot')
             ->add('expiryDate')
             ->add('shipDate')
-            ->add('cost')
+            ->add('cost', null, array('label'=>'Cost $'))
             ->addIdentifier('status', 'choice', array(
                 'choices'  =>  array(Booking::IS_ORDERED=>'In order', Booking::IS_NEW=>'New',
                     Booking::IS_CHANGED=>'Changed'),
