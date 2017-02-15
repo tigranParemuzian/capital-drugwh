@@ -50,22 +50,22 @@
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
-                            <a class="navbar-brand" href="{{ path('homepage') }}"><img class="img-responsive img-circle logo" src="{{ asset('bundles/app/images/logo.png') }}"></a>
+                            <a itemscope itemtype="http://schema.org/Pharmacy" itemprop="url" class="navbar-brand" href="{{ path('homepage') }}"><img itemprop="logo" class="img-responsive img-circle logo" src="{{ asset('bundles/app/images/logo.png') }}"></a>
                         </div>
 
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav">
                                 {#{{ knp_menu_render('AppBundle:Builder:topMenu', { 'template': 'Menu/knp_menu.html.twig', 'currentAsLink': false, 'id':'navigation'}) }}#}
-                                <li class="active"><a href="{{ path('homepage') }}">Home<span class="sr-only">(current)</span></a></li>
-                                <li><a href="{{ path('about_us') }}">About Us</a></li>
-                                <li><a href="{{ path('why_directrex') }}">Why Direct From US</a></li>
-                                <li><a href="{% if app.user == null %}{{ path('products') }}
+                                <li class="active"><a itemprop="url" href="{{ path('homepage') }}">Home<span class="sr-only">(current)</span></a></li>
+                                <li><a itemprop="url" href="{{ path('about_us') }}">About Us</a></li>
+                                <li><a itemprop="url" href="{{ path('why_directrex') }}">Why Direct From US</a></li>
+                                <li><a itemprop="url" href="{% if app.user == null %}{{ path('products') }}
                                 {% else %}{{ path('list') }}{% endif %}">Products</a></li>
-                                <li><a href="{{ path('services') }}">Services</a></li>
-                                <li><a href="{{ path('terms_and_conditions') }}">Terms And Conditions</a></li>
+                                <li><a itemprop="url" href="{{ path('services') }}">Services</a></li>
+                                <li><a itemprop="url" href="{{ path('terms_and_conditions') }}">Terms And Conditions</a></li>
                                 {% if app.user == null %}
-                                <li><a href="{{ path('fos_user_security_login') }}">Login</a></li>
+                                <li><a itemprop="url" href="{{ path('fos_user_security_login') }}">Login</a></li>
                                     {% else %}
                                         <li><a href="
                                         {% if app.user.userSettings %}
@@ -97,11 +97,11 @@
             {% block banner %}
                 <div id="slider">
                     <figure>
-                        <img src="{{ asset('bundles/app/images/slider/1.jpg') }}" alt>
-                        <img src="{{ asset('bundles/app/images/slider/2.jpg') }}" alt>
+                        <img src="{{ asset('bundles/app/images/slider/1.jpg') }}" alt="">
+                        <img src="{{ asset('bundles/app/images/slider/2.jpg') }}" alt="">
                         {#{{ <img src="{{ asset('bundles/app/images/slider/3.jpg') }}" alt> }}#}
-                        <img src="{{ asset('bundles/app/images/slider/4.jpg') }}" alt>
-                        <img src="{{ asset('bundles/app/images/slider/5.jpg') }}" alt>
+                        <img src="{{ asset('bundles/app/images/slider/4.jpg') }}" alt="">
+                        <img src="{{ asset('bundles/app/images/slider/5.jpg') }}" alt="">
                     </figure>
                 </div>
             {% endblock %}
@@ -110,28 +110,28 @@
             {% block footer %}
                 <footer class="footer">
                     <div class="container">
-                        <div class="row">
+                        <div class="row" itemscope itemtype="http://schema.org/Pharmacy">
                             <div class="col-md-4 col-xs-6">
                                 <ul class="footer-info-list">
-                                    <li>AAROGYA MEDSURG LLC</li>
-                                    <li><span>Toll Free:</span>1-888-975-8728</li>
-                                    <li><span>Fax:</span>1-888-624-2851</li>
-                                    <li><span>Direct:</span>1-909-682-8477</li>
-                                    <li><span>Tel:</span>1-909-980-9900</li>
+                                    <li itemprop="name">AAROGYA MEDSURG LLC</li>
+                                    <li itemprop="telephone"><span>Toll Free:</span>1-888-975-8728</li>
+                                    <li itemprop="faxNumber"><span>Fax:</span>1-888-624-2851</li>
+                                    <li itemprop="telephone"><span>Direct:</span>1-909-682-8477</li>
+                                    <li itemprop="telephone"><span>Tel:</span>1-909-980-9900</li>
                                 </ul>
                             </div>
                             <div class="col-md-4 col-xs-6">
-                                <ul class="footer-info-list">
-                                    <li>Working hours Mon to Fri 9-00am to 5-00pm PST</li>
-                                    <li><span>Address:</span>8351 ELM AVE, #103</li>
+                                <ul itemprop="address" itemscope itemtype="http://schema.org/PostalAddress" class="footer-info-list">
+                                    <li itemprop="openingHours">Working hours Mon to Fri 9-00am to 5-00pm PST</li>
+                                    <li itemprop="streetAddress"><span>Address:</span>8351 ELM AVE, #103</li>
                                     <li><span>City:</span>RANCHO CUCAMONGA</li>
-                                    <li><span>State:</span>CA</li>
-                                    <li><span>Zip:</span>91730</li>
+                                    <li itemprop="addressLocality"><span>State:</span>CA</li>
+                                    <li itemprop="postalCode"><span>Zip:</span>91730</li>
                                 </ul>
                             </div>
                             <div class="col-md-4 col-xs-12">
                                 <ul class="footer-info-image">
-                                    <li><p>Email: info@aamedllc.com</p></li>
+                                    <li><p itemprop="email">Email: info@aamedllc.com</p></li>
                                 </ul>
                                 <ul class="footer-info-image">
                                     <li>
