@@ -292,6 +292,12 @@ ul.nav-tabs li a{
     .header-title{
         padding-left: 30px;
     }
+    #slider{
+        display: none;
+    }
+    .wrapper{
+        margin-top: 20px;
+    }
 }
 
 @keyframes slidy {
