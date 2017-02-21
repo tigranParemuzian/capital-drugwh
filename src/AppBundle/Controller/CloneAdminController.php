@@ -41,6 +41,6 @@ class CloneAdminController extends Controller
 
         $this->addFlash('sonata_flash_success', 'Cloned successfully');
 
-        return new RedirectResponse($this->admin->generateObjectUrl('edit', $clonedObject));
+        return new RedirectResponse($this->admin->generateObjectUrl('list', $clonedObject));
 	}
 }

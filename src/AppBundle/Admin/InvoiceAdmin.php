@@ -124,10 +124,6 @@ class InvoiceAdmin extends Admin
                     Invoice::IS_SHIPPED => 'Shipped'))
             )
             ->add('user')
-//            ->add('shippingHandling', 'doctrine_orm_datetime_range', array(),'sonata_type_datetime_range_picker',
-//                array('field_options_start' => array('format' => 'yyyy-MM-dd HH:mm:ss'),
-//                    'field_options_end' => array('format' => 'yyyy-MM-dd HH:mm:ss'))
-//            )
             ->add('created', 'doctrine_orm_datetime_range', array(), 'sonata_type_datetime_range_picker',
                 array('field_options_start' => array('format' => 'yyyy-MM-dd HH:mm:ss'),
                     'field_options_end' => array('format' => 'yyyy-MM-dd HH:mm:ss'))
@@ -156,6 +152,7 @@ class InvoiceAdmin extends Admin
      */
     public function preUpdate($object)
     {
+        $total = 0;
         if ($object->getBooking()) {
             foreach ($object->getBooking() as $productIngredient) {
                 $productIngredient->setInvoice($object);
@@ -163,10 +160,12 @@ class InvoiceAdmin extends Admin
                 $productIngredient->setCost(round($productIngredient->getProduct()->getPrice() * $productIngredient->getCount(), 2));
                 $productIngredient->setSubTotal(round($productIngredient->getProduct()->getPrice() * $productIngredient->getCount(), 2));
                 $productIngredient->setStatus(Booking::IS_ORDERED);
+                $total += round($productIngredient->getProduct()->getPrice() * $productIngredient->getCount(), 2);
             }
         }
 
         if ($object->getStatus() === Invoice::IS_SHIPPED) {
+            $object->setTotal($total);
             $this->sendEmail($object->getNumber());
         }
     }
@@ -197,12 +196,6 @@ class InvoiceAdmin extends Admin
         $userEmails = $em->getRepository('AppBundle:Invoice')->findUserInfo((string)$invoiceNumber);
 
         if (!$userEmails) {
-
-//            $this->addFlash(
-//                'error',
-//                "Sorry Invoice by invoice number {$invoiceNumber} not found."
-//            );
-//            return $this->redirect($this->generateUrl('admin_app_invoice_list'));
         } else {
 
             try {

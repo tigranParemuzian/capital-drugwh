@@ -12,7 +12,9 @@
             <meta name="description" content="AAROGYA MEDSURG LLC is a Pharmacy - Wholesalers licensed to practice in California. Our management team has a combined years of commitment to quality.">
             <meta name="author" content="AAROGYA MEDSURG LLC ">
         {% endblock %}
-        <title>{% block title %}{% if name %}{{ name }}{% else %}AAROGYA MEDSURG LLC {% endif %}{% endblock %}</title>
+        <title>{% block title %}
+                {% if name is defined %}{{ name }}{% else %}AAROGYA MEDSURG LLC {% endif %}
+            {% endblock %}</title>
         {% block stylesheets %}
         <link rel="stylesheet" type="text/css" href="{{ asset('jquery_components/bootstrap/dist/css/bootstrap.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('jquery_components/bootstrap/dist/css/bootstrap-theme.min.css') }}">

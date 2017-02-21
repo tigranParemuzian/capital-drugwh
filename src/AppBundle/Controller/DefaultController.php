@@ -235,7 +235,7 @@ class DefaultController extends Controller
             if(!$invoices->getTrackNumber()){
                 $this->addFlash(
                     'notice',
-                    'Sorry invoice is not ready!!'
+                    'Sorry invoice is not ready!'
                 );
                 return $this->redirectToRoute('submit_order');
             }
@@ -244,15 +244,24 @@ class DefaultController extends Controller
 
         }
 
+        $inv = $em->getRepository('AppBundle:Invoice')->findOneByNumber($invoiceId);
+
         $filename = sprintf('invoice-%s.pdf', $invoiceId);
         $path = $this->container->getParameter('kernel.root_dir')."/../web/uploads/invoice/" . $filename;
 
         if(is_file($path)){
-           unlink($path);
-        }
+            if($inv->getStatus() != Invoice::IN_PROGRESS){
+                unlink($path);
 
+                $pageUrl = $this->generateUrl('pdf_generate', array('invoiceId'=>$invoiceId), true); // use absolute path!
+                $this->container->get('knp_snappy.pdf')->generate($pageUrl, $path);
+            }
+        }else {
             $pageUrl = $this->generateUrl('pdf_generate', array('invoiceId'=>$invoiceId), true); // use absolute path!
             $this->container->get('knp_snappy.pdf')->generate($pageUrl, $path);
+        }
+
+
 
             return new Response(
                 $this->get('knp_snappy.pdf')->getOutput($pageUrl),
@@ -338,7 +347,7 @@ class DefaultController extends Controller
             if(!$invoices){
                 $this->addFlash(
                     'notice',
-                    'Not have a permission!'
+                    'Sorry invoice is not ready!'
                 );
                 return $this->redirectToRoute('submit_order');
             }
