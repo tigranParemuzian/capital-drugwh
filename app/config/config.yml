@@ -236,6 +236,9 @@ knp_snappy:
               - { name: 'viewport-size', value: ‘1024x768’ }
               - { name: 'page-size', value: 'A4' }
               - { name: 'orientation', value: 'Landscape' }
+              - { name: 'footer-right', value: '[page] / [topage]'}
+              - { name: 'footer-left', value: 'AAROGYA MEDSURG LLC'}
+
     image:
         enabled:    true
         binary:     /usr/local/bin/wkhtmltoimage #"\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltoimage.exe\"" for Windows users
