@@ -117,7 +117,7 @@ class DefaultController extends Controller
      * @param Request $request
      * @Security("has_role('ROLE_USER')")
      */
-    public function submitAction(Request $request, ParamFetcher $paramFetcher){
+    public function submitAction(ParamFetcher $paramFetcher){
 
         $userId = $this->getUser()->getId();
 
