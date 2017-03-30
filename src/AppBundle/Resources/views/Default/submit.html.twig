@@ -53,8 +53,8 @@
                                 Shipped
                                 {% endif %}
                             </span></div>
-                        <div class="col-md-2"><span>{% if invoice.trackNumber %}{{ invoice.trackNumber }}
-                        {% else %}Not Available{% endif %}</span></div>
+                        <div class="col-md-2"><span>{% if invoice.trackNumber %}<a href="https://www.fedex.com/apps/fedextrack/?tracknumbers={{ invoice.trackNumber }}" target="_blank">{{ invoice.trackNumber }}</a>
+{% else %}Not Available{% endif %}</span></div>
                         <div class="col-md-4">
                             <a href="{{ path('generate_invoice', {'invoiceId':invoice.number}) }}" {% if invoice.trackNumber %} target="_blank"   class="btn btn-info"
                                {% else %} class="btn btn-default"{% endif %}  title="Download Pdf">

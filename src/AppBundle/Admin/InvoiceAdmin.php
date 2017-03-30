@@ -27,6 +27,7 @@ class InvoiceAdmin extends Admin
         $collection->add('invoice_pdf');
         $collection->add('t3_statement_pdf');
         $collection->add('packing_slip');
+        $collection->add('send_email');
 
     }
 
@@ -43,6 +44,7 @@ class InvoiceAdmin extends Admin
             $actions['invoice_pdf'] = array('label' => 'Generate Pdf', 'ask_confirmation' => true);
             $actions['t3_statement_pdf'] = array('label' => 'T3 Statement Pdf', 'ask_confirmation' => true);
             $actions['packing_slip'] = array('label' => 'Packing Slip Pdf', 'ask_confirmation' => true);
+            $actions['send_email'] = array('label' => 'Send Email', 'ask_confirmation' => true);
 
         }
 
@@ -72,7 +74,7 @@ class InvoiceAdmin extends Admin
                 'widget' => 'single_text',
                 'format' => 'y-dd-MM',
                 'required' => false,
-                'label'=>'Ship Date',
+                'label'=>'Exp. Date',
                 'attr'=>['style' => 'width: 100px !important']
             ))
             ->end()
@@ -99,7 +101,7 @@ class InvoiceAdmin extends Admin
                     Invoice::IS_SHIPPED => 'Shipped'), 'editable' => true
             ))
             ->add('user')
-            ->add('shippingHandling', null, array('label'=>'Ship. Date'))
+            ->add('shippingHandling', null, array('label'=>'Exp. Date'))
             ->add('created', 'date', array('date_format' => 'yyyy-MM-dd'))
             ->add('_action', 'actions',
                 array('actions' =>
@@ -107,6 +109,7 @@ class InvoiceAdmin extends Admin
                         'invoice_pdf' => array('template' => 'AppBundle:CRUD:generate_pdf.html.twig'),
                         't3_statement_pdf' => array('template' => 'AppBundle:CRUD:t3_statment_pdf.html.twig'),
                         'packing_slip' => array('template' => 'AppBundle:CRUD:packing_slip.html.twig'),
+                        'send_email' => array('template' => 'AppBundle:CRUD:send_email.html.twig'),
                         'delete' => array(), 'edit' => array()
                     )
                 ));
@@ -164,9 +167,15 @@ class InvoiceAdmin extends Admin
             }
         }
 
-        if ($object->getStatus() === Invoice::IS_SHIPPED) {
+        if ($object->getStatus() === Invoice::IS_SHIPPED && $object->getEmailSended() == 0) {
             $object->setTotal($total);
+            $object->setEmailSended(1);
             $this->sendEmail($object->getNumber());
+        }
+
+        if(!is_null($object->getTrackNumber()) && $object->getEmailTracking() == 0){
+            $this->sendEmail($object->getNumber(), $object->getTrackNumber());
+            $object->setEmailTracking(1);
         }
     }
 
@@ -186,7 +195,7 @@ class InvoiceAdmin extends Admin
         }
     }
 
-    public function sendEmail($invoiceNumber)
+    public function sendEmail($invoiceNumber, $state = null)
     {
 
         $em = $this->getConfigurationPool()->getContainer()->get('doctrine')->getManager();
@@ -195,56 +204,83 @@ class InvoiceAdmin extends Admin
 
         $userEmails = $em->getRepository('AppBundle:Invoice')->findUserInfo((string)$invoiceNumber);
 
+        $email = array();
+        foreach ($userEmails->getUser()->getUserEmails() as $emails) {
+            $email[] = $emails;
+        }
+
+
         if (!$userEmails) {
         } else {
 
             try {
 
-                $filename = sprintf('invoice-%s.pdf', $invoiceNumber);
-                $pathInv = $containerAdmin->getParameter('kernel.root_dir') . "/../web/uploads/invoice/" . $filename;
+                if(!is_null($state)){
+                    $states = explode(',', $state);
+                    $mess = '';
+                    foreach ($states as $state){
+                        $mess.='<a href="https://www.fedex.com/apps/fedextrack/?tracknumbers='.$state.'" target="_blank">'.$state.'</a>&nbsp;&nbsp;'   ;
 
-                if (is_file($pathInv)) {
-                    unlink($pathInv);
+                    }
+
+                    $message = \Swift_Message::newInstance()
+                        ->setSubject("Your order has been shipped")
+                        ->setFrom('RXtrace@aamedllc.com')
+                        ->setTo("{$email[0]}");
+                    for ($i = 1; $i < count($email); $i++) {
+                        $message
+                            ->setCc("{$email[$i]}");
+                    }
+
+                    $message->setBody(
+                        '<b>Your order has been shipped '.$mess.'<br><b>Thank you</b>',
+                        'text/html'
+                    )
+                        ;
+                    $containerAdmin->get('mailer')->send($message);
+                }else {
+                    $filename = sprintf('invoice-%s.pdf', $invoiceNumber);
+                    $pathInv = $containerAdmin->getParameter('kernel.root_dir') . "/../web/uploads/invoice/" . $filename;
+
+                    if (is_file($pathInv)) {
+                        unlink($pathInv);
+                    }
+
+                    $pageUrl = $containerAdmin->get('router')->generate('pdf_generate', array('invoiceId' => $invoiceNumber), true); // use absolute path!
+                    $containerAdmin->get('knp_snappy.pdf')->generate($pageUrl, $pathInv);
+
+                    $filename = sprintf('t3_statment_%s.pdf', $invoiceNumber);
+                    $path = $containerAdmin->getParameter('kernel.root_dir') . "/../web/uploads/invoice/" . $filename;
+
+                    if (is_file($path)) {
+                        unlink($path);
+                    }
+
+                    $pageUrl = $containerAdmin->get('router')->generate('t3_pdf_generate', array('invoiceId' => $invoiceNumber, 'cuserId' => 1), true); // use absolute path!
+                    $containerAdmin->get('knp_snappy.pdf')->generate($pageUrl, $path);
+
+                    $message = \Swift_Message::newInstance()
+                        ->setSubject("Order Invoice & T3 {$invoiceNumber}")
+                        ->setFrom('RXtrace@aamedllc.com')
+                        ->setTo("{$email[0]}");
+                    for ($i = 1; $i < count($email); $i++) {
+                        $message
+                            ->setCc("{$email[$i]}");
+                    }
+
+                    $message->setBody(
+                        '<p>Please finde attached Invoice and  T3 statement for your records, if you have any questions, please feel free to contact us.</p>'.
+                        '<br><b>Thank you</b>',
+                        'text/html'
+                    )
+                        ->attach(\Swift_Attachment::fromPath($pathInv))
+                        ->attach(\Swift_Attachment::fromPath($path));
+                    $containerAdmin->get('mailer')->send($message);
                 }
 
-                $pageUrl = $containerAdmin->get('router')->generate('pdf_generate', array('invoiceId' => $invoiceNumber), true); // use absolute path!
-                $containerAdmin->get('knp_snappy.pdf')->generate($pageUrl, $pathInv);
-
-                $filename = sprintf('t3_statment_%s.pdf', $invoiceNumber);
-                $path = $containerAdmin->getParameter('kernel.root_dir') . "/../web/uploads/invoice/" . $filename;
-
-                if (is_file($path)) {
-                    unlink($path);
-                }
-
-                $pageUrl = $containerAdmin->get('router')->generate('t3_pdf_generate', array('invoiceId' => $invoiceNumber, 'cuserId' => 1), true); // use absolute path!
-                $containerAdmin->get('knp_snappy.pdf')->generate($pageUrl, $path);
-
-                $email = array();
-                foreach ($userEmails->getUser()->getUserEmails() as $emails) {
-                    $email[] = $emails;
-                }
-
-
-                $message = \Swift_Message::newInstance()
-                    ->setSubject("Order Invoice & T3 {$invoiceNumber}")
-                    ->setFrom('RXtrace@aamedllc.com')
-                    ->setTo("{$email[0]}");
-                for ($i = 1; $i < count($email); $i++) {
-                    $message
-                        ->setCc("{$email[$i]}");
-                }
-                $message->setBody(
-                    '<p>Please finde attached Invoice and  T3 statement for your records, if you have any questions, please feel free to contact us.</p>'.
-                    '<br><b>Thank you</b>',
-                    'text/html'
-                )
-                    ->attach(\Swift_Attachment::fromPath($pathInv))
-                    ->attach(\Swift_Attachment::fromPath($path));
-                $containerAdmin->get('mailer')->send($message);
 
             } catch (\Swift_Message $exception) {
-
+//                Your order has been shipped, 7777792929292
                 /*$this->addFlash(
                     'error',
                     "Sorry Invoice by invoice number {$invoiceNumber} not found."

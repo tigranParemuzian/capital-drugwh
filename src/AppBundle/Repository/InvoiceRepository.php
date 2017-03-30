@@ -65,7 +65,8 @@ class InvoiceRepository extends \Doctrine\ORM\EntityRepository
     }
 
     /**
-     *
+     * @param $invId
+     * @return array
      */
     public function findByInvoiceIdForPdf($invId){
         return $this->getEntityManager()

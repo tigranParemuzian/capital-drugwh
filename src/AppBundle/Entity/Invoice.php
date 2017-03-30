@@ -71,6 +71,18 @@ class Invoice
 
     /**
      * @var
+     * @ORM\Column(name="email_sended", type="smallint", options={"default"=0})
+     */
+    private $emailSended;
+
+    /**
+     * @var
+     * @ORM\Column(name="email_tracking", type="smallint", options={"default"=0})
+     */
+    private $emailTracking;
+
+    /**
+     * @var
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
      */
@@ -397,5 +409,37 @@ class Invoice
     public function getTrackNumber()
     {
         return $this->trackNumber;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmailSended()
+    {
+        return $this->emailSended;
+    }
+
+    /**
+     * @param mixed $emailSended
+     */
+    public function setEmailSended($emailSended)
+    {
+        $this->emailSended = $emailSended;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmailTracking()
+    {
+        return $this->emailTracking;
+    }
+
+    /**
+     * @param mixed $emailTracking
+     */
+    public function setEmailTracking($emailTracking)
+    {
+        $this->emailTracking = $emailTracking;
     }
 }
