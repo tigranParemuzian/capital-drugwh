@@ -158,11 +158,16 @@ class DefaultController extends Controller
 
             $dueDate = clone $now;
             $shippingHandling = clone $now;
+
+            if((int)$shippingHandling->format('w') === 0 || (int)$shippingHandling->format('H')>=14){
+                $shippingHandling = $shippingHandling->modify('+1 day');
+            }
+            
             $invoice->setTotal($total);
             $invoice->setDueDate($dueDate->modify("+{$invoiceSettings->getTerms()} day"));
             $invoice->setNumber($now->getTimestamp().$invoice->getId());
             $invoice->setTerms('Net ' . $invoiceSettings->getTerms());
-            $invoice->setShippingHandling($shippingHandling->modify('+1 day'));
+            $invoice->setShippingHandling($shippingHandling);
             $invoice->setUser($this->getUser());
             $em->persist($invoice);
 
