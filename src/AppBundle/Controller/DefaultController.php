@@ -427,7 +427,6 @@ class DefaultController extends Controller
             $email = array();
 
 
-
             $filename = sprintf('invoice-%s.pdf', $invoiceNumber);
             $path = $this->container->getParameter('kernel.root_dir')."/../web/uploads/invoice/" . $filename;
 
@@ -441,6 +440,7 @@ class DefaultController extends Controller
             foreach ($userEmails->getUser()->getUserEmails() as $emails){
                 $email[] = $emails;
             }
+
             $message = \Swift_Message::newInstance()
                 ->setSubject("We’ve received your order. Order {$invoiceNumber}" )
                 ->setFrom('info@aamedllc.com')

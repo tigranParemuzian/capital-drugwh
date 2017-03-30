@@ -33,8 +33,8 @@
                         <div class="col-md-2"><span>Date</span></div>
                         <div class="col-md-1"><span>Total</span></div>
                         <div class="col-md-1"><span>Status</span></div>
-                        <div class="col-md-2"><span>Tracking Number</span></div>
-                        <div class="col-md-4"><span>Action</span></div>
+                        <div class="col-md-3"><span>Tracking Number</span></div>
+                        <div class="col-md-3"><span>Action</span></div>
                     </div>
                 {% if pagination != null %}
                     {% for invoice in pagination %}
@@ -53,9 +53,15 @@
                                 Shipped
                                 {% endif %}
                             </span></div>
-                        <div class="col-md-2"><span>{% if invoice.trackNumber %}<a href="https://www.fedex.com/apps/fedextrack/?tracknumbers={{ invoice.trackNumber }}" target="_blank">{{ invoice.trackNumber }}</a>
-{% else %}Not Available{% endif %}</span></div>
-                        <div class="col-md-4">
+                        <div class="col-md-3"><span class="track-number">{% if invoice.trackNumber %}
+                        {% set tnum = invoice.trackNumber|split(',') %}
+                        {% for tn in tnum %}
+                                    <a href="https://www.fedex.com/apps/fedextrack/?tracknumbers={{ tn }}" target="_blank">{{ tn }}</a>
+                                {% endfor %}
+
+{% else %}Not Available{% endif %}</span>
+                        </div>
+                        <div class="col-md-3">
                             <a href="{{ path('generate_invoice', {'invoiceId':invoice.number}) }}" {% if invoice.trackNumber %} target="_blank"   class="btn btn-info"
                                {% else %} class="btn btn-default"{% endif %}  title="Download Pdf">
                                 Invoice</a>&nbsp;

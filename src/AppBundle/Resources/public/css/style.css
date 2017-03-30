@@ -205,7 +205,11 @@ form > div >header {
     color: #0DA15A;
 }
 .invoice-body{
-    line-height: 46px;
+    line-height: 32px;
+}
+
+.invoice-body span.track-number {
+    line-height: 26px;
 }
 
 .invoice-body > div.col-md-12{
@@ -377,4 +381,8 @@ ul.pagination>li>a.active{
     margin-top: 10px;
 }
 
+.panel-body div[class^="col-md-"] a span
+ {
+    vertical-align: -webkit-baseline-middle;
+}
 

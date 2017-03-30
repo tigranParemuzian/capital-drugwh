@@ -201,6 +201,11 @@ file that was distributed with this source code.
                                                 <i class="fa fa-user fa-fw" aria-hidden="true"></i> <i class="fa fa-caret-down" aria-hidden="true"></i>
                                             </a>
                                             <ul class="dropdown-menu dropdown-user">
+                                                <li style="text-align: center">
+                                                    <a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-log-out"></span> <span>Logout</span>
+
+                                                    </a>
+                                                </li>
                                                 {% include sonata_admin.adminPool.getTemplate('user_block') %}
                                             </ul>
                                         </li>
