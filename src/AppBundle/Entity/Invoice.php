@@ -71,13 +71,13 @@ class Invoice
 
     /**
      * @var
-     * @ORM\Column(name="email_sended", type="smallint", options={"default"=0})
+     * @ORM\Column(name="email_sended", type="smallint", options={"default"=0}, nullable=true)
      */
     private $emailSended;
 
     /**
      * @var
-     * @ORM\Column(name="email_tracking", type="smallint", options={"default"=0})
+     * @ORM\Column(name="email_tracking", type="smallint", options={"default"=0}, nullable=true)
      */
     private $emailTracking;
 

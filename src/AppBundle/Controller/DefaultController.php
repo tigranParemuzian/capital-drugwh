@@ -162,7 +162,7 @@ class DefaultController extends Controller
             if((int)$shippingHandling->format('w') === 0 || (int)$shippingHandling->format('H')>=14){
                 $shippingHandling = $shippingHandling->modify('+1 day');
             }
-            
+
             $invoice->setTotal($total);
             $invoice->setDueDate($dueDate->modify("+{$invoiceSettings->getTerms()} day"));
             $invoice->setNumber($now->getTimestamp().$invoice->getId());
