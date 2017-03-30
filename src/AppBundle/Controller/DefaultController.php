@@ -352,7 +352,7 @@ class DefaultController extends Controller
             if(!$invoices){
                 $this->addFlash(
                     'notice',
-                    'Sorry invoice is not ready!'
+                    'Sorry T3 statment is not ready!'
                 );
                 return $this->redirectToRoute('submit_order');
             }

@@ -357,7 +357,7 @@ class MainController extends Controller
 
                 $message = \Swift_Message::newInstance()
                     ->setSubject("Order Invoice & T3 {$invoiceNumber}" )
-                    ->setFrom('RXtrace@aamedllc.com')
+                    ->setFrom('info@aamedllc.com')
                     ->setTo("{$email[0]}");
                 for ($i = 1; $i<count($email); $i++){
                     $message
