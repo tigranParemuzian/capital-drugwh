@@ -41,7 +41,7 @@
                     <div class="col-md-12">
                         <div class="col-md-2"><span>{{ invoice.number }}</span></div>
                         <div class="col-md-2"><span>{{ invoice.created|date('Y M d') }}</span></div>
-                        <div class="col-md-1"><span>{{ invoice.total }}&nbsp;$</span></div>
+                        <div class="col-md-1"><span>{{ invoice.total|round(2, 'floor')|number_format(2, '.', ',') }}&nbsp;$</span></div>
                         <div class="col-md-1"><span>
                                 {% set removable = 0 %}
                             {% if invoice.status == 0 %}
