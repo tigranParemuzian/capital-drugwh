@@ -129,6 +129,12 @@ class Product
 
     /**
      * @var
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserPrice", mappedBy="product")
+     */
+    private $userPrice;
+
+    /**
+     * @var
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Category", inversedBy="product")
      * @ORM\JoinColumn(name="category", referencedColumnName="id")
      * @GRID\Column(field="category.name", title="Category Name", filter="select")

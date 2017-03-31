@@ -90,9 +90,21 @@ class User extends BaseUser
 
     /**
      * @var
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserPrice", mappedBy="user", cascade={"all"}, orphanRemoval=true)
+     */
+    private $userPrice;
+
+    /**
+     * @var
      * @ORM\Column(name="customer_id", type="integer")
      */
     private $customerId;
+
+    /**
+     * @var
+     * @ORM\Column(name="sale_percent", type="float", nullable=true)
+     */
+    private $salePercent;
 
     public function __toString()
     {
@@ -105,6 +117,8 @@ class User extends BaseUser
         parent::__construct();
         $this->isValid=false;
         $this->customerId =  rand(1000,10000) . $this->id;
+        $this->userPrice = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->userEmails = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -292,5 +306,63 @@ class User extends BaseUser
     public function getUserEmails()
     {
         return $this->userEmails;
+    }
+
+    /**
+     * Set salePercent
+     *
+     * @param float $salePercent
+     *
+     * @return User
+     */
+    public function setSalePercent($salePercent)
+    {
+        $this->salePercent = $salePercent;
+
+        return $this;
+    }
+
+    /**
+     * Get salePercent
+     *
+     * @return float
+     */
+    public function getSalePercent()
+    {
+        return $this->salePercent;
+    }
+
+    /**
+     * Add userPrice
+     *
+     * @param \AppBundle\Entity\UserPrice $userPrice
+     *
+     * @return User
+     */
+    public function addUserPrice(\AppBundle\Entity\UserPrice $userPrice)
+    {
+        $this->userPrice[] = $userPrice;
+
+        return $this;
+    }
+
+    /**
+     * Remove userPrice
+     *
+     * @param \AppBundle\Entity\UserPrice $userPrice
+     */
+    public function removeUserPrice(\AppBundle\Entity\UserPrice $userPrice)
+    {
+        $this->userPrice->removeElement($userPrice);
+    }
+
+    /**
+     * Get userPrice
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUserPrice()
+    {
+        return $this->userPrice;
     }
 }

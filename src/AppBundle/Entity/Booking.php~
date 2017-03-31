@@ -6,12 +6,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Booking
  *
  * @ORM\Table(name="booking")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\BookingRepository")
+ *
  * @ORM\HasLifecycleCallbacks()
  */
 class Booking
@@ -116,10 +118,19 @@ class Booking
 
     public function __toString()
     {
-        return $this->id ? $this->product . ' count: ' . $this->count :"new order";
+        return $this->id ? $this->product . ', count: ' . $this->count  .
+            ', Lot:' . $this->lot :"new order";
         // TODO: Implement __toString() method.
     }
 
+    /**
+     * set clone function configs
+     */
+    public function __clone() {
+
+        $this->id = null;
+
+    }
     /**
      * Get id
      *

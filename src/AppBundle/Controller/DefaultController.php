@@ -237,7 +237,7 @@ class DefaultController extends Controller
                 return $this->redirectToRoute('submit_order');
             }
 
-            if(!$invoices->getTrackNumber()){
+            if(!$invoices->getTrackNumber() || $invoices->getStatus() === Invoice::IN_PROGRESS){
                 $this->addFlash(
                     'notice',
                     'Sorry invoice is not ready!'

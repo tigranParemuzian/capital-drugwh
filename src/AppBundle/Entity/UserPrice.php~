@@ -1,0 +1,86 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * UserPrice
+ *
+ * @ORM\Table(name="user_price")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserPriceRepository")
+ */
+class UserPrice
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="percent", type="float", options={"default"=0} , nullable=true)
+     */
+    private $percent;
+
+    /**
+     * @var
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="userPrice")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     */
+    private $user;
+
+    /**
+     * @var
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Product", inversedBy="userPrice")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     */
+    private $product;
+
+    /**
+     * @var
+     * @ORM\Column(name="individual_price", type="float", nullable=true, options={"default"=0})
+     */
+    private $individualPrice;
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set percent
+     *
+     * @param float $percent
+     *
+     * @return UserPrice
+     */
+    public function setPercent($percent)
+    {
+        $this->percent = $percent;
+
+        return $this;
+    }
+
+    /**
+     * Get percent
+     *
+     * @return float
+     */
+    public function getPercent()
+    {
+        return $this->percent;
+    }
+}
+

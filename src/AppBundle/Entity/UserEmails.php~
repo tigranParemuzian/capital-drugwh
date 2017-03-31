@@ -11,9 +11,14 @@ use JMS\Serializer\Annotation as Serializer;
 /**
  * UserEmails
  *
- * @ORM\Table(name="user_emails")
+ * @ORM\Table(name="user_emails", uniqueConstraints={@ORM\UniqueConstraint(name="user_email_validation_unique_idx", columns={"user_id", "email"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserEmailsRepository")
- * @UniqueEntity({"user", "email"}, message="email.duplicate")
+ * @UniqueEntity(
+ *     fields={"user", "email"},
+ *     errorPath="email",
+ *     message="This email is already in use on that user."
+ * )
+ * @ORM\HasLifecycleCallbacks()
  */
 class UserEmails
 {
@@ -47,7 +52,6 @@ class UserEmails
      * @var
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="userEmails")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
-     * @Assert\NotBlank(message = "User field can't be null")
      */
     private $user;
 
@@ -156,5 +160,53 @@ class UserEmails
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     *
+     * @return UserEmails
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set updated
+     *
+     * @param \DateTime $updated
+     *
+     * @return UserEmails
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * Get updated
+     *
+     * @return \DateTime
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
     }
 }

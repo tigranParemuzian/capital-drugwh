@@ -60,10 +60,11 @@ class ProductAdmin extends Admin
             ->add('id')
             ->add('name')
             ->add('productItem', null, array('sortable' => 'productItem.nds'))
-            ->add('category')
-            ->add('alternative')
+//            ->add('category')
+//            ->add('alternative')
             ->addIdentifier('count')
-            ->addIdentifier('price')
+            ->addIdentifier('price', null, ['label'=>'$ Show Price'])
+            ->addIdentifier('pricingCode', null, ['label'=>'$ Real Price'])
             ->addIdentifier('avalible', 'choice', array(
                     'choices'  => array(1=> 'Avalible',
                         2=>'Not avalible'),
@@ -88,7 +89,8 @@ class ProductAdmin extends Admin
                     2=>'Not avalible')))
             ->add('alternative', null, array(''))
             ->add('count')
-            ->add('price')
+            ->add('price', null, ['label'=>'Show Price'])
+            ->add('pricingCode', null, ['label'=>'Real Price'])
             ->add('productItem', null, array(), 'entity', array(
                 'class'    => 'AppBundle\Entity\ProductItem',
                 'property' => 'nds',
@@ -121,7 +123,8 @@ class ProductAdmin extends Admin
                 ProductItem::ML=>'ML')))
         ->add('alternative', null, array(''))
         ->add('count')
-        ->add('price')
+        ->add('price', null, ['label'=>'Show Price'])
+        ->add('pricingCode', null, ['label'=>'Real Price'])
         ->add('productItem', null, array(), 'entity', array(
             'class'    => 'AppBundle\Entity\ProductItem',
             'property' => 'Manufacturer',

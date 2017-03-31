@@ -62,10 +62,12 @@
 {% else %}Not Available{% endif %}</span>
                         </div>
                         <div class="col-md-3">
-                            <a href="{{ path('generate_invoice', {'invoiceId':invoice.number}) }}" {% if invoice.trackNumber %} target="_blank"   class="btn btn-info"
+                            <a href="{{ path('generate_invoice', {'invoiceId':invoice.number}) }}"
+                                    {% if invoice.trackNumber and invoice.status == 2 %} target="_blank"   class="btn btn-info"
                                {% else %} class="btn btn-default"{% endif %}  title="Download Pdf">
                                 Invoice</a>&nbsp;
-                            <a href="{{ path('generate_t3_statment', {'invoiceId':invoice.number}) }}" {% if invoice.trackNumber and invoice.status == 2 %} class="btn btn-info" target="_blank"
+                            <a href="{{ path('generate_t3_statment', {'invoiceId':invoice.number}) }}"
+                                    {% if invoice.trackNumber and invoice.status == 2 %} class="btn btn-info" target="_blank"
                             {% else %} class="btn btn-default"{% endif %}  title="Download Pdf">
                                 T3 Statment</a>&nbsp;
                             {% if removable == 1 %}

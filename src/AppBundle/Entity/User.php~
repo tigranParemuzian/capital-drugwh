@@ -90,9 +90,21 @@ class User extends BaseUser
 
     /**
      * @var
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserPrice", mappedBy="user", cascade={"all"}, orphanRemoval=true)
+     */
+    private $userPrice;
+
+    /**
+     * @var
      * @ORM\Column(name="customer_id", type="integer")
      */
     private $customerId;
+
+    /**
+     * @var
+     * @ORM\Column(name="sale_percent", type="float", nullable=true)
+     */
+    private $salePercent;
 
     public function __toString()
     {

@@ -129,6 +129,12 @@ class Product
 
     /**
      * @var
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserPrice", mappedBy="product")
+     */
+    private $userPrice;
+
+    /**
+     * @var
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Category", inversedBy="product")
      * @ORM\JoinColumn(name="category", referencedColumnName="id")
      * @GRID\Column(field="category.name", title="Category Name", filter="select")
@@ -458,5 +464,39 @@ class Product
     public function getBooking()
     {
         return $this->booking;
+    }
+
+    /**
+     * Add userPrice
+     *
+     * @param \AppBundle\Entity\UserPrice $userPrice
+     *
+     * @return Product
+     */
+    public function addUserPrice(\AppBundle\Entity\UserPrice $userPrice)
+    {
+        $this->userPrice[] = $userPrice;
+
+        return $this;
+    }
+
+    /**
+     * Remove userPrice
+     *
+     * @param \AppBundle\Entity\UserPrice $userPrice
+     */
+    public function removeUserPrice(\AppBundle\Entity\UserPrice $userPrice)
+    {
+        $this->userPrice->removeElement($userPrice);
+    }
+
+    /**
+     * Get userPrice
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUserPrice()
+    {
+        return $this->userPrice;
     }
 }

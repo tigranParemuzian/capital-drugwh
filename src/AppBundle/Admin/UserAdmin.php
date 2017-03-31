@@ -121,14 +121,10 @@ class UserAdmin extends Admin
 //        $rolesChoices = $this->flattenRoles($roles);
 
         $formMapper
+            ->tab('General')
             ->with('General', array('class'=> 'col-md-6'))
             ->add('email')
             ->add('username')
-//            ->add('birthday', 'sonata_type_date_picker', array(
-//                'dp_side_by_side'       => false,
-//                'dp_use_current'        => false,
-//                'widget' => 'single_text',
-//                'format' => 'y-dd-MM', 'required'=>false))
             ->add('roles', 'choice', array(
                 'choices'  => array('ROLE_USER'=>'User', 'ROLE_ADMIN'=>'Admin'),
                 'multiple' => true
@@ -146,6 +142,8 @@ class UserAdmin extends Admin
             ->add('lastName')
             ->add('firstName')
             ->end()
+            ->end()
+            ->tab('Emails')
             ->with('Emails', array('class' =>'col-sm-12',
                 'box-class' => 'box box-solid box-danger',
                 'description'=>'User parent emails'))
@@ -156,6 +154,23 @@ class UserAdmin extends Admin
                     'delete'=>true
                 )
             )
+            ->end()
+            ->end()
+            ->tab('Price')
+            ->with('Price', array('class' =>'col-sm-12',
+                'box-class' => 'box box-solid box-danger',
+                'description'=>'User Price'))
+            ->add('salePercent', null, ['label'=>'% Sale Percent',
+                'help' => 'When user have a global percent for all products'])
+            ->add('userPrice', 'sonata_type_collection', array(), array(
+                    'edit' => 'inline',
+                    'inline' => 'table',
+                    'sortable'  => 'id',
+                    'delete'=>true,
+                    'help'=>'when user have a individual percent for current product'
+                )
+            )
+            ->end()
             ->end()
         ;
     }
@@ -192,6 +207,12 @@ class UserAdmin extends Admin
             }
         }
 
+        if($object->getUserPrice()){
+            foreach($object->getUserPrice() as $price) {
+                $price->setUser($object);
+            }
+        }
+
     }
 
     public function prePersist($object)
@@ -203,6 +224,12 @@ class UserAdmin extends Admin
         if($object->getUserEmails()){
             foreach($object->getUserEmails() as $email) {
                 $email->setUser($object);
+            }
+        }
+
+        if($object->getUserPrice()){
+            foreach($object->getUserPrice() as $price) {
+                $price->setUser($object);
             }
         }
     }
