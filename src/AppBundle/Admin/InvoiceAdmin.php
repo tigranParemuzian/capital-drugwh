@@ -170,11 +170,11 @@ class InvoiceAdmin extends Admin
         if ($object->getStatus() === Invoice::IS_SHIPPED && $object->getEmailSended() == 0) {
             $object->setTotal($total);
             $object->setEmailSended(1);
-            $this->sendEmail($object->getNumber());
+            $this->sendEmail($object->getNumber(), null, 'info@aamedllc.com');
         }
 
         if(!is_null($object->getTrackNumber()) && $object->getEmailTracking() == 0){
-            $this->sendEmail($object->getNumber(), $object->getTrackNumber());
+            $this->sendEmail($object->getNumber(), $object->getTrackNumber(), 'info@aamedllc.com');
             $object->setEmailTracking(1);
         }
     }
@@ -195,7 +195,7 @@ class InvoiceAdmin extends Admin
         }
     }
 
-    public function sendEmail($invoiceNumber, $state = null)
+    public function sendEmail($invoiceNumber, $state = null, $emailFrom = null)
     {
 
         $em = $this->getConfigurationPool()->getContainer()->get('doctrine')->getManager();
@@ -225,7 +225,7 @@ class InvoiceAdmin extends Admin
 
                     $message = \Swift_Message::newInstance()
                         ->setSubject("Your order has been shipped")
-                        ->setFrom('RXtrace@aamedllc.com')
+                        ->setFrom($emailFrom)
                         ->setTo("{$email[0]}");
                     for ($i = 1; $i < count($email); $i++) {
                         $message
@@ -233,7 +233,7 @@ class InvoiceAdmin extends Admin
                     }
 
                     $message->setBody(
-                        '<b>Your order has been shipped '.$mess.'<br><b>Thank you</b>',
+                        '<p>Your order has been shipped FedEx '.$mess.'<br>Thank you.</p>',
                         'text/html'
                     )
                         ;
@@ -261,7 +261,7 @@ class InvoiceAdmin extends Admin
 
                     $message = \Swift_Message::newInstance()
                         ->setSubject("Order Invoice & T3 {$invoiceNumber}")
-                        ->setFrom('RXtrace@aamedllc.com')
+                        ->setFrom($emailFrom)
                         ->setTo("{$email[0]}");
                     for ($i = 1; $i < count($email); $i++) {
                         $message
