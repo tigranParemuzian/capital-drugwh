@@ -170,7 +170,7 @@ class InvoiceAdmin extends Admin
         if ($object->getStatus() === Invoice::IS_SHIPPED && $object->getEmailSended() == 0) {
             $object->setTotal($total);
             $object->setEmailSended(1);
-            $this->sendEmail($object->getNumber(), null, 'info@aamedllc.com');
+            $this->sendEmail($object->getNumber(), null, 'RXtrace@aamedllc.com');
         }
 
         if(!is_null($object->getTrackNumber()) && $object->getEmailTracking() == 0){

@@ -111,11 +111,13 @@ class DefaultController extends Controller
     }
 
     /**
+     *
      * @Route("/orders", name="submit_order")
      * @QueryParam(name="state", nullable=true, requirements="\d+")
      * @Template()
-     * @param Request $request
      * @Security("has_role('ROLE_USER')")
+     * @param ParamFetcher $paramFetcher
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function submitAction(ParamFetcher $paramFetcher){
 

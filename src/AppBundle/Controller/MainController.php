@@ -306,11 +306,107 @@ class MainController extends Controller
      */
     public function sendEmailAction(Request $request, $invoiceNumber){
 
-       $this->sendEmail($invoiceNumber);
+       $this->sendEmail2($invoiceNumber, null, 'RXtrace@aamedllc.com');
 
         return $this->redirect($this->generateUrl('admin_app_invoice_list'));
     }
 
+
+
+    public function sendEmail2($invoiceNumber, $state = null, $emailFrom = null)
+    {
+
+        $em = $this->container->get('doctrine')->getManager();
+
+        $containerAdmin = $this->container;
+
+        $userEmails = $em->getRepository('AppBundle:Invoice')->findUserInfo((string)$invoiceNumber);
+
+        $email = array();
+        foreach ($userEmails->getUser()->getUserEmails() as $emails) {
+            $email[] = $emails;
+        }
+
+
+        if (!$userEmails) {
+        } else {
+
+            try {
+
+                if(!is_null($state)){
+                    $states = explode(',', $state);
+                    $mess = '';
+                    foreach ($states as $state){
+                        $mess.='<a href="https://www.fedex.com/apps/fedextrack/?tracknumbers='.$state.'" target="_blank">'.$state.'</a>&nbsp;&nbsp;'   ;
+
+                    }
+
+                    $message = \Swift_Message::newInstance()
+                        ->setSubject("Your order has been shipped")
+                        ->setFrom($emailFrom)
+                        ->setTo("{$email[0]}");
+                    for ($i = 1; $i < count($email); $i++) {
+                        $message
+                            ->setCc("{$email[$i]}");
+                    }
+
+                    $message->setBody(
+                        '<p>Your order has been shipped FedEx '.$mess.'<br>Thank you.</p>',
+                        'text/html'
+                    )
+                    ;
+                    $containerAdmin->get('mailer')->send($message);
+                }else {
+                    $filename = sprintf('invoice-%s.pdf', $invoiceNumber);
+                    $pathInv = $containerAdmin->getParameter('kernel.root_dir') . "/../web/uploads/invoice/" . $filename;
+
+                    if (is_file($pathInv)) {
+                        unlink($pathInv);
+                    }
+
+                    $pageUrl = $containerAdmin->get('router')->generate('pdf_generate', array('invoiceId' => $invoiceNumber), true); // use absolute path!
+                    $containerAdmin->get('knp_snappy.pdf')->generate($pageUrl, $pathInv);
+
+                    $filename = sprintf('t3_statment_%s.pdf', $invoiceNumber);
+                    $path = $containerAdmin->getParameter('kernel.root_dir') . "/../web/uploads/invoice/" . $filename;
+
+                    if (is_file($path)) {
+                        unlink($path);
+                    }
+
+                    $pageUrl = $containerAdmin->get('router')->generate('t3_pdf_generate', array('invoiceId' => $invoiceNumber, 'cuserId' => 1), true); // use absolute path!
+                    $containerAdmin->get('knp_snappy.pdf')->generate($pageUrl, $path);
+
+                    $message = \Swift_Message::newInstance()
+                        ->setSubject("Order Invoice & T3 {$invoiceNumber}")
+                        ->setFrom($emailFrom)
+                        ->setTo("{$email[0]}");
+                    for ($i = 1; $i < count($email); $i++) {
+                        $message
+                            ->setCc("{$email[$i]}");
+                    }
+
+                    $message->setBody(
+                        '<p>Please finde attached Invoice and  T3 statement for your records, if you have any questions, please feel free to contact us.</p>'.
+                        '<br><b>Thank you</b>',
+                        'text/html'
+                    )
+                        ->attach(\Swift_Attachment::fromPath($pathInv))
+                        ->attach(\Swift_Attachment::fromPath($path));
+                    $containerAdmin->get('mailer')->send($message);
+                }
+
+
+            } catch (\Swift_Message $exception) {
+//                Your order has been shipped, 7777792929292
+                /*$this->addFlash(
+                    'error',
+                    "Sorry Invoice by invoice number {$invoiceNumber} not found."
+                );*/
+
+            }
+        }
+    }
 
 
         public function sendEmail($invoiceNumber){
