@@ -262,13 +262,16 @@ class DefaultController extends Controller
 
                 $pageUrl = $this->generateUrl('pdf_generate', array('invoiceId'=>$invoiceId), true); // use absolute path!
                 $this->container->get('knp_snappy.pdf')->generate($pageUrl, $path);
+            }elseif($secure->isGranted("ROLE_SUPER_ADMIN")){
+                unlink($path);
+
+                $pageUrl = $this->generateUrl('pdf_generate', array('invoiceId'=>$invoiceId), true); // use absolute path!
+                $this->container->get('knp_snappy.pdf')->generate($pageUrl, $path);
             }
         }else {
             $pageUrl = $this->generateUrl('pdf_generate', array('invoiceId'=>$invoiceId), true); // use absolute path!
             $this->container->get('knp_snappy.pdf')->generate($pageUrl, $path);
         }
-
-
 
             return new Response(
                 $this->get('knp_snappy.pdf')->getOutput($pageUrl),

@@ -88,7 +88,7 @@ class BookingAdmin extends Admin
             ->add('count')
             ->add('lot')
             ->add('expiryDate')
-            ->add('shipDate')
+            ->add('shipDate', null, ['label'=>'SUP date'])
             ->add('cost', 'currency', array(
                 'currency' => 'Cost &'
             ))
@@ -123,7 +123,7 @@ class BookingAdmin extends Admin
                 array('field_options_start' => array('format' => 'yyyy-MM-dd HH:mm:ss'),
                     'field_options_end' => array('format' => 'yyyy-MM-dd HH:mm:ss'))
             )
-            ->add('shipDate', 'doctrine_orm_datetime_range', array(),'sonata_type_datetime_range_picker',
+            ->add('shipDate', 'doctrine_orm_datetime_range', ['label'=>'SUP date'],'sonata_type_datetime_range_picker',
                 array('field_options_start' => array('format' => 'yyyy-MM-dd HH:mm:ss'),
                     'field_options_end' => array('format' => 'yyyy-MM-dd HH:mm:ss'))
             )

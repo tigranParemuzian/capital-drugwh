@@ -1,1 +1,5 @@
-<a class="btn btn-sm btn-default view_link" href="{{ admin.generateObjectUrl('clone', object) }}" title="Clone"> <i class="glyphicon glyphicon-refresh"></i> Clone</a>
+<a class="btn btn-sm btn-default view_link" onclick="openData()" href="{{ admin.generateObjectUrl('clone', object) }}" title="Clone">
+    <i class="glyphicon glyphicon-refresh"></i> Clone</a>
+<script>
+    console.log($('.glyphicon-refresh'));
+</script>
