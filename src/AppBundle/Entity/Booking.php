@@ -129,10 +129,10 @@ class Booking
     public function __clone() {
 
         $this->id = null;
-        $this->count = 0;
-        $this->lot = null;
-        $this->expiryDate = null;
-        $this->shipDate = null;
+        //$this->count = 0;
+        //$this->lot = null;
+        //$this->expiryDate = null;
+        //$this->shipDate = null;
 
     }
     /**
