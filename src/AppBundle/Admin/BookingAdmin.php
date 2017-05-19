@@ -85,10 +85,10 @@ class BookingAdmin extends Admin
             ->add('invoice', null, array('sortable' => 'invoice.number'))
             ->add('product', null, array('sortable' => 'product.name'))
             ->add('client', null, array('sortable' => 'client.username'))
-            ->add('count')
-            ->add('lot')
-            ->add('expiryDate')
-            ->add('shipDate', null, ['label'=>'SUP date'])
+            ->add('count', null, ['editable' => true])
+            ->add('lot',  null, ['editable' => true])
+            ->add('expiryDate', 'date', ['editable' => true])
+            ->add('shipDate', 'date', ['label'=>'SUP date', 'editable' => true])
             ->add('cost', 'currency', array(
                 'currency' => 'Cost &'
             ))
