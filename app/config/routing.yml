@@ -1,41 +1,51 @@
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+    schemes:  [http, https]
 
 bag_rest:
     type:     rest
     resource: AppBundle\Controller\Rest\RestMainController
+    schemes:  [http, https]
 
 # fos user routes
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+    schemes:  [http, https]
 
 fos_user_profile:
     resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
     prefix: /profile
+    schemes:  [http, https]
 
 fos_user_register:
     resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
     prefix: /register
+    schemes:  [http, https]
 
 fos_user_resetting:
     resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
     prefix: /resetting
+    schemes:  [http, https]
 
 fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /profile
+    schemes:  [http, https]
 
 #sonata user bundle routes
 admin:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
     prefix: /admin
+    schemes:  [http, https]
 
 _sonata_admin:
     resource: .
     type: sonata_admin
     prefix: /admin
+    schemes:  [http, https]
 
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
     prefix:   /api/doc/
+    schemes:  [http, https]
