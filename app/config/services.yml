@@ -35,7 +35,7 @@ services:
         class: AppBundle\Admin\ProductAdmin
         arguments: [~, AppBundle\Entity\Product, ~]
         tags:
-            - {name: sonata.admin, manager_type: orm, group: Product, label: Product, show_in_dashboard: true}
+            - {name: sonata.admin, manager_type: orm, group: Product, label: Product, show_in_dashboard: false}
 
     admin.invoice:
         class: AppBundle\Admin\InvoiceAdmin
