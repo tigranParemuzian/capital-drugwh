@@ -9,17 +9,21 @@
         {% endif %}
         </div>
         <div class="grid_body col-md-12">
-        <table class="table table-hover">
-        {% if grid.isTitleSectionVisible %}
-            {{ grid_titles(grid) }}
-        {% endif %}
-        {% if grid.isFilterSectionVisible %}
-            {{ grid_filters(grid) }}
-        {% endif %}
-        {{ grid_rows(grid) }}
+        <table class="table table-responsive table-striped table-hover">
+            <thead>
+            {% if grid.isTitleSectionVisible %}
+                {{ grid_titles(grid) }}
+            {% endif %}
+            {% if grid.isFilterSectionVisible %}
+                {{ grid_filters(grid) }}
+            {% endif %}
+            </thead>
+            <tbody class="table-striped">
+            {{ grid_rows(grid) }}
+            </tbody>
         </table>
         </div>
-        </div>
+        {#</div>#}
         <div class="panel-footer grid_footer col-md-12 text-center">
         {% if grid.isPagerSectionVisible %}
             {{ grid_pager(grid) }}

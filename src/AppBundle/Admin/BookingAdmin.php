@@ -29,8 +29,26 @@ class BookingAdmin extends Admin
 
     protected function configureRoutes(RouteCollection $collection)
     {
-        $collection->add('clone', $this->getRouterIdParameter().'/clone');
+        parent::configureRoutes($collection);
+        $collection->add('project_show');
+        $collection->add('clone', 'clone/{objectId}/{count}');
     }
+
+    public function getBatchActions()
+    {
+        // retrieve the default (currently only the delete action) actions
+        $actions = parent::getBatchActions();
+
+        // check user permissions
+        if ($this->hasRoute('edit') && $this->isGranted('EDIT') && $this->hasRoute('delete') && $this->isGranted('DELETE')) {
+            // define calculate action
+            $actions['save_draft'] = array('label' => 'Save Draft', 'ask_confirmation' => true);
+            $actions['project_show'] = array('label' => 'Show Project', 'ask_confirmation' => true);
+        }
+
+        return $actions;
+    }
+
 
     protected function configureFormFields(FormMapper $formMapper)
     {

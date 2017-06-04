@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;*/
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -25,19 +26,22 @@ class CloneAdminController extends Controller
 	/**
 	 * @return RedirectResponse
 	 */
-	public function cloneAction()
+	public function cloneAction($objectId, $count)
 	{
-        $object = $this->admin->getSubject();
+	    if((int)$objectId <0 || (int)$count <= 0){
 
-        if (!$object) {
-            throw new NotFoundHttpException(sprintf('unable to find the object with id : %s', $id));
+            throw new NotFoundHttpException(sprintf('unable to find the object with id : %s', $objectId));
         }
 
-        // Be careful, you may need to overload the __clone method of your object
-        // to set its id to null !
-        $clonedObject = clone $object;
+        $em = $this->getDoctrine()->getManager();
+        $object = $em->getRepository('AppBundle:Booking')->find($objectId);
 
-        $this->admin->create($clonedObject);
+        do{
+            $clonedObject = clone $object;
+            $this->admin->create($clonedObject);
+            $count --;
+        }while($count);
+
 
         $this->addFlash('sonata_flash_success', 'Cloned successfully');
 

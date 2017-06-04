@@ -1,7 +1,5 @@
-<a class="btn btn-sm btn-default view_link" onclick="openData({{ object.id }})" href="#" title="Clone" data-toggle="modal" data-target="#myModal">
+<a class="btn btn-sm btn-default view_link" onclick="openData({{ object.id }})" onject-id="{{ object.id }})" href="#" title="Clone" data-toggle="modal" data-target="#myModal">
     <i class="glyphicon glyphicon-refresh"></i> Clone</a>
-{% set reditUrl = admin.generateObjectUrl('clone', object) %}
-
 <div class="modal fade bs-example-modal-sm" id="myModal"  tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -10,18 +8,34 @@
                 <h4 class="modal-title">Modal title</h4>
             </div>
             <div class="modal-body">
-                <input name="cloned_count" type="number">
+                <div class="form-group">
+                    <label> Enter count </label>
+                    <input name="cloned_count" type="number" class="form-control">
+                    <input name="cloned_object" type="hidden" class="form-control" value="{{ object.id }}">
+                </div>
 
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary submit" name="clone">Clone</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <script>
+
+
+
     function openData(id) {
-        console.log(id)
+        $('.submit').on('click', function () {
+            var t = $(this).children('input[name=cloned_object]');
+            console.log(t);
+        });
+
+        $('button[name="clone"]').on('click', function () {
+            var count = $('input[name="cloned_count"]').val(),
+                objetc = id;
+            if(parseInt(count)>0 && parseInt(objetc)>0) location.href = '/admin/app/booking/clone/'+objetc+'/'+count;
+        });
     }
 </script>
