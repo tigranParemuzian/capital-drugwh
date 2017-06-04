@@ -51,9 +51,6 @@ class ProductItemAdmin extends Admin
             ->add('id')
             ->add('product.name',null, ['label'=>'Name'])
             ->add('manufacturer',null, ['label'=>'manufacturer'])
-            ->add('product.count',null, ['label'=>'Count'])
-            ->add('product.price', null, ['label'=>'$ Show Price'])
-//            ->add('product.pricingCode', null, ['label'=>'$ Real Price'])
             ->add('strength')
             ->add('nds', null, array('label'=>'NDC'))
             ->add('size')
@@ -63,6 +60,8 @@ class ProductItemAdmin extends Admin
                     ProductItem::GM=>'gm',
                 ),
             ))
+            ->add('product.count',null, ['label'=>'Count'])
+            ->add('product.price', null, ['label'=>'$ Show Price'])
             ->add('_action', 'actions',
                 array('actions'=>
                     array('show'=>array(), 'edit'=>array(), 'delete'=>array())
