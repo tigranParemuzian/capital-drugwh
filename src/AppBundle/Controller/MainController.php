@@ -387,7 +387,7 @@ class MainController extends Controller
                     }
 
                     $message->setBody(
-                        '<p>Please finde attached Invoice and  T3 statement for your records, if you have any questions, please feel free to contact us.</p>'.
+                        '<p>Please find attached Invoice and  T3 statement for your records, if you have any questions, please feel free to contact us.</p>'.
                         '<br><b>Thank you</b>',
                         'text/html'
                     )
