@@ -347,7 +347,7 @@ class MainController extends Controller
                         ->setTo("{$email[0]}");
                     for ($i = 1; $i < count($email); $i++) {
                         $message
-                            ->setCc("{$email[$i]}");
+                            ->addCc("{$email[$i]}");
                     }
 
                     $message->setBody(
@@ -383,7 +383,7 @@ class MainController extends Controller
                         ->setTo("{$email[0]}");
                     for ($i = 1; $i < count($email); $i++) {
                         $message
-                            ->setCc("{$email[$i]}");
+                            ->addCc("{$email[$i]}");
                     }
 
                     $message->setBody(
@@ -457,7 +457,7 @@ class MainController extends Controller
                     ->setTo("{$email[0]}");
                 for ($i = 1; $i<count($email); $i++){
                     $message
-                        ->setCc("{$email[$i]}");
+                        ->addCc("{$email[$i]}");
                 }
                 $message->setBody(
                     $this->renderView(
