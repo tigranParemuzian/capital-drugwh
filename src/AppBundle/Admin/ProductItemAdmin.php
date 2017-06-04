@@ -61,7 +61,7 @@ class ProductItemAdmin extends Admin
                 ),
             ))
             ->add('product.count',null, ['label'=>'Count'])
-            ->add('product.price', null, ['label'=>'$ Show Price'])
+            ->add('product.price', null, ['label'=>'$ Price'])
             ->add('_action', 'actions',
                 array('actions'=>
                     array('show'=>array(), 'edit'=>array(), 'delete'=>array())
