@@ -49,7 +49,11 @@ class ProductItemAdmin extends Admin
     {
         $list
             ->add('id')
-            ->add('manufacturer')
+            ->add('product.name',null, ['label'=>'Name'])
+            ->add('manufacturer',null, ['label'=>'manufacturer'])
+            ->add('product.count',null, ['label'=>'Count'])
+            ->add('product.price', null, ['label'=>'$ Show Price'])
+            ->add('product.pricingCode', null, ['label'=>'$ Real Price'])
             ->add('strength')
             ->add('nds', null, array('label'=>'NDC'))
             ->add('size')
