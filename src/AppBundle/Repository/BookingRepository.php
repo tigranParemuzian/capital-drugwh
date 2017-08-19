@@ -27,7 +27,7 @@ class BookingRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('pid', $prodId)
             ->getQuery()->getOneOrNullResult();
 
-            ;
+        ;
 
     }
 
@@ -50,6 +50,56 @@ class BookingRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('st', Booking::IS_NEW)
             ->setParameter('cid', $userId)
             ->getQuery()->getResult();
-            ;
+        ;
     }
+
+    /**
+     * This function use to update store
+     *
+     * @param $bId
+     * @param $lot
+     * @param $supDate
+     * @param $expDate
+     */
+    public function updateStore($bId, $lot, $supDate, $expDate){
+
+        $this->getEntityManager()
+            ->createQueryBuilder()
+            ->update('AppBundle:Booking', 'b')
+            ->set('b.lot', ':lot')
+            ->set('b.expiryDate', ':exDate')
+            ->set('b.shipDate', ':sup')
+            ->where('b.id IN (:bId)')
+            ->setParameter('bId', $bId)
+            ->setParameter('lot', $lot)
+            ->setParameter('exDate', $expDate)
+            ->setParameter('sup', $supDate)
+            ->getQuery()->execute()
+        ;
+    }
+
+    public function findRealByProduct($prodId){
+
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('b')
+            ->from('AppBundle:Booking', 'b')
+            ->innerJoin('b.product', 'p', 'WITH', 'p.id = :pId')
+            ->leftJoin('b.client', 'c')
+            ->where('b.invoice IS NOT NULL AND b.lot IS NULL AND b.shipDate IS NULL AND b.expiryDate IS NULL AND b.count >0 ')
+            ->orderBy('b.id', 'ASC')
+            ->setParameter('pId', $prodId)
+            ->getQuery()->getResult();
+        ;
+    }
+
+//    public function insertBooking(){
+//        $this->getEntityManager()
+//            ->createQuery('INSERT INTO AppBundle:Booking')
+//            ->insert('AppBundle:Booking')
+//            ->setValue('name', '?')
+//            ->setValue('password', '?')
+//            ->setParameter(0, $username)
+//            ->setParameter(1, $password)
+//    }
 }

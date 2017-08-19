@@ -7,35 +7,45 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Modal title</h4>
             </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label> Enter count </label>
-                    <input name="cloned_count" type="number" class="form-control">
-                    <input name="cloned_object" type="hidden" class="form-control" value="{{ object.id }}">
-                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label> Enter count </label>
+                        <input name="cloned_count" type="number" class="form-control">
+                        <input name="cloned_object" type="hidden" class="form-control" value="{{ object.id }}">
+                    </div>
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary submit" name="clone">Clone</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary submit" name="clone">Clone</button>
+                </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <script>
 
-
-
     function openData(id) {
+
         $('.submit').on('click', function () {
-            var t = $(this).children('input[name=cloned_object]');
-            console.log(t);
+            $(this).children('input[name=cloned_object]');
         });
 
         $('button[name="clone"]').on('click', function () {
             var count = $('input[name="cloned_count"]').val(),
                 objetc = id;
-            if(parseInt(count)>0 && parseInt(objetc)>0) location.href = '/admin/app/booking/clone/'+objetc+'/'+count;
+            if(parseInt(count)>0 && parseInt(objetc)>0) location.href = '/admin/app/{% if app.request.attributes.get('_sonata_admin') == 'admin.booking' %}booking{% else %}productstorage{% endif %}/clone/'+objetc+'/'+count;
         });
+
+        $('input[name="cloned_count"]').keypress(function (e) {
+            if (e.keyCode == 13) {
+                var count = $('input[name="cloned_count"]').val(),
+                    objetc = id;
+                if(parseInt(count)>0 && parseInt(objetc)>=0){
+                    e.preventDefault();
+                    location.href = '/admin/app/{% if app.request.attributes.get('_sonata_admin') == 'admin.booking' %}booking{% else %}productstorage{% endif %}/clone/'+objetc+'/'+count;
+                }
+
+            }
+        })
     }
 </script>

@@ -82,5 +82,76 @@ class UserPrice
     {
         return $this->percent;
     }
-}
 
+    /**
+     * Set individualPrice
+     *
+     * @param float $individualPrice
+     *
+     * @return UserPrice
+     */
+    public function setIndividualPrice($individualPrice)
+    {
+        $this->individualPrice = $individualPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get individualPrice
+     *
+     * @return float
+     */
+    public function getIndividualPrice()
+    {
+        return $this->individualPrice;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return UserPrice
+     */
+    public function setUser(\AppBundle\Entity\User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set product
+     *
+     * @param \AppBundle\Entity\Product $product
+     *
+     * @return UserPrice
+     */
+    public function setProduct(\AppBundle\Entity\Product $product)
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    /**
+     * Get product
+     *
+     * @return \AppBundle\Entity\Product
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+}

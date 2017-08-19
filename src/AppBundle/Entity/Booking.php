@@ -116,6 +116,13 @@ class Booking
      */
     private $shipDate;
 
+    /**
+     * @var
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ProductStorage", inversedBy="booking")
+     * @ORM\JoinColumn(name="store_id", referencedColumnName="id")
+     */
+    private $store;
+
     public function __toString()
     {
         return $this->id ? $this->product . ', count: ' . $this->count  .
@@ -129,12 +136,13 @@ class Booking
     public function __clone() {
 
         $this->id = null;
-        //$this->count = 0;
-        //$this->lot = null;
-        //$this->expiryDate = null;
-        //$this->shipDate = null;
+        $this->count = 0;
+        $this->lot = null;
+        $this->expiryDate = null;
+        $this->shipDate = null;
 
     }
+
     /**
      * Get id
      *
@@ -431,5 +439,29 @@ class Booking
     public function getShipDate()
     {
         return $this->shipDate;
+    }
+
+    /**
+     * Set store
+     *
+     * @param \AppBundle\Entity\ProductStorage $store
+     *
+     * @return Booking
+     */
+    public function setStore(\AppBundle\Entity\ProductStorage $store = null)
+    {
+        $this->store = $store;
+
+        return $this;
+    }
+
+    /**
+     * Get store
+     *
+     * @return \AppBundle\Entity\ProductStorage
+     */
+    public function getStore()
+    {
+        return $this->store;
     }
 }

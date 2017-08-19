@@ -23,18 +23,17 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class CloneAdminController extends Controller
 {
 
-	/**
-	 * @return RedirectResponse
-	 */
-	public function cloneAction($objectId, $count)
-	{
-	    if((int)$objectId <0 || (int)$count <= 0){
+    /**
+     * @return RedirectResponse
+     */
+    public function cloneAction($objectId, $count)
+    {
+        if((int)$objectId <0 || (int)$count <= 0){
 
             throw new NotFoundHttpException(sprintf('unable to find the object with id : %s', $objectId));
         }
 
-        $em = $this->getDoctrine()->getManager();
-        $object = $em->getRepository('AppBundle:Booking')->find($objectId);
+        $object = $this->admin->getObject($objectId);
 
         do{
             $clonedObject = clone $object;
@@ -46,5 +45,5 @@ class CloneAdminController extends Controller
         $this->addFlash('sonata_flash_success', 'Cloned successfully');
 
         return new RedirectResponse($this->admin->generateObjectUrl('list', $clonedObject));
-	}
+    }
 }

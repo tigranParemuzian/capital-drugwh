@@ -141,12 +141,17 @@ class Product
      */
     private $category;
 
+    /**
+     * @var
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProductStorage", mappedBy="product")
+     */
+    private $storage;
+
     public function __toString()
     {
-        return $this->id ? $this->name . ' ' . $this->productItem->getNds() : 'new Product item';
+        return $this->id ? $this->name . ' ' . $this->productItem->getStrength(). ' ' . $this->productItem->getNds() : 'new Product item';
         // TODO: Implement __toString() method.
     }
-
 
     public function getShowCount(){
         return $this->showcount . 'ddd';
@@ -464,5 +469,39 @@ class Product
     public function getBooking()
     {
         return $this->booking;
+    }
+
+    /**
+     * Add userPrice
+     *
+     * @param \AppBundle\Entity\UserPrice $userPrice
+     *
+     * @return Product
+     */
+    public function addUserPrice(\AppBundle\Entity\UserPrice $userPrice)
+    {
+        $this->userPrice[] = $userPrice;
+
+        return $this;
+    }
+
+    /**
+     * Remove userPrice
+     *
+     * @param \AppBundle\Entity\UserPrice $userPrice
+     */
+    public function removeUserPrice(\AppBundle\Entity\UserPrice $userPrice)
+    {
+        $this->userPrice->removeElement($userPrice);
+    }
+
+    /**
+     * Get userPrice
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUserPrice()
+    {
+        return $this->userPrice;
     }
 }

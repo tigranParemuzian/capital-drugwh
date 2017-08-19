@@ -116,6 +116,13 @@ class Booking
      */
     private $shipDate;
 
+    /**
+     * @var
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ProductStorage", inversedBy="booking")
+     * @ORM\JoinColumn(name="store_id", referencedColumnName="id")
+     */
+    private $store;
+
     public function __toString()
     {
         return $this->id ? $this->product . ', count: ' . $this->count  .
@@ -129,6 +136,10 @@ class Booking
     public function __clone() {
 
         $this->id = null;
+        //$this->count = 0;
+        //$this->lot = null;
+        //$this->expiryDate = null;
+        //$this->shipDate = null;
 
     }
     /**

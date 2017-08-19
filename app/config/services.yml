@@ -8,6 +8,13 @@ services:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
 
+
+    kernel.listener.logged_in_user_listener:
+        class: AppBundle\DoctrineListeners\KernelListener
+        arguments: [ @service_container ]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
     app.form.type.gender:
             class: AppBundle\Form\IconType
             tags:
@@ -36,6 +43,12 @@ services:
         arguments: [~, AppBundle\Entity\Product, ~]
         tags:
             - {name: sonata.admin, manager_type: orm, group: Product, label: Product, show_in_dashboard: false}
+
+    admin.storage.product:
+            class: AppBundle\Admin\ProductStorageAdmin
+            arguments: [~, AppBundle\Entity\ProductStorage,  AppBundle:CloneAdmin, ~]
+            tags:
+                - {name: sonata.admin, manager_type: orm, group: Product, label: Product Storage, show_in_dashboard: true}
 
     admin.invoice:
         class: AppBundle\Admin\InvoiceAdmin

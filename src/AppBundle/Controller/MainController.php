@@ -481,4 +481,34 @@ class MainController extends Controller
             }
     }
 
+    /**
+     *
+     * @Route("/product/prices/{productId}", name="product-prices")
+     * @Security("has_role('ROLE_USER')")
+     *
+     * @param Request $request
+     * @param $prId
+     */
+    public function priceAction(Request $request, $productId){
+
+        $em = $this->getDoctrine()->getManager();
+
+        if(!is_null($this->getUser()->getSalePercent())){
+
+            $price = $em->getRepository('AppBundle:UserPrice')->findByUserPrices($this->getUser()->getId(), $productId);
+
+            if(!$price){
+
+                $product = $em->getRepository('AppBundle:Product')->find((int)$productId)->getWacPkgPrice();
+
+                $price = $product - ($product * $this->getUser()->getSalePercent() /100);
+            }else {
+                $price['individualPrice'] ? $price = $price['individualPrice'] : $price = $price['price'] - ($price['price'] * $price['percent']/100);
+            }
+        }else {
+            $price = $em->getRepository('AppBundle:Product')->find((int)$productId)->getWacPkgPrice();
+        }
+
+        return $this->render('@App/Main/price.html.twig', ['price'=>$price]);
+    }
 }

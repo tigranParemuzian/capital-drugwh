@@ -138,6 +138,47 @@ class DefaultController extends Controller
             foreach($bookings as $booking){
 
                 $product=$booking->getProduct();
+
+                $productStore = $em->getRepository('AppBundle:ProductStorage')->findStoreByProduct($product->getId());
+
+                if(count($productStore) > 0){
+                    foreach ($productStore as $store){
+                        if($store->getCount() >= $booking->getCount()){
+
+                            $booking->setLot($store->getLot());
+                            $booking->setExpiryDate($store->getExpiryDate());
+                            $booking->setShipDate($store->getSupDate());
+
+                            $store->setCount($store->getCount() - $booking->getCount());
+
+                            $em->persist($store);
+                            $em->persist($store);
+                        }else {
+                            $bookingCount = $booking->getCount();
+
+
+                            $booking->setLot($store->getLot());
+                            $booking->setExpiryDate($store->getExpiryDate());
+                            $booking->setShipDate($store->getSupDate());
+                            $booking->setCount($store->getCount());
+
+                            $store->setCount(0);
+
+                            $em->persist($booking);
+                            $em->persist($store);
+
+                            $booking = clone $booking;
+
+                            $booking->setCount($bookingCount - $store->getCount());
+                            $booking->setLot(null);
+                            $booking->setExpiryDate(null);
+                            $booking->setShipDate(null);
+
+                            $em->persist($booking);
+                        }
+                    }
+                }
+
                 $product->setCount($product->getCount() - $booking->getCount());
                 $booking->setStatus(Booking::IS_ORDERED);
 
