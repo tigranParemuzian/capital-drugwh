@@ -51,7 +51,7 @@ class DefaultController extends Controller
         $grid = $this->get('grid');
         $grid->setSource($source);
 
-        $MyTypedColumn = new DateColumn(array('id' => 'buy_count', 'title' => 'Need Count', 'source' => false, 'filterable' => false, 'sortable' => false));
+        $MyTypedColumn = new DateColumn(array('id' => 'buy_count', 'title' => 'Qty', 'source' => false, 'filterable' => false, 'sortable' => false));
         $grid->addColumn($MyTypedColumn);
 
         // Create an Actions Column

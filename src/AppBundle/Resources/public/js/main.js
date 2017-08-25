@@ -221,3 +221,11 @@ function number_format(number, decimals, dec_point, thousands_sep) {  // Format 
     kd = (decimals ? dec_point + Math.abs(number - i).toFixed(decimals).replace(/-/, 0).slice(2) : "");
     return km + kw + kd;
 }
+
+function checkInfo(id, e){
+
+    if (e.keyCode == 13) {
+        id = id.replace(/used_count_/g, '');
+        $('#add_'+id).click();
+    }
+}
