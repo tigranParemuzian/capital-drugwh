@@ -125,6 +125,8 @@ sonata_block:
 sonata_admin:
     title:      AAMED LLC
     title_logo: /bundles/app/images/logo.png
+    security:
+        handler: sonata.admin.security.handler.role
     templates:
         # default global templates
 

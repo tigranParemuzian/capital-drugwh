@@ -42,13 +42,18 @@ class KernelListener
         // get url name
         $routeName = $this->container->get('request')->get('_route');
 
-        if ($routeName === 'sonata_admin_set_object_field_value'){
 
-//            $booking = $em->getRepository('AppBundle:Booking')->find(2198);
-//
-//            $booking->setCount(343434);
-//            $em->persist($booking);
-//            $em->flush();
+        if($routeName === 'list' && true === $this->container->get('security.authorization_checker')->isGranted('ROLE_MODERATOR')){
+
+            $url = $this->container->get('router')->generate('admin_app_productstorage_list');
+
+            $response = new RedirectResponse($url);
+
+            $event->setResponse($response);
+        } ;
+
+
+        if ($routeName === 'sonata_admin_set_object_field_value'){
 
             if(!is_null($event->getRequest()->get('code')) && $event->getRequest()->get('code') === 'admin.storage.product') {
 

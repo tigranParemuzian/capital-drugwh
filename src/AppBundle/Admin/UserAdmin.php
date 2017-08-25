@@ -68,7 +68,8 @@ class UserAdmin extends Admin
             ->add('isValid', null, array('label'=>'Valid'))
             ->add('phone')
             ->add('roles', 'doctrine_orm_string', array(), 'choice', array(
-                'choices'  => array('ROLE_DRIVER'=>'Driver', 'ROLE_CLIENT'=>'Client', 'ROLE_SUPER_ADMIN'=>'Admin'),
+                'choices'  => array('ROLE_USER'=>'User', 'ROLE_MODERATOR'=>'Worker',
+                    'ROLE_SUPER_ADMIN'=>'Admin'),
                 ))
             ->add('created', 'doctrine_orm_datetime_range', array(),'sonata_type_datetime_range_picker',
                 array('field_options_start' => array('format' => 'yyyy-MM-dd HH:mm:ss'),
@@ -89,7 +90,7 @@ class UserAdmin extends Admin
             ->add('firstName')
             ->add('phone')
             ->add('roles', 'choice', array(
-                'choices'  => array('ROLE_USER'=>'User', 'ROLE_SUPER_ADMIN'=>'Admin'),
+                'choices'  => array('ROLE_USER'=>'User', 'ROLE_MODERATOR'=>'Worker', 'ROLE_SUPER_ADMIN'=>'Admin'),
                 'multiple' => true
             ))
             ->add('enabled', null, array('editable'=>true))
@@ -110,15 +111,10 @@ class UserAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        // get lenguage
-//        $languages = $this->configurationPool->getContainer()->getParameter('languages');
         // get container
         $container = $this->getConfigurationPool()->getContainer();
 
         $roles = $container->getParameter('security.role_hierarchy.roles');
-
-        // get roles
-//        $rolesChoices = $this->flattenRoles($roles);
 
         $formMapper
             ->tab('General')
@@ -126,7 +122,9 @@ class UserAdmin extends Admin
             ->add('email')
             ->add('username')
             ->add('roles', 'choice', array(
-                'choices'  => array('ROLE_USER'=>'User', 'ROLE_ADMIN'=>'Admin'),
+                'choices'  => array('ROLE_USER'=>'User',
+                    'ROLE_MODERATOR'=>'Worker',
+                    'ROLE_ADMIN'=>'Admin'),
                 'multiple' => true
             ))
             ->add('plainPassword', 'repeated', array('first_name' => 'password',
@@ -156,7 +154,7 @@ class UserAdmin extends Admin
             )
             ->end()
             ->end()
-            ->tab('Price')
+            /*->tab('Price')
             ->with('Price', array('class' =>'col-sm-12',
                 'box-class' => 'box box-solid box-danger',
                 'description'=>'User Price'))
@@ -171,7 +169,7 @@ class UserAdmin extends Admin
                 )
             )
             ->end()
-            ->end()
+            ->end()*/
         ;
     }
 
@@ -207,11 +205,11 @@ class UserAdmin extends Admin
             }
         }
 
-        if($object->getUserPrice()){
+        /*if($object->getUserPrice()){
             foreach($object->getUserPrice() as $price) {
                 $price->setUser($object);
             }
-        }
+        }*/
 
     }
 
@@ -227,30 +225,12 @@ class UserAdmin extends Admin
             }
         }
 
-        if($object->getUserPrice()){
+        /*if($object->getUserPrice()){
             foreach($object->getUserPrice() as $price) {
                 $price->setUser($object);
             }
-        }
+        }*/
     }
-
-//    /**
-//     * @param $rolesHierarchy
-//     * @return array
-//     */
-//    private function flattenRoles($rolesHierarchy)
-//    {
-//        // empty values for
-//        $flatRoles = array();
-//        foreach($rolesHierarchy as $key=> $roles) {
-//
-//            // check roles, don`t show role admin, and sonata entities hierarchies
-//            if(strpos($key, 'SONATA') === false && $key != "ROLE_ADMIN"){
-//                $flatRoles[$key] = $key;
-//            }
-//        }
-//        return $flatRoles;
-//    }
 
     /**
      * @param $object
@@ -286,9 +266,6 @@ class UserAdmin extends Admin
     {
         return array(
             'id' => 'id',
-//            $this->trans('field label 2') => 'finish',
-//            'phone' => 'phone',
-//            'e-mail' => 'email',
             'Username' => 'username',
             'Last Name' => 'lastName',
             'First Name' => 'firstName',
@@ -305,76 +282,4 @@ class UserAdmin extends Admin
 
         return $this->getModelManager()->getDataSourceIterator($datagrid, $this->getExportFields());
     }
-
-
-//    /**
-//     * {@inheritdoc}
-//     */
-//    public function preRemove($object)
-//    {
-//        // get entity manager
-//        $em = $this->getConfigurationPool()->getContainer()->get('doctrine')->getManager();
-//
-//        // remove user relation
-//        $em->getRepository("AppBundle:UserRelation")->removeRelationByUser($object->getId());
-//
-//        // remove user`s push
-//        $em->getRepository("AppBundle:UserPush")->removePushByUser($object->getId());
-//
-//        // remove user ad location
-//        $em->getRepository("AppBundle:UserAdLocation")->deleteExistLocations($object);
-//
-//        // remove user`s subscriber
-//        $em->getRepository("LBPaymentBundle:Subscriber")->deleteSubscriberByUser($object);
-//        //todo:: disconnect from paypal
-//
-//        // remove user`s report
-//        $em->getRepository("AppBundle:Report")->removeReportByUser($object->getId());
-//
-//        // remove user`s notification
-//        $em->getRepository("LBNotificationBundle:Notification")->removeNoteByUser($object->getId());
-//
-//        // remove user`s messages
-//        $em->getRepository("LBMessageBundle:Message")->removeMessageByUser($object->getId());
-//
-//        // remove groups members by user
-//        $em->getRepository("AppBundle:LBGroupMembers")->removeGroupMemberByUser($object->getId());
-//
-//        // remove groups members by user
-//        $em->getRepository("AppBundle:LBGroupModerators")->removeGroupModeratorByUser($object->getId());
-//
-//        // remove comments by user
-//        $em->getRepository("AppBundle:Comment")->removeCommentByUser($object->getId());
-//
-//        // remove user`s groups
-//        $blogs = $em->getRepository("AppBundle:Blog")->findBy(array('author'=> $object->getId()));
-//        if($blogs){
-//            foreach($blogs as $blog){
-//                $em->remove($blog);
-//            }
-//        }
-//        // remove user`s groups
-//        $groups = $em->getRepository("AppBundle:LBGroup")->findBy(array('author'=> $object->getId()));
-//        if($groups){
-//            foreach($groups as $group){
-//                $em->remove($group);
-//            }
-//        }
-//
-//        // remove user files
-//        $files = $object->getFiles();
-//        if($files){
-//            foreach($files as $file){
-//                $em->remove($file);
-//            }
-//        }
-//
-//        // remove user interest
-//        $interests = $object->getInterests();
-//        if($interests){
-//            foreach($interests as $interest){
-//                $object->removeInterest($interest);
-//            }
-//        }
-//    }
 }
