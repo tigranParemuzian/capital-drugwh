@@ -21,6 +21,13 @@ use Sonata\AdminBundle\Show\ShowMapper;
 class InvoiceAdmin extends Admin
 {
 
+
+    protected $datagridValues = array(
+        '_page' => 1,
+        '_sort_order' => 'DESC', // sort direction
+        '_sort_by' => 'id' // field name
+    );
+
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection->clearExcept(array('list', 'delete', 'edit', 'batch', 'export'));

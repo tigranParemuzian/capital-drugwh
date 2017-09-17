@@ -144,12 +144,35 @@ class ProductStorageAdmin extends Admin
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function preUpdate($object)
+    {
+
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function prePersist($object){
+
+        $pool = $this->getConfigurationPool();
+        $user = $pool->getContainer()->get('security.token_storage')->getToken()->getUser();
+        $object->setUser($user);
+
+    }
+
+
+    /**
      * This function
      * @param string $context
      * @return \Sonata\AdminBundle\Datagrid\ProxyQueryInterface
      */
     public function createQuery($context = 'list')
     {
+        $pool = $this->getConfigurationPool();
+        $user = $pool->getContainer()->get('security.token_storage')->getToken()->getUser();
+
         // get sonata admin pool service
         $pool = $this->getConfigurationPool();
         $query = parent::createQuery($context);
@@ -161,6 +184,19 @@ class ProductStorageAdmin extends Admin
         $query->leftJoin('pri.manufacturers', 'prm');
         $query->leftJoin($query->getRootAlias() . '.booking', 'b');
         $query->leftJoin('b.invoice', 'bi');
+        $query->leftJoin($query->getRootAlias().'.user', 'u');
+
+        if(!$this->isGranted("ROLE_SUPER_ADMIN")) {
+            // create query
+            $query->andWhere(
+                $query->expr()->in($query->getRootAliases()[0] . '.user', ':ui')
+            );$query->orWhere(
+                $query->expr()->isNull($query->getRootAliases()[0] . '.user')
+
+            );
+            $query->setParameter('ui', $user);
+
+        }
 
         return $query;
     }

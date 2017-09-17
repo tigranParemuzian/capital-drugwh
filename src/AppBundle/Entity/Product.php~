@@ -504,4 +504,38 @@ class Product
     {
         return $this->userPrice;
     }
+
+    /**
+     * Add storage
+     *
+     * @param \AppBundle\Entity\ProductStorage $storage
+     *
+     * @return Product
+     */
+    public function addStorage(\AppBundle\Entity\ProductStorage $storage)
+    {
+        $this->storage[] = $storage;
+
+        return $this;
+    }
+
+    /**
+     * Remove storage
+     *
+     * @param \AppBundle\Entity\ProductStorage $storage
+     */
+    public function removeStorage(\AppBundle\Entity\ProductStorage $storage)
+    {
+        $this->storage->removeElement($storage);
+    }
+
+    /**
+     * Get storage
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStorage()
+    {
+        return $this->storage;
+    }
 }

@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;*/
 
+use AppBundle\Entity\ProductStorage;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
@@ -37,6 +38,12 @@ class CloneAdminController extends Controller
 
         do{
             $clonedObject = clone $object;
+
+            if($clonedObject instanceof ProductStorage){
+
+                $clonedObject->setUser($this->getUser());
+            }
+
             $this->admin->create($clonedObject);
             $count --;
         }while($count);
