@@ -23,7 +23,7 @@ class ProductStorageAdmin extends Admin
     protected $datagridValues = array(
         '_page' => 1,
         '_sort_order' => 'DESC', // sort direction
-        '_sort_by' => 'expiryDate' // field name
+        '_sort_by' => 'id' // field name
     );
 
 
