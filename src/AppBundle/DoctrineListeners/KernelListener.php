@@ -113,6 +113,7 @@ class KernelListener
                                                 $booking->setExpiryDate($storage->getExpiryDate());
                                                 $booking->setShipDate($storage->getSupDate());
                                                 $booking->setCount($storage->getCount());
+                                                $booking->setInvoice($booking->getInvoice());
 
                                                 $storage->setCount(0);
 
@@ -140,6 +141,7 @@ class KernelListener
 
                                             if ($booking->getCount() >= $storage->getCount() && $storage->getCount() > 0) {
                                                 $newBooking = clone $booking;
+                                                $newBooking->setInvoice($booking->getInvoice());
                                                 $newBooking->setCount($booking->getCount() - $storage->getCount());
                                                 $newBooking->setCost(round($newBooking->getProduct()->getPrice() * $newBooking->getCount(), 2));
                                                 $newBooking->setSubTotal(round($newBooking->getProduct()->getPrice() * $newBooking->getCount(), 2));
