@@ -9,6 +9,7 @@ namespace AppBundle\Admin;
 
 use AppBundle\Entity\Product;
 use AppBundle\Entity\ProductItem;
+use AppBundle\Entity\ProductStorage;
 use Sonata\AdminBundle\Admin\AbstractAdmin as Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -138,6 +139,20 @@ class ProductAdmin extends Admin
      */
     public function prePersist($object)
     {
+        $em = $this->getConfigurationPool()->getContainer()->get('doctrine')->getManager();
+
+        $now = new \DateTime('now');
+
+        $newStore = new ProductStorage();
+        $newStore->setCount(0);
+        $newStore->setExpiryDate($now);
+        $newStore->setSupDate($now);
+        $newStore->setLot(' ');
+        $newStore->setProduct($object);
+
+        $em->persist($newStore);
+
+
         if($object->getPrice()){
             $object->setPrice($object->getPrice() - ($object->getPrice() * 0.09));
         }

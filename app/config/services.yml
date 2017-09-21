@@ -36,13 +36,13 @@ services:
         class: AppBundle\Admin\ProductItemAdmin
         arguments: [~, AppBundle\Entity\ProductItem, ~]
         tags:
-            - {name: sonata.admin, manager_type: orm, group: Product, label: Product Item, show_in_dashboard: true}
+            - {name: sonata.admin, manager_type: orm, group: Product, label: Product Item, show_in_dashboard: true }
 
     admin.product:
         class: AppBundle\Admin\ProductAdmin
         arguments: [~, AppBundle\Entity\Product, ~]
         tags:
-            - {name: sonata.admin, manager_type: orm, group: Product, label: Product, show_in_dashboard: false}
+            - {name: sonata.admin, manager_type: orm, group: Product, label: Product, show_in_dashboard: true }
 
     admin.storage.product:
             class: AppBundle\Admin\ProductStorageAdmin

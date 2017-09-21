@@ -43,7 +43,7 @@ class Booking
     /**
      * @var int
      *
-     * @ORM\Column(name="cost", type="integer")
+     * @ORM\Column(name="cost", type="float")
      * @Groups({"booking_list"})
      */
     private $cost;

@@ -135,6 +135,7 @@ class DefaultController extends Controller
             $now = new \DateTime('now');
             $total = 0;
             $errorData = array();
+
             foreach($bookings as $booking){
 
                 $product=$booking->getProduct();
@@ -142,50 +143,71 @@ class DefaultController extends Controller
                 $productStore = $em->getRepository('AppBundle:ProductStorage')->findStoreByProduct($product->getId());
 
                 if(count($productStore) > 0){
+
+                    $bookingCount = $booking->getCount();
+
                     foreach ($productStore as $store){
+
                         if($store->getCount() >= $booking->getCount()){
 
                             $booking->setLot($store->getLot());
                             $booking->setExpiryDate($store->getExpiryDate());
                             $booking->setShipDate($store->getSupDate());
-
+                            $booking->setInvoice($invoice);
                             $store->setCount($store->getCount() - $booking->getCount());
 
+                            $em->persist($booking);
                             $em->persist($store);
-                            $em->persist($store);
-                        }else {
-                            $bookingCount = $booking->getCount();
+                            break;
 
+                        }else {
 
                             $booking->setLot($store->getLot());
                             $booking->setExpiryDate($store->getExpiryDate());
                             $booking->setShipDate($store->getSupDate());
                             $booking->setCount($store->getCount());
+                            $booking->setInvoice($invoice);
+                            $booking->setCost(round($product->getPrice() * (int)$store->getCount(), 2));
+                            $booking->setSubTotal(round($product->getPrice() * (int)$store->getCount(), 2));
+                            $booking->setStatus(Booking::IS_ORDERED);
+
+                            $bookingCount = $bookingCount - (int)$store->getCount();
 
                             $store->setCount(0);
 
                             $em->persist($booking);
                             $em->persist($store);
 
-                            $booking = clone $booking;
+                            $booking = new Booking();
 
-                            $booking->setCount($bookingCount - $store->getCount());
+                            $booking->setProduct($product);
+                            $booking->setCount($bookingCount);
                             $booking->setLot(null);
                             $booking->setExpiryDate(null);
                             $booking->setShipDate(null);
+                            $booking->setInvoice($invoice);
+                            $booking->setClient($this->getUser());
+
+                            $booking->setCost(round($product->getPrice() * $booking->getCount(), 2));
+                            $booking->setSubTotal(round($product->getPrice() * $booking->getCount(), 2));
+                            $booking->setStatus(Booking::IS_ORDERED);
 
                             $em->persist($booking);
                         }
+
+
                     }
+
+                    $em->persist($booking);
                 }
 
                 $product->setCount($product->getCount() - $booking->getCount());
-                $booking->setStatus(Booking::IS_ORDERED);
+//                $booking->setStatus(Booking::IS_ORDERED);
 
-                $booking->setInvoice($invoice);
+//                $booking->setInvoice($invoice);
 
                 $em->persist($product);
-                $em->persist($booking);
+//                $em->persist($booking);
                 $total +=$booking->getCost();
             }
 

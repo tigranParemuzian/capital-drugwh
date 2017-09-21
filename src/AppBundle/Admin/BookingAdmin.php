@@ -107,9 +107,7 @@ class BookingAdmin extends Admin
             ->add('lot',  null, ['editable' => true])
             ->add('expiryDate', 'date', ['editable' => true])
             ->add('shipDate', 'date', ['label'=>'SUP date', 'editable' => true])
-            ->add('cost', 'currency', array(
-                'currency' => 'Cost &'
-            ))
+            ->add('cost', null,[])
             ->addIdentifier('status', 'choice', array(
                 'choices'  =>  array(Booking::IS_ORDERED=>'In order', Booking::IS_NEW=>'New',
                     Booking::IS_CHANGED=>'Changed'),
