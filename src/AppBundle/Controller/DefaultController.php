@@ -113,13 +113,11 @@ class DefaultController extends Controller
     /**
      *
      * @Route("/orders", name="submit_order")
-     * @QueryParam(name="state", nullable=true, requirements="\d+")
      * @Template()
      * @Security("has_role('ROLE_USER')")
-     * @param ParamFetcher $paramFetcher
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function submitAction(ParamFetcher $paramFetcher){
+    public function submitAction(Request $request){
 
         $userId = $this->getUser()->getId();
 
@@ -127,7 +125,9 @@ class DefaultController extends Controller
 
         $bookings = $em->getRepository('AppBundle:Booking')->findAllNewByClient($userId);
 
-        if(count($bookings)>0 && !is_null($this->getUser()->getUserSettings()) && !empty($paramFetcher->get('state')) && (int)$paramFetcher->get('state') == 1){
+        $state = $request->get('state');
+
+        if(count($bookings)>0 && !is_null($this->getUser()->getUserSettings()) && (int)$state == 1){
 
             $invoice = new Invoice();
             $invoice->setStatus(Invoice::IS_NEW);
