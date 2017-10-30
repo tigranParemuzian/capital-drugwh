@@ -154,6 +154,7 @@ class DefaultController extends Controller
                             $booking->setExpiryDate($store->getExpiryDate());
                             $booking->setShipDate($store->getSupDate());
                             $booking->setInvoice($invoice);
+                            $booking->setStatus(Booking::IS_ORDERED);
                             $store->setCount($store->getCount() - $booking->getCount());
 
                             $em->persist($booking);
