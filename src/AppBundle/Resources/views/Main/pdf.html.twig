@@ -119,7 +119,7 @@
                             <td><span>{{ invoice[0].dueDate|date("m/d/Y") }}</span></td>
                             <td><span>{{ invoice[0].terms }}</span></td>
                             <td><span>{{ invoice[0].shippingHandling|date("m/d/Y") }}</span></td>
-                            <td><span>{{ {{ invoice[0].id <= 85 ? shipping[0] : shipping[1] }}</span></td>
+                            <td><span>{{ invoice[0].id <= 85 ? shipping[0] : shipping[1] }}</span></td>
                             {% if invoice[0].trackNumber %}<th><span>{{ invoice[0].trackNumber }}</span></th>{% endif %}
                         </tr>
                     </tbody>
