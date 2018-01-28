@@ -226,7 +226,12 @@ class InvoiceAdmin extends Admin
                     $states = explode(',', $state);
                     $mess = '';
                     foreach ($states as $state){
-                        $mess.='<a href="https://www.fedex.com/apps/fedextrack/?tracknumbers='.$state.'" target="_blank">'.$state.'</a>&nbsp;&nbsp;'   ;
+                        if((int)$invoiceNumber <= 1516645260){
+                            $mess.='<a href="https://www.fedex.com/apps/fedextrack/?tracknumbers='.$state.'" target="_blank">'.$state.'</a>&nbsp;&nbsp;'   ;
+
+                        }else {
+                            $mess.=$state.'nbsp;&nbsp;'   ;
+                        }
 
                     }
 
@@ -240,7 +245,8 @@ class InvoiceAdmin extends Admin
                     }
 
                     $message->setBody(
-                        '<p>Your order has been shipped FedEx '.$mess.'<br>Thank you.</p>',
+
+                        '<p>Your order has been shipped UPS '.$mess.'<br>Thank you.</p>',
                         'text/html'
                     )
                         ;
