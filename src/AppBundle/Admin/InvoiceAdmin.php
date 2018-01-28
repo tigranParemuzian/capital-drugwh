@@ -230,7 +230,7 @@ class InvoiceAdmin extends Admin
                             $mess.='<a href="https://www.fedex.com/apps/fedextrack/?tracknumbers='.$state.'" target="_blank">'.$state.'</a>&nbsp;&nbsp;'   ;
 
                         }else {
-                            $mess.=$state.'nbsp;&nbsp;'   ;
+                            $mess.=$state.'&nbsp;&nbsp;'   ;
                         }
 
                     }
