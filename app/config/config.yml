@@ -35,6 +35,10 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+        shipping:
+              - Fedex
+              - UPS
     date:
         format: d.m.Y, H:i:s
         interval_format: '%%d days'

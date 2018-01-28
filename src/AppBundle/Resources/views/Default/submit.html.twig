@@ -56,7 +56,7 @@
                         <div class="col-md-3"><span class="track-number">{% if invoice.trackNumber %}
                         {% set tnum = invoice.trackNumber|split(',') %}
                         {% for tn in tnum %}
-                                    <a href="https://www.fedex.com/apps/fedextrack/?tracknumbers={{ tn }}" target="_blank">{{ tn }}</a>
+                                    {#<a href="https://www.fedex.com/apps/fedextrack/?tracknumbers={{ tn }}" target="_blank">#}{{ tn }}{#</a>#}
                                 {% endfor %}
 
 {% else %}Not Available{% endif %}</span>
